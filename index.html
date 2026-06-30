@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>波波 ｜ 整合 Demo（LINE 內一條龍）</title>
+<style>
+  :root{--bg:#e9ece6;--screen:#8cabd9;--card:#fff;--ink:#231F2B;--muted:#6e6a72;--brand:#E8674C;--brand-d:#cf4f37;--line:#e6e1d8;--good:#2e9e6b;--green:#9be4b0;--dm:#fdf0e8}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,sans-serif;background:#d7d2c8;color:var(--ink)}
+  .stage{display:contents}
+  .hint{display:none}
+  .phone{display:contents}
+  .notch,.home{display:none}
+  .screen{position:relative;background:var(--bg);overflow:hidden;height:100vh;height:100dvh;max-width:480px;margin:0 auto;display:flex;flex-direction:column;box-shadow:0 0 40px rgba(0,0,0,.1)}
+  /* nav */
+  .nav{background:#fff;border-bottom:1px solid var(--line);padding:14px 14px 8px;display:flex;align-items:center;gap:10px;flex:none}
+  .nav .ico{width:30px;height:30px;border-radius:9px;background:#e7f0e9;display:flex;align-items:center;justify-content:center;font-size:16px}
+  .nav .ttl{font-size:15px;font-weight:700}
+  .nav .ttl small{display:block;font-size:11px;color:var(--muted);font-weight:400}
+  .tabs{display:flex;background:#fff;border-bottom:1px solid var(--line);flex:none}
+  .tabs button{flex:1;border:0;background:#fff;padding:9px 0;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;font-family:inherit}
+  .tabs button.on{color:var(--brand-d);border-bottom-color:var(--brand)}
+  .tabs .dmdot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--brand);margin-left:5px;vertical-align:1px}
+  /* threads */
+  .thread{flex:1;overflow-y:auto;padding:14px 12px 22px}
+  .thread.dm{background:linear-gradient(180deg,#fdf3ec,#f3ece3)}
+  .dmbanner{font-size:11px;color:#a85b32;background:#fdeadd;border:1px solid #f3d3bd;border-radius:9px;padding:6px 10px;margin-bottom:12px;text-align:center}
+  .msg{display:flex;gap:8px;margin-bottom:12px;align-items:flex-end;animation:pop .3s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .av{width:30px;height:30px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff}
+  .av.bot{background:linear-gradient(150deg,var(--brand),#f0a07a)}
+  .bub{max-width:80%;background:#fff;border-radius:15px;border-top-left-radius:4px;padding:10px 13px;font-size:14px;line-height:1.55;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+  .bub .nm{font-size:11px;color:var(--muted);margin-bottom:3px}
+  .msg.me{flex-direction:row-reverse}
+  .msg.me .bub{background:var(--green);border-top-left-radius:15px;border-top-right-radius:4px;color:#10331c}
+  .msg.sys{justify-content:center}.msg.sys span{font-size:11px;color:#7a7268;background:rgba(255,255,255,.7);padding:3px 12px;border-radius:20px}
+  /* card in bubble */
+  .card{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:4px;width:235px}
+  .card .hd{padding:8px 11px;font-size:12.5px;font-weight:700;background:#faf6f1;border-bottom:1px solid var(--line)}
+  .card .bd{padding:10px 12px;font-size:13px;color:#4a463f;line-height:1.65}
+  .card .acts{display:flex;gap:7px;padding:9px 11px;border-top:1px solid var(--line)}
+  .btn{flex:1;text-align:center;padding:8px 0;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;border:0;font-family:inherit}
+  .btn.pri{background:var(--brand);color:#fff}.btn.pri:hover{background:var(--brand-d)}
+  .btn.gho{background:#fff;border:1.5px solid var(--brand);color:var(--brand-d)}
+  .summary{font-size:12.5px;color:#5a564f;background:#f4f7f3;border:1px solid #d8e6dc;border-radius:9px;padding:8px 11px;margin-top:6px}
+  /* LIFF overlay */
+  .liff{position:absolute;inset:0;background:#fff;z-index:40;display:none;flex-direction:column}
+  .liff.on{display:flex;animation:slide .28s ease}
+  @keyframes slide{from{transform:translateY(100%)}to{transform:none}}
+  .liff .lhd{flex:none;display:flex;align-items:center;gap:10px;padding:12px 14px;background:#fff;border-bottom:1px solid var(--line)}
+  .liff .lhd .x{width:28px;height:28px;border-radius:50%;background:#f1ece4;border:0;font-size:16px;cursor:pointer;color:#555}
+  .liff .lhd .lt{font-size:14px;font-weight:700}.liff .lhd .lt small{display:block;font-size:10.5px;color:var(--muted);font-weight:400}
+  .liff iframe{flex:1;width:100%;border:0;background:#faf7f2}
+  .home{margin-top:2px;height:5px;width:120px;background:#0f0d14;border-radius:3px;align-self:center;opacity:.25}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="hint">這支整合 Demo 模擬「LINE 內」的一條龍：團主在<b>私訊</b>編輯菜單（OCR 以 LIFF 內嵌開啟）→ 用此菜單開團 → 完成後自動把開團公告發回<b>群組</b>。上方可切換群組／團主私訊兩個檢視。</div>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="screen">
+      <div class="nav">
+        <div class="ico">🍱</div>
+        <div class="ttl" id="navttl">辦公室揪團<small id="navsub">群組 · 8 人</small></div>
+      </div>
+      <div class="tabs">
+        <button id="tab-group" class="on" onclick="switchView('group')">群組</button>
+        <button id="tab-dm" onclick="switchView('dm')">團主私訊 🔒<span class="dmdot" id="dmdot"></span></button>
+      </div>
+      <div class="thread" id="thread-group"></div>
+      <div class="thread dm" id="thread-dm" style="display:none"></div>
+
+      <div class="liff" id="liff">
+        <div class="lhd">
+          <button class="x" onclick="closeLiff()">✕</button>
+          <div class="lt" id="lifftitle">菜單 OCR</div>
+        </div>
+        <iframe id="liffframe" title="LIFF"></iframe>
+      </div>
+    </div>
+    <div class="home"></div>
+  </div>
+</div>
+
+<script>
+var $=function(s){return document.querySelector(s);};
+var state={curated:null,view:'group',published:false};
+
+/* ---- 訊息渲染 ---- */
+function el(html){var d=document.createElement('div');d.innerHTML=html.trim();return d.firstChild;}
+function addMsg(view,opts){
+  var t=$('#thread-'+view);
+  var who=opts.who||'bot', txt=opts.txt||'', card=opts.card||'';
+  var html;
+  if(who==='sys'){ html='<div class="msg sys"><span>'+txt+'</span></div>'; }
+  else if(who==='me'){ html='<div class="msg me"><div class="av" style="background:#5b8def">我</div><div class="bub">'+txt+card+'</div></div>'; }
+  else if(who==='bot'){ html='<div class="msg"><div class="av bot">波</div><div class="bub"><div class="nm">波波</div>'+txt+card+'</div></div>'; }
+  else { html='<div class="msg"><div class="av" style="background:'+(opts.color||'#9b59b6')+'">'+(opts.name||'同')[0]+'</div><div class="bub"><div class="nm">'+(opts.name||'同事')+'</div>'+txt+card+'</div></div>'; }
+  var node=el(html); t.appendChild(node); t.scrollTop=t.scrollHeight; return node;
+}
+
+/* ---- 檢視切換 ---- */
+function switchView(v){
+  state.view=v;
+  $('#thread-group').style.display = v==='group'?'':'none';
+  $('#thread-dm').style.display = v==='dm'?'':'none';
+  $('#tab-group').classList.toggle('on',v==='group');
+  $('#tab-dm').classList.toggle('on',v==='dm');
+  $('#navsub').textContent = v==='group'?'群組 · 8 人':'與 波波 的對話 · 只有你看得到';
+  if(v==='dm') $('#dmdot').style.display='none';
+}
+
+/* ---- LIFF 浮層 ---- */
+function openLiff(url,title){
+  var base=url, hash='', hi=url.indexOf('#');
+  if(hi>=0){ base=url.slice(0,hi); hash=url.slice(hi); }
+  base += (base.indexOf('?')<0?'?':'&')+'_t='+Date.now();   // 破快取，保證載入最新版內頁
+  $('#liffframe').src=base+hash;
+  $('#lifftitle').textContent=title;
+  $('#liff').classList.add('on');
+}
+function closeLiff(){ $('#liff').classList.remove('on'); setTimeout(function(){$('#liffframe').src='about:blank';},250); }
+
+/* ---- 接收 LIFF 內頁訊息 ---- */
+window.addEventListener('message',function(e){
+  var d=e.data||{};
+  if(d.type==='bobo_open_team'){
+    state.curated=d.payload;
+    state.published=false;            // 每次重新開團都允許再發布一次
+    try{ localStorage.setItem('bobo_team_stage','0'); }catch(_){}   // 新團 → 重置發布/截單階段
+    var json=JSON.stringify(d.payload);
+    var b64=btoa(unescape(encodeURIComponent(json)));
+    openLiff('bobo-admin-panel-prototype.html#menu='+b64,'開團面板');
+  } else if(d.type==='bobo_team_published'){
+    closeLiff();
+    onPublished(d.shop||'本次菜單', d.count||0);
+  } else if(d.type==='bobo_order_closed'){
+    closeLiff();
+    switchView('group');
+    addMsg('group',{who:'bot',txt:'⏰ <b>'+(d.shop||'本團')+'</b> 已截單！開始幫大家送出訂單，謝謝參與 🙌'});
+    addMsg('group',{who:'sys',txt:'團主已截單'});
+  } else if(d.type==='bobo_oos'){
+    // 團主在面板標示缺貨 → 波波到群組自動 tag 當事人
+    addMsg('group',{who:'bot',txt:'⚠️ <b>@'+(d.person||'')+'</b> 你點的「'+(d.item||'')+'」<b>缺貨</b>了，要改點什麼?直接回我就好 🙏'});
+  } else if(d.type==='bobo_order_placed'){
+    // 成員從點餐頁送出 → 回到群組顯示
+    closeLiff();
+    switchView('group');
+    addMsg('group',{who:'peer',name:(d.person||'我'),color:'#2980b9',txt:'我點好了 🙋'});
+    addMsg('group',{who:'bot',txt:'✅ 已收到 <b>'+(d.person||'')+'</b> 的訂單：'+(d.item||'')+'（'+(d.spec||'')+'）· $'+(d.price||0)+'　<span style="color:var(--muted);font-size:12px">截單前可改</span>'});
+  }
+});
+
+/* ---- 開團發布後：把結果帶回群組 ---- */
+function onPublished(shop,count){
+  if(state.published) return; state.published=true;
+  // 私訊：確認
+  addMsg('dm',{who:'bot',txt:'✅ 已發到群組！截單、換單、收款對帳都在開團面板。',
+    card:'<div class="card"><div class="acts"><button class="btn gho" onclick="openLiff(\'bobo-admin-panel-prototype.html\',\'開團面板\')">📋 開啟開團面板</button></div></div>'});
+  // 群組：開團公告（帶 OCR 菜單摘要）
+  var sum = '';
+  if(state.curated && state.curated.items){
+    var its=state.curated.items.slice(0,3).map(function(i){return i.name+' $'+i.price;});
+    sum='<div class="summary">🧋 '+its.join('・')+(state.curated.items.length>3?(' …共 '+state.curated.items.length+' 項'):'')+'</div>';
+  }
+  addMsg('group',{who:'bot',
+    txt:'☕ <b>'+shop+'</b> 開團囉！截單 15:00，點下方填單 👇',
+    card:'<div class="card"><div class="hd">📋 '+shop+' 點餐表單</div><div class="bd">飲料・糖度・冰量・加料，選好直接送出。'+sum+'</div><div class="acts"><button class="btn pri" onclick="openLiff(\'bobo_order_form.html\',\'我要點餐\')">我要點餐 →</button></div></div>'});
+  // 切回群組讓人看到公告
+  $('#dmdot').style.display='';
+  switchView('group');
+  addMsg('group',{who:'sys',txt:'波波 已將開團公告發送到群組'});
+}
+
+/* ---- 店家資料：金茶伍=現場上傳辨識；彤露/雀飲=已有辨識過的範例菜單 ---- */
+var SHOPS={
+  jincha:{name:'金茶伍 手切Q粿', live:true},
+  tonglu:{name:'彤露', sample:'彤露', items:96, conf:95},
+  quewin:{name:'雀飲', sample:'雀飲', items:92, conf:97}
+};
+
+/* ---- 初始對話 ---- */
+function seed(){
+  try{ localStorage.removeItem('bobo_team_stage'); }catch(_){}   // 每次重新整理 Demo 都回到乾淨狀態
+  addMsg('group',{who:'peer',name:'Vivi',color:'#9b59b6',txt:'下午好睏，有人要揪飲料嗎 ☕'});
+  addMsg('group',{who:'peer',name:'阿Ken',color:'#2980b9',txt:'+1 想喝奶茶 🙋'});
+  addMsg('group',{who:'peer',name:'Vivi',color:'#9b59b6',txt:'<span style="color:var(--brand-d);font-weight:700">@波波</span> 幫我們揪一下！'});
+  addMsg('group',{who:'bot',txt:'收到！附近這 3 家評價不錯，<b>誰想當團主就點「由我開團」</b> 👇',
+    card:'<div class="card"><div class="hd">🥤 金茶伍 手切Q粿 <span style="background:var(--brand);color:#fff;font-size:10px;padding:1px 7px;border-radius:10px;margin-left:4px">人氣</span></div><div class="bd">⭐ 4.6・步行 3 分・招牌：手切Q粿紅茶、琥珀紅奶茶</div><div class="acts"><button class="btn pri" onclick="chooseShop(\'jincha\')">由我開團 →</button></div></div>'
+      +'<div class="card" style="margin-top:8px"><div class="hd">🧋 彤露 <span style="background:#e7f0e9;color:#2e7d5b;font-size:10px;padding:1px 7px;border-radius:10px;margin-left:4px">已有菜單</span></div><div class="bd">⭐ 4.5・步行 5 分・招牌：極上紅茶、四季春青茶</div><div class="acts"><button class="btn gho" onclick="chooseShop(\'tonglu\')">改選這家 →</button></div></div>'
+      +'<div class="card" style="margin-top:8px"><div class="hd">🍵 雀飲 <span style="background:#e7f0e9;color:#2e7d5b;font-size:10px;padding:1px 7px;border-radius:10px;margin-left:4px">已有菜單</span></div><div class="bd">⭐ 4.7・步行 6 分・招牌：黃金蕎麥茶、蕎麥鮮奶</div><div class="acts"><button class="btn gho" onclick="chooseShop(\'quewin\')">改選這家 →</button></div></div>'});
+  addMsg('dm',{who:'sys',txt:'🔒 以下只有團主（你）看得到'});
+  addMsg('dm',{who:'bot',txt:'先到群組挑一家店，我就把開團準備好給你確認 👇'});
+}
+function chooseShop(id){
+  var s=SHOPS[id]; if(!s) return;
+  $('#dmdot').style.display='';
+  switchView('dm');
+  if(state.dmCardFor===id) return;           // 同一家不重複加卡
+  state.dmCardFor=id;
+  if(s.live){
+    addMsg('dm',{who:'bot',txt:'好的，幫你準備 <b>'+s.name+'</b> 的開團 👇',
+      card:'<div class="card"><div class="hd">📋 '+s.name+' · 菜單 OCR</div><div class="bd">這家還沒有菜單，<b>上傳照片自動辨識</b>成填單表，確認後發到群組。</div><div class="acts"><button class="btn pri" onclick="openLiff(\'menu_ocr_demo.html\',\'菜單 OCR\')">✏️ 上傳／編輯菜單</button></div></div>'});
+  } else {
+    addMsg('dm',{who:'bot',txt:'<b>'+s.name+'</b> 先前有人辨識過菜單，幫你帶出來 👇',
+      card:'<div class="card"><div class="hd">✅ '+s.name+' · 菜單已辨識過</div><div class="bd">先前已辨識 <b>'+s.items+' 項</b>（信心 '+s.conf+'%），可直接檢視微調後開團。</div><div class="acts"><button class="btn pri" onclick="openLiff(\'menu_ocr_demo.html#sample='+encodeURIComponent(s.sample)+'\',\'菜單 OCR\')">📋 檢視已辨識菜單</button></div></div>'});
+  }
+}
+seed();
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+[
+  {
+    "type": "scan_summary",
+    "overall_confidence": 0.94,
+    "low_confidence_items": [
+      { "name": "湯餃加購『加牛肚』價格", "issue": "湯餃可加牛肉/加牛肚，『加牛肚』加價數字字體小，原辨識不確定，經團主確認為 +40，已更正" }
+    ],
+    "summary_note": "✅ 本次掃描信心良好（0.94）。正餐/麵食類已自動生成『辣度、主食選擇（泡飯/冬粉/蝴蝶麵/Q麵）、加麵』等欄位；餃子生成『內餡（韭菜/高麗菜/各半）』與『加購（加牛肉/加牛肚）』；滷味與小菜為單一價無客製。"
+  },
+
+  { "category": "想吃牛", "name": "四川椒麻雙寶牛肉麵", "price": 220, "custom_options": { "辣度": ["小辣","標準","中辣","大辣"], "主食選擇": ["麵","泡飯","冬粉","蝴蝶麵","Q麵"], "加購": ["加麵 (+15)"] } },
+  { "category": "想吃牛", "name": "四川椒麻牛肉麵", "price": 170, "custom_options": { "辣度": ["小辣","標準","中辣","大辣"], "主食選擇": ["麵","泡飯","冬粉","蝴蝶麵","Q麵"], "加購": ["加麵 (+15)"] } },
+  { "category": "想吃牛", "name": "川味牛肉麵", "price": 150, "custom_options": { "主食選擇": ["麵","泡飯","冬粉","蝴蝶麵","Q麵"], "加購": ["加麵 (+15)"] } },
+  { "category": "想吃牛", "name": "四川椒麻牛肉湯麵(無牛肉)", "price": 120, "custom_options": { "辣度": ["小辣","標準","中辣","大辣"], "主食選擇": ["麵","泡飯","冬粉","蝴蝶麵","Q麵"], "加購": ["加麵 (+15)"] } },
+  { "category": "想吃牛", "name": "川味牛肉湯麵(無牛肉)", "price": 100, "custom_options": { "主食選擇": ["麵","泡飯","冬粉","蝴蝶麵","Q麵"], "加購": ["加麵 (+15)"] } },
+
+  { "category": "麵麵俱到", "name": "餛飩麵(湯/乾)", "price": 80, "custom_options": { "湯乾": ["湯","乾"], "加購": ["加餛飩 ($10/3顆)"] } },
+  { "category": "麵麵俱到", "name": "四川椒麻牛肉乾拌麵", "price": 70, "custom_options": { "辣度": ["小辣","標準","中辣","大辣"], "主食選擇": ["麵","泡飯","冬粉"] } },
+  { "category": "麵麵俱到", "name": "酸辣麵", "price": 70, "custom_options": {} },
+  { "category": "麵麵俱到", "name": "麻醬麵", "price": 70, "custom_options": {} },
+  { "category": "麵麵俱到", "name": "府城沙茶乾拌麵", "price": 60, "custom_options": {} },
+  { "category": "麵麵俱到", "name": "陽春麵(湯/乾)", "price": 50, "custom_options": { "湯乾": ["湯","乾"] } },
+  { "category": "麵麵俱到", "name": "肉燥飯(小)", "price": 25, "custom_options": { "配菜": ["酸菜","蒜泥"] } },
+  { "category": "麵麵俱到", "name": "肉燥飯(大)", "price": 35, "custom_options": { "配菜": ["酸菜","蒜泥"] } },
+
+  { "category": "吃餃子", "name": "四川椒麻湯餃(10顆)", "price": 145, "custom_options": { "辣度": ["小辣","標準","中辣","大辣"], "內餡": ["韭菜","高麗菜","各半"], "加購": ["加牛肉 (+50)","加牛肚 (+40)"] } },
+  { "category": "吃餃子", "name": "川味牛肉湯餃(10顆)", "price": 115, "custom_options": { "內餡": ["韭菜","高麗菜","各半"], "加購": ["加牛肉 (+50)","加牛肚 (+40)"] } },
+  { "category": "吃餃子", "name": "酸辣湯餃(10顆)", "price": 100, "custom_options": {} },
+  { "category": "吃餃子", "name": "手工水餃(10顆)", "price": 70, "custom_options": { "內餡": ["韭菜","高麗菜","各半"] } },
+  { "category": "吃餃子", "name": "紅油炒手(10顆)", "price": 70, "custom_options": { "辣度": ["小辣","中辣","大辣"] } },
+
+  { "category": "湯類", "name": "川味牛肉湯(無牛肉)", "price": 50, "custom_options": { "加購": ["加四川椒麻 (+30)","加牛肉 (+50)"] } },
+  { "category": "湯類", "name": "餛飩湯", "price": 40, "custom_options": {} },
+  { "category": "湯類", "name": "酸辣湯", "price": 35, "custom_options": {} },
+  { "category": "湯類", "name": "魚丸湯", "price": 35, "custom_options": {} },
+  { "category": "湯類", "name": "青菜豆腐湯", "price": 35, "custom_options": {} },
+
+  { "category": "小菜", "name": "麻辣牛肚", "price": 110, "custom_options": {} },
+  { "category": "小菜", "name": "麻辣鴨血", "price": 40, "custom_options": {} },
+  { "category": "小菜", "name": "麻辣豆腐", "price": 40, "custom_options": {} },
+  { "category": "小菜", "name": "麻辣魚蛋", "price": 40, "custom_options": {} },
+  { "category": "小菜", "name": "麻辣雙拼(豆腐+鴨血)", "price": 40, "custom_options": {} },
+  { "category": "小菜", "name": "煙燻豬耳朵", "price": 35, "custom_options": {} },
+  { "category": "小菜", "name": "燙青菜", "price": 40, "custom_options": {} },
+
+  { "category": "滷味", "name": "菊花肉(60g)", "price": 55, "custom_options": {} },
+  { "category": "滷味", "name": "豬耳朵(55g)", "price": 45, "custom_options": {} },
+  { "category": "滷味", "name": "豬腸瓜(55g)", "price": 55, "custom_options": {} },
+  { "category": "滷味", "name": "豬腳蹄", "price": 40, "custom_options": {} },
+  { "category": "滷味", "name": "百頁豆腐", "price": 40, "custom_options": {} },
+  { "category": "滷味", "name": "黑厚豆干", "price": 25, "custom_options": {} },
+  { "category": "滷味", "name": "甜不辣", "price": 15, "custom_options": {} },
+  { "category": "滷味", "name": "黃豆干", "price": 10, "custom_options": {} },
+  { "category": "滷味", "name": "白豆干", "price": 15, "custom_options": {} },
+  { "category": "滷味", "name": "豆包", "price": 20, "custom_options": {} },
+  { "category": "滷味", "name": "海帶", "price": 15, "custom_options": {} },
+  { "category": "滷味", "name": "米血", "price": 15, "custom_options": {} },
+  { "category": "滷味", "name": "滷蛋", "price": 10, "custom_options": {} }
+]

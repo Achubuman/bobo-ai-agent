@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>波波菜單 OCR（FastAPI + Gemini/Claude）</title>
+<style>
+  :root{--bg:#faf7f2;--card:#fff;--ink:#2b2b2b;--muted:#7a7268;--brand:#e8743b;--brand-dark:#c95a26;--line:#ece5db;--good:#2e9e6b;--warn:#e0a23b;--bad:#d9534f;--chip:#f3ede4}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+  .wrap{max-width:900px;margin:0 auto;padding:26px 18px 70px}
+  h1{font-size:23px;margin:0 0 4px}
+  header p{margin:0;color:var(--muted);font-size:13px}
+  .logo{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--brand)}
+  .logo .dot{width:12px;height:12px;border-radius:50%;background:var(--brand)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}
+  .card h2{font-size:15px;margin:0 0 4px}
+  .card .sub{font-size:12.5px;color:var(--muted);margin:0 0 12px}
+  label{font-size:12.5px;color:var(--muted);display:block;margin-bottom:5px}
+  input[type=text]{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:9px;font-size:14px}
+  .row{display:flex;gap:12px;flex-wrap:wrap}
+  .row>div{flex:1;min-width:180px}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+  .seg button{border:0;background:#fff;padding:8px 16px;font-size:14px;cursor:pointer;color:var(--muted)}
+  .seg button.on{background:var(--brand);color:#fff;font-weight:700}
+  .drop{border:2px dashed #d8cdbe;border-radius:12px;padding:20px;text-align:center;cursor:pointer;background:#fdfbf8;margin-top:12px}
+  .drop:hover{border-color:var(--brand)}
+  .drop.has{padding:8px;border-style:solid;border-color:var(--line)}
+  .drop img{max-width:100%;max-height:260px;border-radius:8px}
+  .ph{color:var(--muted);font-size:13px}
+  button.go{margin-top:14px;width:100%;padding:13px;border:0;border-radius:10px;background:var(--brand);color:#fff;font-size:16px;font-weight:700;cursor:pointer}
+  button.go:disabled{background:#d9cfc2}
+  .mini{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;color:var(--ink)}
+  .mini:hover{border-color:var(--brand)}
+  .status{margin-top:12px;font-size:14px;min-height:20px}
+  .spin{display:inline-block;width:14px;height:14px;border:2px solid #e3d9cc;border-top-color:var(--brand);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px;margin-right:6px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .err{color:var(--bad);font-size:14px;white-space:pre-wrap}
+  .resultgrid{display:flex;gap:18px;align-items:flex-start}
+  .origcol{flex:0 0 38%;max-width:38%;position:sticky;top:12px}
+  .origcol .cap{font-size:12px;color:var(--muted);margin-bottom:6px}
+  .origimg{width:100%;border:1px solid var(--line);border-radius:10px;cursor:zoom-in;display:block}
+  .parsecol{flex:1;min-width:0}
+  @media(max-width:640px){.resultgrid{flex-direction:column}.origcol{position:static;flex:none;max-width:100%;width:100%}}
+  @media(max-width:560px){
+    .wrap{padding:18px 14px 56px}
+    h1{font-size:20px}
+    .card{padding:14px 13px}
+    .row>div{flex:1 1 100%;min-width:0}
+    .openteam{font-size:14px}
+    .item .top{flex-wrap:wrap}
+  }
+  .summary{border-radius:12px;padding:14px 16px;margin-bottom:14px;border:1px solid}
+  .summary.ok{background:#eefaf3;border-color:#bfe7d1}.summary.warn{background:#fdf6e7;border-color:#f0dcb0}.summary.bad{background:#fdecea;border-color:#f1c4bf}
+  .summary .score{font-size:28px;font-weight:800;line-height:1}.summary .lab{font-size:12px;color:var(--muted)}.summary .note{flex:1;min-width:0;overflow-wrap:anywhere;font-size:14px}
+  .lowlist{margin:10px 0 0;padding-left:18px;font-size:13px;color:#8a5a2b;overflow-wrap:anywhere}
+  .storedef{background:#eef4fb;border:1px solid #cfe0f3;border-radius:10px;padding:10px 12px;margin:2px 0 12px}
+  .storedef .hd{font-size:12px;font-weight:700;color:#185FA5;margin-bottom:6px}
+  .curatehint{font-size:12px;color:var(--muted);margin:0 0 10px}
+  .reupload{background:#fdecea;border:1px solid #f1c4bf;border-radius:12px;padding:13px 15px;margin-top:16px;font-size:13.5px;color:#a23b30;line-height:1.65}
+  .reupload.warn{background:#fdf6e7;border-color:#f0dcb0;color:#8a5a2b}
+  .rebtn{display:inline-block;margin-top:10px;border:1px solid currentColor;background:#fff;border-radius:8px;padding:6px 12px;font-size:12.5px;cursor:pointer;color:inherit}
+  .cattabs{display:flex;gap:8px;overflow-x:auto;padding:8px 0 10px;position:sticky;top:0;background:var(--card);z-index:6;-webkit-overflow-scrolling:touch}
+  .cattabs::-webkit-scrollbar{height:0}
+  .cattab{flex:none;border:1px solid var(--line);background:#fff;border-radius:20px;padding:6px 14px;font-size:12.5px;cursor:pointer;color:var(--muted);white-space:nowrap}
+  .cattab.on{background:var(--brand);color:#fff;border-color:var(--brand);font-weight:700}
+  .catblock.hidden{opacity:.4}
+  .cat .mbtn{border:1px solid var(--line);background:#fff;border-radius:7px;padding:2px 8px;font-size:11px;cursor:pointer;color:var(--muted);font-weight:500}
+  .cat .mbtn:hover{border-color:var(--brand);color:var(--brand-dark)}
+  .openteam{display:block;width:100%;margin:16px 0 2px;padding:13px;border:0;border-radius:10px;background:var(--brand);color:#fff;font-size:15px;font-weight:700;cursor:pointer}
+  .openteam:hover{background:var(--brand-dark)}
+  .cat{font-size:13px;font-weight:700;color:var(--brand-dark);margin:16px 0 8px;border-bottom:1px solid var(--line);padding-bottom:4px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .addonnote{font-size:12px;color:#8a5a2b;background:#fdf6e7;border:1px solid #f0dcb0;border-radius:8px;padding:6px 10px;margin:2px 0 10px}
+  .item{border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin-bottom:10px}
+  .item.hidden{opacity:.4}.item.removed{opacity:.5}.item.removed .name{text-decoration:line-through}
+  .item .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .item .name{font-weight:600;font-size:15px;flex:1;min-width:0;overflow-wrap:anywhere}
+  .item .price{font-weight:700;color:var(--brand);white-space:nowrap}.item .price.addon{color:#993C1D}
+  .ctl{display:flex;gap:7px;align-items:center}
+  .ctl .mbtn{border:1px solid var(--line);background:#fff;border-radius:7px;padding:2px 8px;font-size:12px;cursor:pointer;color:var(--muted)}
+  .ctl .mbtn:hover{border-color:var(--brand);color:var(--brand-dark)}
+  .opt{margin-top:9px}.opt .k{font-size:12px;color:var(--muted);margin-bottom:3px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{background:var(--chip);border-radius:20px;padding:3px 11px;font-size:12.5px;color:#5a5147}
+  .chip .x{cursor:pointer;color:#b3a692;margin-left:6px;font-weight:700}.chip .x:hover{color:var(--bad)}
+  .chip.off{text-decoration:line-through;opacity:.45}
+  .tbadge{font-size:11px;background:#fdf6e7;color:#8a5a2b;border:1px solid #f0dcb0;border-radius:20px;padding:2px 9px;white-space:nowrap}
+  .tprice{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+  .tprice button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer}
+  .pill{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;background:#f3ede4;color:var(--muted);margin-left:8px}
+  .srcbar{font-size:13px;color:var(--muted);margin-bottom:10px}.srcbar b{color:var(--ink)}
+  details{margin-top:14px}details summary{cursor:pointer;font-size:13px;color:var(--muted)}
+  pre{background:#2b2b2b;color:#e8e0d4;padding:12px;border-radius:8px;overflow:auto;font-size:11px}
+  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;z-index:50;cursor:zoom-out;padding:24px}
+  .lightbox.on{display:flex}.lightbox img{max-width:96%;max-height:96%;border-radius:8px}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;white-space:nowrap}
+  th,td{text-align:left;padding:4px 6px}tr{border-top:1px solid var(--line)}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:26px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo"><span class="dot"></span>波波菜單 OCR</div>
+    <h1>上傳菜單，自動變成可點餐填單表</h1>
+    <p>上傳菜單照片，自動辨識成可點餐的填單表，並一鍵帶入開團面板。</p>
+  </header>
+
+  <div class="card">
+    <h2>① 選模型並上傳</h2>
+    <div class="row">
+      <div>
+        <label>模型供應商</label>
+        <div class="seg" id="seg">
+          <button data-prov="gemini" class="on">Gemini（免費）</button>
+          <button data-prov="claude">Claude</button>
+        </div>
+      </div>
+      <div>
+        <label>模型名稱（選填）</label>
+        <input type="text" id="model" placeholder="留空＝gemini-3.5-flash">
+      </div>
+    </div>
+    <div id="drop" class="drop"><div class="ph">點此或拖入菜單照片（自動壓縮長邊 1568px）</div><input id="file" type="file" accept="image/*" hidden></div>
+    <button id="go" class="go" disabled>解析菜單</button>
+    <div id="status" class="status"></div>
+  </div>
+
+  <div class="card" id="samplecard" style="display:none">
+    <h2>離線示範模式 <span class="pill">免 API key · 不需網路</span></h2>
+    <p class="sub">點任一張＝直接載入「預先驗證過」的真實辨識結果，餵進同一個前端畫面。<b>不會即時呼叫模型</b>，現場沒網路或 key 失效也保證跑得出來。</p>
+    <div id="samplebtns" class="row" style="gap:8px"></div>
+  </div>
+
+  <div id="result"></div>
+
+  <div class="card" id="logcard" style="display:none">
+    <h2>② 測試紀錄 <span class="pill" id="logcount">0 筆</span></h2>
+    <p class="sub">每次解析自動記一筆（供應商／模型／耗時／品項／狀態），可下載 CSV。</p>
+    <div id="logtable" style="overflow:auto"></div>
+    <button class="mini" id="dlcsv" style="margin-top:10px">下載 CSV</button>
+  </div>
+
+  <footer>波波菜單 OCR　|　辨識結果一律 needs_review，發單前由團主確認。</footer>
+</div>
+<div class="lightbox" id="lb"><img id="lbimg" alt="原始菜單放大"></div>
+
+<script>
+var $=function(s){return document.querySelector(s);};
+var imgB64=null,imgType=null,gName='',provider='gemini';
+
+function escapeHtml(s){return (s==null?'':String(s)).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+function countItems(arr){var n=0;(arr||[]).forEach(function(o){if(!o||o.type==='scan_summary')return;if(o.type==='category'&&o.items)n+=o.items.length;else if(o.name)n++;});return n;}
+function flattenItems(arr){var out=[];(arr||[]).forEach(function(o){if(!o||o.type==='scan_summary')return;if(o.type==='category'&&Array.isArray(o.items)){var cat=o.name||o.category||'其他';o.items.forEach(function(it){var e={};for(var k in it){e[k]=it[k];}if(e.category==null)e.category=cat;out.push(e);});}else if(o.name){out.push(o);}});return out;}
+function mergeDefaults(defaults,opts){opts=opts||{};var eff={};if(defaults){Object.keys(defaults).forEach(function(k){eff[k]=(defaults[k]||[]).slice();});}(opts._omit||[]).forEach(function(k){delete eff[k];});Object.keys(opts).forEach(function(k){if(k==='_omit')return;if(Array.isArray(opts[k])&&opts[k].length===0){delete eff[k];}else{eff[k]=opts[k];}});return eff;}
+
+/* JSON 抽取 + 截斷救援（與單檔版同邏輯，供串流邊收邊渲染）*/
+function extractArray(text){
+  text=text.trim();
+  if(text.indexOf('```')===0){text=text.replace(/^```(json)?/,'').replace(/```$/,'').trim();}
+  var s=text.indexOf('['),e=text.lastIndexOf(']');
+  if(s===-1||e===-1)return null;
+  try{return JSON.parse(text.slice(s,e+1));}catch(_){return null;}
+}
+function repairArray(text){
+  text=text.trim();
+  if(text.indexOf('```')===0){text=text.replace(/^```(json)?/,'').replace(/```$/,'').trim();}
+  var start=text.indexOf('[');if(start===-1)return null;
+  var depth=0,inStr=false,esc=false,lastEnd=-1;
+  for(var i=start;i<text.length;i++){
+    var c=text[i];
+    if(inStr){if(esc){esc=false;}else if(c==='\\'){esc=true;}else if(c==='"'){inStr=false;}continue;}
+    if(c==='"'){inStr=true;}
+    else if(c==='{'||c==='['){depth++;}
+    else if(c==='}'||c===']'){depth--;if(depth===1&&c==='}'){lastEnd=i;}}
+  }
+  if(lastEnd===-1)return null;
+  try{var d=JSON.parse(text.slice(start,lastEnd+1)+']');return (d&&d.length)?d:null;}catch(_){return null;}
+}
+
+/* provider 切換 */
+$('#seg').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;provider=b.getAttribute('data-prov');$('#seg').querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});});
+
+/* 上傳 + 壓縮 */
+var drop=$('#drop'),fileInput=$('#file');
+drop.addEventListener('click',function(){fileInput.click();});
+drop.addEventListener('dragover',function(e){e.preventDefault();drop.style.borderColor='var(--brand)';});
+drop.addEventListener('dragleave',function(){drop.style.borderColor='';});
+drop.addEventListener('drop',function(e){e.preventDefault();drop.style.borderColor='';if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0]);});
+fileInput.addEventListener('change',function(e){if(e.target.files[0])loadFile(e.target.files[0]);});
+function loadFile(f){
+  if(!f.type||f.type.indexOf('image/')!==0){alert('請上傳圖片檔');return;}
+  gName=f.name||'menu';
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      var MAX=1568,w=img.width,h=img.height,sc=Math.min(1,MAX/Math.max(w,h));
+      var cw=Math.round(w*sc),ch=Math.round(h*sc);
+      var cv=document.createElement('canvas');cv.width=cw;cv.height=ch;
+      cv.getContext('2d').drawImage(img,0,0,cw,ch);
+      var url=cv.toDataURL('image/jpeg',0.85);
+      imgType='image/jpeg';imgB64=url.split(',')[1];window._imgData=url;
+      drop.classList.add('has');
+      drop.innerHTML='<img src="'+url+'" alt="菜單"><div style="font-size:11px;color:var(--muted);margin-top:5px">已壓縮 '+w+'×'+h+' → '+cw+'×'+ch+'</div>';
+      $('#go').disabled=false;
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(f);
+}
+
+/* 呼叫後端 /parse_stream：邊收邊用 repairArray 漸進渲染 */
+$('#go').addEventListener('click',async function(){
+  if(!imgB64){alert('請先上傳菜單');return;}
+  var model=$('#model').value.trim()||null;
+  $('#go').disabled=true;$('#result').innerHTML='';
+  var t0=Date.now(),gItems=0,raw='',lastLen=0;
+  var timer=setInterval(function(){var s=((Date.now()-t0)/1000).toFixed(1);$('#status').innerHTML='<span class="spin"></span>'+provider+' 串流辨識中… '+s+' 秒'+(gItems?' · 已顯示 '+gItems+' 項':'');},100);
+  try{
+    var resp=await fetch('/parse_stream',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({provider:provider,model:model,image_b64:imgB64,mime:imgType})});
+    if(!resp.ok){var t=await resp.text();throw new Error('後端回 '+resp.status+'：'+t);}
+    var reader=resp.body.getReader(),dec=new TextDecoder(),buf='';
+    while(true){
+      var ch=await reader.read();if(ch.done)break;
+      buf+=dec.decode(ch.value,{stream:true});
+      var lines=buf.split('\n');buf=lines.pop();
+      for(var i=0;i<lines.length;i++){
+        var line=lines[i];if(line.indexOf('data:')!==0)continue;
+        var payload=line.slice(5).trim();if(!payload)continue;
+        var ev;try{ev=JSON.parse(payload);}catch(_){continue;}
+        if(ev.error){throw new Error(ev.error);}
+        if(ev.text){
+          raw+=ev.text;
+          if(raw.length-lastLen>800){lastLen=raw.length;var partial=repairArray(raw);if(partial){gItems=countItems(partial);render(partial,provider+'（'+(model||'預設')+'）· 串流辨識中…（已收到 '+gItems+' 項）',window._imgData);}}
+        }
+      }
+    }
+    clearInterval(timer);
+    var secs=((Date.now()-t0)/1000).toFixed(1);
+    var parsed=extractArray(raw),truncated=false;
+    if(!parsed){parsed=repairArray(raw);truncated=!!parsed;}
+    if(!parsed){throw new Error('無法解析模型輸出：\n'+raw);}
+    var n=countItems(parsed),col=parseFloat(secs)<=8?'var(--good)':'var(--warn)';
+    render(parsed,provider+'（'+(model||'預設')+'）· '+secs+'s',window._imgData);
+    $('#status').innerHTML='<span style="color:'+col+'">✅ 完成（'+n+' 項），耗時 '+secs+' 秒</span>'+(truncated?' <span style="color:var(--warn)">（輸出被截斷，已還原成功項）</span>':'');
+    logRun({menu:gName,model:(model||provider),secs:secs,items:n,status:(truncated?'截斷':'完成')});
+  }catch(err){
+    clearInterval(timer);
+    var es=((Date.now()-t0)/1000).toFixed(1);
+    var m=/Failed to fetch|NetworkError/i.test(err.message||'')?'連不到後端 — 請確認已啟動 uvicorn 且從 http://localhost:8000/ 開啟本頁':err.message;
+    $('#status').innerHTML='<div class="err">解析失敗（'+es+'s）：'+escapeHtml(m)+'</div>';
+    logRun({menu:gName,model:(model||provider),secs:es,items:0,status:'失敗'});
+  }finally{$('#go').disabled=false;}
+});
+
+/* 渲染（store_defaults 繼承 + 團主策展可還原 + 套餐加購 + 時價三選一 + 分類批次隱藏）*/
+function render(arr,sourceLabel,imgSrc){
+  var summary=arr.find(function(o){return o&&o.type==='scan_summary';});
+  var items=flattenItems(arr);
+  var storeDefaults=(summary&&summary.store_defaults&&Object.keys(summary.store_defaults).length)?summary.store_defaults:null;
+  var conf0=summary?(summary.overall_confidence||0):1;
+  var isNotMenu=!!(summary&&summary.is_menu===false);
+  var lowButItems=!isNotMenu&&items.length>0&&conf0<0.65;   // 有品項但信心低：團主可選
+  var right='';
+  if(summary){
+    var conf=summary.overall_confidence||0,low=summary.low_confidence_items||[],notMenu=summary.is_menu===false;
+    var cls=notMenu?'bad':((conf>=0.95&&low.length===0)?'ok':(conf<0.5?'bad':'warn'));
+    right+='<div class="summary '+cls+'"><div style="display:flex;align-items:center;gap:14px"><div><div class="score">'+Math.round(conf*100)+'%</div><div class="lab">整體信心</div></div><div class="note">'+escapeHtml(summary.summary_note||'')+'</div></div>';
+    if(low.length){right+='<ul class="lowlist">';low.forEach(function(it){right+='<li><b>'+escapeHtml(it.name||'')+'</b>：'+escapeHtml(it.issue||'')+'</li>';});right+='</ul>';}
+    right+='</div>';
+  }
+  if(items.length===0){
+    right+='<div class="reupload">⚠️ 沒有辨識到可點的品項——可能照片模糊或不是菜單（這正是抗幻覺：系統不會無中生有）。請重新上傳清晰的菜單照片。<button class="rebtn" data-act="reupload">↻ 重新上傳</button></div>';
+  }else{
+    right+='<h2 style="font-size:15px;margin:0 0 4px">填單預覽 <span class="pill">'+items.length+' 項 · 團主可隱藏/刪改</span></h2>';
+    right+='<div class="curatehint">品項可「隱藏／刪除」、選項可「×」移除、整個分類可「隱藏整類」——<b>全部可還原</b>；時價品項需先決定處理方式。</div>';
+    if(storeDefaults){
+      right+='<div class="storedef"><div class="hd">全店通用選項（糖／冰／加料，已套用至下列所有品項）</div>';
+      Object.keys(storeDefaults).forEach(function(k){right+='<div class="opt"><div class="k">'+escapeHtml(k)+'</div><div class="chips">';(storeDefaults[k]||[]).forEach(function(v){right+='<span class="chip">'+escapeHtml(String(v))+'</span>';});right+='</div></div>';});
+      right+='</div>';
+    }
+    var groups={};items.forEach(function(it){var c=it.category||'其他';(groups[c]=groups[c]||[]).push(it);});
+    var catNames=Object.keys(groups);
+    if(catNames.length>=3){
+      right+='<div class="cattabs"><button class="cattab on" data-act="cattab" data-cat="__all">全部 '+items.length+'</button>';
+      catNames.forEach(function(cat){right+='<button class="cattab" data-act="cattab" data-cat="'+escapeHtml(cat)+'">'+escapeHtml(cat)+' '+groups[cat].length+'</button>';});
+      right+='</div>';
+    }
+    catNames.forEach(function(cat){
+      var isAddon=cat.indexOf('套餐')>=0||cat.indexOf('加購')>=0;
+      right+='<div class="catblock" data-cat="'+escapeHtml(cat)+'">';
+      right+='<div class="cat"><span>'+escapeHtml(cat)+(isAddon?' <span class="tbadge">加購／升級</span>':'')+'</span><button class="mbtn" data-act="hidecat">隱藏整類</button></div>';
+      if(isAddon){right+='<div class="addonnote">這是「加購／升級」項目：需搭配主餐、價格以加價（＋$）顯示。例：每份鬆餅限加購一份套餐。</div>';}
+      groups[cat].forEach(function(it){
+        var isNull=(it.price===null||it.price===undefined);
+        var priceHtml=isNull?'<span class="tbadge">時價 · 需處理</span>':(isAddon?'<span class="price addon">＋$'+it.price+'</span>':'<span class="price">$'+it.price+'</span>');
+        right+='<div class="item"><div class="top"><span class="name">'+escapeHtml(it.name||'')+'</span><span class="ctl">'+priceHtml+'<button class="mbtn" data-act="hide">隱藏</button><button class="mbtn" data-act="del">刪除</button></span></div>';
+        if(isNull){right+='<div class="tprice"><button data-act="setprice">填價</button><button data-act="onsite">現場結算·不分帳</button><button data-act="hide">隱藏</button></div>';}
+        var opts=mergeDefaults(storeDefaults,it.custom_options);
+        Object.keys(opts).forEach(function(k){right+='<div class="opt"><div class="k">'+escapeHtml(k)+'</div><div class="chips">';(opts[k]||[]).forEach(function(v){right+='<span class="chip">'+escapeHtml(String(v))+'<span class="x" data-act="rmopt">×</span></span>';});right+='</div></div>';});
+        right+='</div>';
+      });
+      right+='</div>';
+    });
+    if(isNotMenu){
+      right+='<div class="reupload">⚠️ 這似乎不是菜單，請重新上傳菜單照片再開團。<button class="rebtn" data-act="reupload">↻ 重新上傳</button></div>';
+    }else if(lowButItems){
+      right+='<div class="reupload warn">⚠️ 整體辨識信心偏低（'+Math.round(conf0*100)+'%），部分品項可能有誤，請先逐項確認。<button class="rebtn" data-act="reupload">↻ 重新上傳</button></div>';
+      right+='<button class="openteam" data-act="openteam">已逐項確認，編輯後開團 →</button>';
+    }else{
+      right+='<button class="openteam" data-act="openteam">✅ 用這份菜單開團 →</button>';
+    }
+  }
+  var html='<div class="card">';
+  if(sourceLabel){html+='<div class="srcbar"><b>來源</b>　'+escapeHtml(sourceLabel)+'</div>';}
+  html+='<div class="resultgrid">';
+  if(imgSrc){html+='<div class="origcol"><div class="cap">原始菜單（點圖放大，可與右側逐項核對）</div><img class="origimg" src="'+imgSrc+'" alt="原始菜單" onerror="this.parentNode.style.display=\'none\'"></div>';}
+  html+='<div class="parsecol">'+right+'</div></div>';
+  html+='<details><summary>查看原始 JSON 輸出</summary><pre>'+escapeHtml(JSON.stringify(arr,null,2))+'</pre></details></div>';
+  $('#result').innerHTML=html;
+  var oi=$('#result').querySelector('.origimg');
+  if(oi){oi.addEventListener('click',function(){$('#lbimg').src=oi.src;$('#lb').classList.add('on');});}
+}
+
+$('#lb').addEventListener('click',function(){this.classList.remove('on');});
+
+/* 團主策展互動（皆可還原）*/
+$('#result').addEventListener('click',function(e){
+  var t=e.target;if(t.tagName==='IMG')return;
+  var act=t.getAttribute('data-act');if(!act)return;
+  var item=t.closest('.item');
+  if(act==='hide'){if(!item)return;item.classList.toggle('hidden');var hb=item.querySelector('.ctl [data-act=hide]');if(hb)hb.textContent=item.classList.contains('hidden')?'還原':'隱藏';}
+  else if(act==='del'){if(!item)return;item.classList.toggle('removed');var db=item.querySelector('.ctl [data-act=del]');if(db)db.textContent=item.classList.contains('removed')?'還原':'刪除';}
+  else if(act==='rmopt'){var chip=t.closest('.chip');if(chip){chip.classList.toggle('off');t.textContent=chip.classList.contains('off')?'↺':'×';}}
+  else if(act==='hidecat'){var blk=t.closest('.catblock');if(blk){blk.classList.toggle('hidden');t.textContent=blk.classList.contains('hidden')?'還原整類':'隱藏整類';}}
+  else if(act==='setprice'){var p=prompt('請輸入此品項價格（純數字）：');if(p!==null&&p!==''){var bd=item.querySelector('.top .tbadge');if(bd){bd.outerHTML='<span class="price">$'+(parseInt(p,10)||0)+'</span>';}var tp=item.querySelector('.tprice');if(tp)tp.remove();}}
+  else if(act==='onsite'){var b2=item.querySelector('.top .tbadge');if(b2){b2.outerHTML='<span class="tbadge">現場結算 · 不分帳</span>';}var tp2=item.querySelector('.tprice');if(tp2)tp2.remove();}
+  else if(act==='openteam'){openTeam();}
+  else if(act==='reupload'){var d=$('#drop');if(d)d.scrollIntoView({behavior:'smooth',block:'center'});}
+  else if(act==='cattab'){var cat=t.getAttribute('data-cat'),R=$('#result');R.querySelectorAll('.cattab').forEach(function(x){x.classList.toggle('on',x===t);});R.querySelectorAll('.catblock').forEach(function(b){b.style.display=(cat==='__all'||b.getAttribute('data-cat')===cat)?'':'none';});}
+});
+
+/* 一條龍：把策展後的菜單帶進團主開團面板 */
+function collectCuratedMenu(){
+  var out=[];
+  document.querySelectorAll('#result .catblock').forEach(function(blk){
+    if(blk.classList.contains('hidden'))return;
+    var cat=blk.getAttribute('data-cat')||'';
+    blk.querySelectorAll('.item').forEach(function(item){
+      if(item.classList.contains('hidden')||item.classList.contains('removed'))return;
+      var nameEl=item.querySelector('.name');var name=nameEl?nameEl.textContent.trim():'';
+      if(!name)return;
+      var price=null,priceEl=item.querySelector('.price');
+      if(priceEl){var d=priceEl.textContent.replace(/[^0-9]/g,'');if(d)price=parseInt(d,10);}
+      if(price===null&&item.querySelector('.top .tbadge'))return;
+      var opts=[];
+      item.querySelectorAll('.opt').forEach(function(o){
+        var kEl=o.querySelector('.k');var k=kEl?kEl.textContent.trim():'';var vals=[];
+        o.querySelectorAll('.chip').forEach(function(c){if(c.classList.contains('off'))return;var txt=(c.childNodes[0]&&c.childNodes[0].textContent||c.textContent).replace(/[×↺]/g,'').trim();if(txt)vals.push(txt);});
+        if(vals.length)opts.push(k+'：'+vals.join('/'));
+      });
+      out.push({name:name,price:(price==null?0:price),opts:(opts.join('；')||'無加選'),category:cat});
+    });
+  });
+  return out;
+}
+function openTeam(){
+  var items=collectCuratedMenu();
+  if(!items.length){alert('目前沒有可開團的品項（可能都被隱藏，或時價尚未處理）。');return;}
+  var shop=(gName||'菜單').replace(/\.[^.]+$/,'');
+  var json=JSON.stringify({shop:shop,items:items,ts:Date.now()});
+  try{localStorage.setItem('bobo_open_team_menu',json);}catch(_){}
+  var b64=btoa(unescape(encodeURIComponent(json)));
+  window.location.href='bobo-admin-panel-prototype.html#menu='+b64;
+}
+
+/* 測試紀錄 */
+var RUNLOG=[];
+function logRun(rec){
+  rec.time=new Date().toLocaleString('zh-TW',{hour12:false});if(rec.provider==null)rec.provider=provider;RUNLOG.push(rec);
+  $('#logcard').style.display='';$('#logcount').textContent=RUNLOG.length+' 筆';
+  var h='<table><tr style="color:var(--muted)"><th>#</th><th>時間</th><th>供應商</th><th>菜單</th><th>模型</th><th>耗時(s)</th><th>品項</th><th>狀態</th></tr>';
+  RUNLOG.forEach(function(r,i){var col=r.status==='完成'?'var(--good)':'var(--bad)';h+='<tr><td>'+(i+1)+'</td><td>'+escapeHtml(r.time)+'</td><td>'+escapeHtml(r.provider)+'</td><td>'+escapeHtml(r.menu)+'</td><td>'+escapeHtml(r.model)+'</td><td>'+r.secs+'</td><td>'+r.items+'</td><td style="color:'+col+'">'+escapeHtml(r.status)+'</td></tr>';});
+  $('#logtable').innerHTML=h+'</table>';
+}
+$('#dlcsv').addEventListener('click',function(){
+  if(!RUNLOG.length)return;
+  var head=['time','provider','menu','model','secs','items','status'];
+  var rows=RUNLOG.map(function(r){return [r.time,r.provider,r.menu,r.model,r.secs,r.items,r.status];});
+  var csv=[head].concat(rows).map(function(row){return row.map(function(x){return '"'+String(x).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  var blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='menu_ocr_runlog.csv';a.click();
+});
+
+/* 離線示範模式：載入預先驗證過的 result_*.json + 菜單圖，餵進同一個 render()。
+   面試保險：現場沒網路或 API key 失效也能完整渲染。只需 uvicorn 起著、不呼叫模型。*/
+function sampleUrl(name){return '/samples_files/'+encodeURIComponent(name);}
+async function loadSamples(){
+  try{
+    var resp=await fetch('/samples');var data=await resp.json();
+    if(!data.ok||!data.samples||!data.samples.length)return;
+    var box=$('#samplebtns');box.innerHTML='';
+    data.samples.forEach(function(s){
+      var b=document.createElement('button');b.className='mini';
+      var conf=(s.confidence!=null)?(' · 信心'+Math.round(s.confidence*100)+'%'):'';
+      var n=(s.items!=null)?(' · '+s.items+'項'):'';
+      b.textContent=s.label+n+conf;
+      b.addEventListener('click',function(){showSample(s);});
+      box.appendChild(b);
+    });
+    $('#samplecard').style.display='';
+  }catch(err){/* 取不到樣本就不顯示離線卡片，不影響主流程 */}
+}
+async function showSample(s){
+  $('#result').innerHTML='';
+  $('#status').innerHTML='<span class="spin"></span>載入離線示範：'+escapeHtml(s.label)+'…';
+  try{
+    var arr=await (await fetch(sampleUrl(s.json_name))).json();
+    var imgSrc=s.img_name?sampleUrl(s.img_name):null;
+    render(arr,'離線示範 · '+s.label+'（預先驗證結果，未即時呼叫模型）',imgSrc);
+    $('#status').innerHTML='<span style="color:var(--good)">✅ 離線示範已載入（'+countItems(arr)+' 項）· 預存結果，未即時呼叫模型</span>';
+    logRun({menu:s.label,provider:'離線示範',model:'—',secs:'—',items:countItems(arr),status:'完成'});
+    $('#result').scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(err){
+    $('#status').innerHTML='<div class="err">離線示範載入失敗：'+escapeHtml(err.message||String(err))+'</div>';
+  }
+}
+loadSamples();
+</script>
+</body>
+</html>

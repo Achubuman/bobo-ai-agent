@@ -1,0 +1,53 @@
+[
+  {
+    "type": "scan_summary",
+    "overall_confidence": 0.97,
+    "low_confidence_items": [],
+    "summary_note": "✅ 本次掃描信心良好（0.97），菜單清晰。雞排已帶入菜單實際印製的完整調味清單；其餘炸物套用炸物類調味模板；A餐超值組已生成套餐主餐欄位。建議加購紙盒（每個 $5）已記於備註。"
+  },
+
+  { "category": "魔王厚切超大雞排", "name": "魔王厚切超大雞排", "price": 80, "custom_options": { "調味": ["原味不加","胡椒","狂爆小辣","狂爆中辣","狂爆大辣","芥末","海苔","梅子","咖哩","香蒜","起司","檸檬"], "加購": ["紙盒 (+5)"] } },
+
+  { "category": "經典炸物", "name": "鹹酥雞", "price": 55, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"], "標記": ["推薦"] } },
+  { "category": "經典炸物", "name": "雞軟骨", "price": 55, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"], "標記": ["推薦"] } },
+  { "category": "經典炸物", "name": "三角骨", "price": 55, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"], "標記": ["推薦"] } },
+  { "category": "經典炸物", "name": "炸魷魚", "price": 55, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "經典炸物", "name": "美國脆薯", "price": 35, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "經典炸物", "name": "細薯", "price": 30, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "經典炸物", "name": "甘梅地瓜", "price": 30, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "經典炸物", "name": "雞皮", "price": 30, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "經典炸物", "name": "洋蔥圈", "price": 30, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "經典炸物", "name": "玉米布丁酥", "price": 30, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "經典炸物", "name": "花枝丸", "price": 25, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "經典炸物", "name": "德式香腸", "price": 25, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "經典炸物", "name": "煉乳銀絲卷", "price": 25, "custom_options": { "備註": ["附煉乳"] } },
+  { "category": "經典炸物", "name": "起司乳酪條", "price": 25, "custom_options": {} },
+  { "category": "經典炸物", "name": "脆皮杏鮑菇", "price": 30, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"], "標記": ["推薦"] } },
+
+  { "category": "小炸物", "name": "雞肉香腸", "price": 20, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "百頁豆腐", "price": 20, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "麥克雞塊", "price": 20, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "熱狗3條", "price": 20, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "麻糬蛋黃芋丸", "price": 20, "custom_options": {} },
+  { "category": "小炸物", "name": "雙色QQ球", "price": 20, "custom_options": {} },
+  { "category": "小炸物", "name": "花生湯圓", "price": 20, "custom_options": {} },
+  { "category": "小炸物", "name": "青椒", "price": 20, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "四季豆", "price": 20, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "玉米筍", "price": 20, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "高麗菜", "price": 20, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "雞心", "price": 20, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "雞胗", "price": 20, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "魚板", "price": 20, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "甜不辣", "price": 20, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "黑輪片", "price": 20, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "芋粿", "price": 20, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "米血", "price": 20, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "小肉豆", "price": 20, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "薯餅", "price": 20, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "蘿蔔糕", "price": 20, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "糯米腸", "price": 25, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "黃金魚蛋", "price": 25, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+  { "category": "小炸物", "name": "雞屁股", "price": 25, "custom_options": { "調味": ["原味","胡椒鹽","梅粉","加辣"] } },
+
+  { "category": "超值套餐", "name": "A餐超值組", "price": 105, "custom_options": { "主餐": ["三角骨","杏鮑菇","細薯"], "調味": ["原味","胡椒鹽","梅粉","加辣"], "備註": ["三角骨+杏鮑菇+細薯"] } }
+]

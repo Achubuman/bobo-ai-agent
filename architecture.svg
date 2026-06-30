@@ -1,0 +1,80 @@
+<svg viewBox="0 0 760 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t d" font-family="'PingFang TC','Noto Sans TC',ui-sans-serif,system-ui,sans-serif">
+<title id="t">波波系統架構與技術分層</title>
+<desc id="d">五層：User、Channel Layer（LINE/Teams Bot）、AI Agent、Skills/Tools（OCR Skill 含 VLM Gemini/Claude、Billing、Orders）與 Scheduler、呈現層（Embedded Web App、Rich Cards）。更換通道僅替換 Channel Layer 與卡片格式。</desc>
+<rect x="0" y="0" width="760" height="540" fill="#ffffff"/>
+<style>
+  .band{fill:#faf8f5;stroke:#e2ddd4;stroke-width:1.5;}
+  .accent{fill:#fdf3ec;stroke:#e8743b;stroke-width:2.5;}
+  .lbl{fill:#2b2b2b;font-weight:700;}
+  .sub{fill:#7a7268;}
+  .chip{fill:#ffffff;stroke:#e2ddd4;}
+  .chipai{fill:#ffffff;stroke:#e8743b;stroke-width:2;}
+  .ctxt{fill:#2b2b2b;font-weight:600;}
+  .flow{stroke:#c7bfb3;stroke-width:1.5;fill:none;}
+  .colh{fill:#9a8f80;font-weight:700;letter-spacing:1px;}
+  .tag{fill:#9a8f80;font-weight:700;}
+</style>
+
+<rect x="30" y="22" width="700" height="40" rx="11" class="band"/>
+<text x="48" y="47" class="lbl" font-size="14">① User · 使用者<tspan class="sub" font-weight="400" font-size="12">　群組內以自然語言發起需求</tspan></text>
+<path d="M380 62 L380 74" class="flow" marker-end="url(#ar)"/>
+
+<rect x="30" y="74" width="700" height="44" rx="11" class="band"/>
+<text x="48" y="100" class="lbl" font-size="13">② Channel Layer · 通道層</text>
+<rect x="330" y="85" width="180" height="22" rx="8" class="chip"/><text x="420" y="100" text-anchor="middle" class="ctxt" font-size="11">LINE Bot（Webhook）</text>
+<rect x="520" y="85" width="192" height="22" rx="8" class="chip"/><text x="616" y="100" text-anchor="middle" class="ctxt" font-size="11">Teams Bot（Bot Framework）</text>
+<path d="M380 118 L380 130" class="flow" marker-end="url(#ar)"/>
+
+<rect x="30" y="130" width="700" height="52" rx="11" class="accent"/>
+<text x="48" y="153" class="lbl" font-size="14">③ AI Agent · 智慧代理</text>
+<text x="48" y="172" class="sub" font-size="12">Intent 意圖辨識・Recommendation 推薦・Copy Generation 文案生成・Tool Routing 工具路由</text>
+
+<path d="M380 182 L380 196 L200 196 L200 212" class="flow" marker-end="url(#ar)"/>
+<path d="M380 182 L380 196 L560 196 L560 212" class="flow" marker-end="url(#ar)"/>
+<text x="200" y="210" text-anchor="middle" class="colh" font-size="11">Action · 操作</text>
+<text x="560" y="210" text-anchor="middle" class="colh" font-size="11">Notify · 通知</text>
+
+<rect x="30" y="216" width="345" height="104" rx="11" class="band"/>
+<text x="46" y="236" class="lbl" font-size="12.5">④ Skills / Tools</text>
+<text x="46" y="258" class="tag" font-size="10">AI-powered</text>
+<rect x="110" y="243" width="206" height="22" rx="11" class="chipai"/><text x="213" y="258" text-anchor="middle" class="ctxt" font-size="10.5">OCR Skill（內含 VLM）</text>
+<text x="46" y="290" class="tag" font-size="10">Rule-based</text>
+<rect x="110" y="275" width="104" height="22" rx="11" class="chip"/><text x="162" y="290" text-anchor="middle" class="ctxt" font-size="10.5">Billing 分帳</text>
+<rect x="222" y="275" width="100" height="22" rx="11" class="chip"/><text x="272" y="290" text-anchor="middle" class="ctxt" font-size="10.5">Orders 訂單</text>
+
+<rect x="385" y="216" width="345" height="104" rx="11" class="band"/>
+<text x="401" y="236" class="lbl" font-size="12.5">④ Scheduler · 排程器</text>
+<g font-size="10.5" font-weight="600">
+  <rect x="401" y="252" width="96" height="22" rx="11" class="chip"/><text x="449" y="267" text-anchor="middle" class="ctxt">Cutoff 截單</text>
+  <rect x="505" y="252" width="100" height="22" rx="11" class="chip"/><text x="555" y="267" text-anchor="middle" class="ctxt">Skip 請假跳過</text>
+  <rect x="613" y="252" width="84" height="22" rx="11" class="chip"/><text x="655" y="267" text-anchor="middle" class="ctxt">對帳通知</text>
+</g>
+<text x="401" y="298" class="sub" font-size="11">規則・時間觸發</text>
+
+<path d="M200 320 L200 334" class="flow" marker-end="url(#ar)"/>
+<path d="M560 320 L560 334" class="flow" marker-end="url(#ar)"/>
+
+<rect x="30" y="338" width="345" height="64" rx="11" class="band"/>
+<text x="46" y="358" class="lbl" font-size="12.5">⑤ Embedded Web App · 操作頁</text>
+<g font-size="10.5" font-weight="600">
+  <rect x="46" y="368" width="56" height="22" rx="11" class="chip"/><text x="74" y="383" text-anchor="middle" class="ctxt">LIFF</text>
+  <rect x="110" y="368" width="190" height="22" rx="11" class="chip"/><text x="205" y="383" text-anchor="middle" class="ctxt">Teams Tab / Task Module</text>
+</g>
+
+<rect x="385" y="338" width="345" height="64" rx="11" class="band"/>
+<text x="401" y="358" class="lbl" font-size="12.5">⑤ Rich Cards · 訊息卡片</text>
+<g font-size="10.5" font-weight="600">
+  <rect x="401" y="368" width="150" height="22" rx="11" class="chip"/><text x="476" y="383" text-anchor="middle" class="ctxt">LINE Flex Message</text>
+  <rect x="559" y="368" width="158" height="22" rx="11" class="chip"/><text x="638" y="383" text-anchor="middle" class="ctxt">Teams Adaptive Card</text>
+</g>
+
+<rect x="30" y="418" width="700" height="58" rx="11" class="accent"/>
+<text x="48" y="443" class="lbl" font-size="12.5">AI 負責理解與生成；金額與排程由確定性規則處理。</text>
+<text x="48" y="463" class="sub" font-size="12">更換通道僅需替換 Channel Layer 與卡片格式，核心邏輯（③④⑤）不變。</text>
+
+<defs>
+  <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+    <path d="M0 0 L8 4 L0 8 z" fill="#c7bfb3"/>
+  </marker>
+</defs>
+</svg>

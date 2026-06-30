@@ -1,0 +1,20 @@
+[
+  {
+    "type": "scan_summary",
+    "overall_confidence": 0.46,
+    "low_confidence_items": [
+      { "name": "鮭魚飯 / 金線魚飯 / 土魠魚飯", "issue": "價格標示為『時價』，無固定金額，price 以 null 表示" },
+      { "name": "鹽酥魚飯 / 筋肉飯 / 燒肉飯 / 魚肚飯 價格", "issue": "招牌為低解析度且傾斜，價格數字（100/110）對應的品項不易精確對齊，數值待確認" },
+      { "name": "整體", "issue": "此為店面招牌照片、非完整菜單，品名與價格皆需團主重新確認" }
+    ],
+    "summary_note": "⚠️ 本張為低解析度便當招牌（信心 0.46）。多數魚類為『時價』已標 null，其餘價格因傾斜對齊不確定。系統未硬填價格，建議團主重拍清晰菜單。"
+  },
+
+  { "category": "便當", "name": "鮭魚飯", "price": null, "custom_options": { "備註": ["時價，請洽店家"] } },
+  { "category": "便當", "name": "金線魚飯", "price": null, "custom_options": { "備註": ["時價，請洽店家"] } },
+  { "category": "便當", "name": "土魠魚飯", "price": null, "custom_options": { "備註": ["時價，請洽店家"] } },
+  { "category": "便當", "name": "鹽酥魚飯", "price": 100, "custom_options": { "備註": ["招牌模糊，價格疑似 100，待確認"] } },
+  { "category": "便當", "name": "筋肉飯", "price": 110, "custom_options": { "備註": ["招牌模糊，品名與價格待確認"] } },
+  { "category": "便當", "name": "燒肉飯", "price": 100, "custom_options": { "備註": ["招牌模糊，價格疑似 100，待確認"] } },
+  { "category": "便當", "name": "魚肚飯", "price": 110, "custom_options": { "備註": ["招牌模糊，價格疑似 110，待確認"] } }
+]
