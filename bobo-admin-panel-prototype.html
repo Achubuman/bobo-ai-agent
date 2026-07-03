@@ -422,7 +422,7 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
     <div class="card-title"><span class="ci">⏰</span>截單提醒</div>
     <div id="cutoff-status">
       <p style="font-size:13px;color:var(--muted);margin-bottom:8px">截單時間 <span id="cutoff-time-display">2026-06-03 15:30</span> 到時，波波會私訊提醒你要延長還是截單。</p>
-      <button class="btn btn-g" style="font-size:13px;padding:9px;margin-top:0" onclick="simCutoff()">👆 模擬：截單時間到了</button>
+      <button class="btn btn-g" style="font-size:13px;padding:9px;margin-top:0" onclick="simCutoff()">模擬：截單時間到了</button>
     </div>
   </div>
 
@@ -431,7 +431,7 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
     <div class="card-title"><span class="ci">🛵</span>取餐通知</div>
     <div id="arrival-status">
       <p style="font-size:13px;color:var(--muted);margin-bottom:8px">預計 <span id="arrival-time-display">2026-06-03 16:30</span> 波波會私訊提醒你確認到餐。</p>
-      <button class="btn btn-g" style="font-size:13px;padding:9px;margin-top:0" onclick="simArrival()">👆 模擬：波波提醒到餐了</button>
+      <button class="btn btn-g" style="font-size:13px;padding:9px;margin-top:0" onclick="simArrival()">模擬：波波提醒到餐了</button>
     </div>
   </div>
 
@@ -507,7 +507,41 @@ var payee = 'Amy';
 function changePayee(s){
   payee = (s.value.split('（')[0]).trim();
   var h=document.getElementById('payee-h3'); if(h) h.textContent='收款人：'+payee;
-  buildPay(); updateSummary();
+  buildPay(); updateSummary(); saveTeamConfig();
+}
+
+/* ── 開團設定持久化：重開面板不會把計費模式／金主／補助／外送設定弄丟 ── */
+function saveTeamConfig(){
+  try{
+    localStorage.setItem('bobo_team_config', JSON.stringify({
+      billingMode: billingMode,
+      sponsorFull: (document.getElementById('sponsor-select')||{}).value || '',
+      sponsorOne: (document.getElementById('sponsor-one-select')||{}).value || '',
+      sponsorSubsidy: (document.getElementById('sponsor-subsidy-select')||{}).value || '',
+      subsidyAmt: subsidyAmt,
+      deliveryFee: deliveryFee,
+      deliveryMode: deliveryMode,
+      payee: payee,
+      cutoff: (document.getElementById('cutoff-time')||{}).value || ''
+    }));
+  }catch(_){}
+}
+function restoreTeamConfig(){
+  try{
+    var raw = localStorage.getItem('bobo_team_config'); if(!raw) return;
+    var cfg = JSON.parse(raw); if(!cfg) return;
+    function setVal(id,val){ var e=document.getElementById(id); if(e && val!=null && val!=='') e.value=val; }
+    if(cfg.payee){ payee=cfg.payee; setVal('payee-sel', ''); var ps=document.getElementById('payee-sel'); if(ps){ for(var i=0;i<ps.options.length;i++){ if(ps.options[i].text.indexOf(cfg.payee)===0){ ps.selectedIndex=i; break; } } } var h=document.getElementById('payee-h3'); if(h) h.textContent='收款人：'+payee; }
+    setVal('sponsor-select', cfg.sponsorFull);
+    setVal('sponsor-one-select', cfg.sponsorOne);
+    setVal('sponsor-subsidy-select', cfg.sponsorSubsidy);
+    if(cfg.subsidyAmt!=null){ subsidyAmt=cfg.subsidyAmt; setVal('subsidy-amt', cfg.subsidyAmt); }
+    if(cfg.deliveryFee!=null){ deliveryFee=cfg.deliveryFee; setVal('delivery-fee', cfg.deliveryFee); }
+    if(cfg.deliveryMode){ deliveryMode=cfg.deliveryMode; setVal('delivery-mode', cfg.deliveryMode); }
+    if(cfg.cutoff){ setVal('cutoff-time', cfg.cutoff); var e=document.getElementById('cutoff-time-display'); if(e) e.textContent=String(cfg.cutoff).replace('T',' '); }
+    // 計費模式最後套（會重繪收款＋開團文案預設）
+    if(cfg.billingMode){ var bm=document.getElementById('billing-mode'); if(bm){ bm.value=cfg.billingMode; changeBillingMode(bm); } }
+  }catch(_){}
 }
 
 /* ── billing mode state ── */
@@ -687,7 +721,7 @@ function payerList(){
 function recalcDelivery(){
   deliveryFee  = Math.max(0, parseInt(document.getElementById('delivery-fee')?.value)||0);
   deliveryMode = document.getElementById('delivery-mode')?.value||'none';
-  buildPay(); updateSummary();
+  buildPay(); updateSummary(); saveTeamConfig();
 }
 
 function changeBillingMode(sel){
@@ -703,12 +737,14 @@ function changeBillingMode(sel){
   defaultCopyForBilling(); buildCopyOptions();   // 請客模式自動反白「有人請客」那則
   buildPay();
   updateSummary();
+  saveTeamConfig();
 }
 
 function recalcBilling(){
   subsidyAmt = Math.max(0, parseInt(document.getElementById('subsidy-amt').value)||0);
   buildPay();
   updateSummary();
+  saveTeamConfig();
 }
 
 /* ── tab ── */
@@ -1092,7 +1128,7 @@ function renderSettle(){
 }
 function finishSettle(){
   // 完成結算＝整團收尾：清掉本次狀態，把面板重整回預設值（不進入下一團流程）
-  try{ localStorage.removeItem('bobo_team_stage'); localStorage.removeItem('bobo_member_orders'); }catch(_){}
+  try{ localStorage.removeItem('bobo_team_stage'); localStorage.removeItem('bobo_member_orders'); localStorage.removeItem('bobo_team_config'); }catch(_){}
   location.replace(location.pathname);
 }
 
@@ -1123,7 +1159,7 @@ function simArrival(){
   const t = document.getElementById('arrival-time')?.value || '16:30';
   document.getElementById('arrival-status').innerHTML=`
     <div class="notice" style="margin-bottom:8px">
-      📩 波波私訊你：「${t} 到了，食物到了嗎？確認後我幫你發取餐通知 👇」
+      📩 波波私訊你：「${t} 到了，食物到了嗎？確認後我幫你發取餐通知」
     </div>
     <button class="btn btn-s" style="font-size:13px;padding:10px;margin-top:0" onclick="confirmArrival()">
       ✓ 確認，現在通知大家取餐
@@ -1256,7 +1292,7 @@ function extendCutoff(mins){
   if(inp&&inp.value){ var d=parseLocalDT(inp.value); if(d){ d.setMinutes(d.getMinutes()+mins); inp.value=fmtLocalDT(d); newDisp=inp.value.replace('T',' '); } }
   var disp=document.getElementById('cutoff-time-display'); if(disp&&newDisp) disp.textContent=newDisp;
   document.getElementById('cutoff-status').innerHTML='<div class="notice-g" style="margin-bottom:8px">✅ 已延長 '+mins+' 分鐘'+(newDisp?('，新截單時間 '+newDisp):'')+'。波波已到群組公告。</div>'
-    +'<button class="btn btn-g" style="font-size:13px;padding:9px;margin-top:0" onclick="simCutoff()">👆 再次模擬：時間又到了</button>';
+    +'<button class="btn btn-g" style="font-size:13px;padding:9px;margin-top:0" onclick="simCutoff()">再次模擬：時間又到了</button>';
   if(window.parent && window.parent!==window){ window.parent.postMessage({type:'bobo_cutoff_extended', mins:mins, newtime:newDisp},'*'); }
 }
 function closeCutoffNow(){
@@ -1308,6 +1344,7 @@ updateSummary();
 if(!boboCopies.length) boboCopies=boboCopyTemplates('這家店', boboShopType(menuItems));
 defaultCopyForBilling();
 buildCopyOptions();
+restoreTeamConfig();   // 重開面板時把上次的計費模式／金主／補助／外送設定救回來
 /* 依開團階段自動切到對應分頁：已開團→訂單狀況、已截單→收款對帳（未開團維持開團設定） */
 try{ var _initStage=parseInt(localStorage.getItem('bobo_team_stage')||'0',10)||0; if(_initStage>=2){ switchTab(2); } else if(_initStage>=1){ switchTab(1); } }catch(_){}
 </script>

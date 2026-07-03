@@ -224,7 +224,7 @@ var SHOPS={
 
 /* ---- 初始對話 ---- */
 function seed(){
-  try{ localStorage.removeItem('bobo_team_stage'); localStorage.removeItem('bobo_member_orders'); }catch(_){}   // 每次重新整理 Demo 都回到乾淨狀態
+  try{ localStorage.removeItem('bobo_team_stage'); localStorage.removeItem('bobo_member_orders'); localStorage.removeItem('bobo_team_config'); }catch(_){}   // 每次重新整理 Demo 都回到乾淨狀態
   addMsg('group',{who:'peer',name:'Vivi',color:'#C2883C',txt:'下午好睏，有人要揪飲料嗎 ☕'});
   addMsg('group',{who:'peer',name:'阿Ken',color:'#5E7C99',txt:'+1 想喝奶茶 🙋'});
   addMsg('group',{who:'peer',name:'Vivi',color:'#C2883C',txt:'<span style="color:var(--brand-d);font-weight:700">@波波</span> 幫我們揪一下！'});
