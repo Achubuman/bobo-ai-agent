@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>波波 ｜ 整合 Demo（LINE 內一條龍）</title>
 <style>
-  :root{--bg:#e9ece6;--screen:#8cabd9;--card:#fff;--ink:#231F2B;--muted:#6e6a72;--brand:#E8674C;--brand-d:#cf4f37;--line:#e6e1d8;--good:#2e9e6b;--green:#9be4b0;--dm:#fdf0e8}
+  :root{--bg:#FCF6F4;--screen:#8cabd9;--card:#fff;--ink:#231613;--muted:#5C524E;--brand:#E5462F;--brand-d:#C5371F;--line:#EEE4DF;--good:#1E9E6B;--green:#D8EEDD;--dm:#FCEBE6}
   *{box-sizing:border-box}
-  body{margin:0;font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,sans-serif;background:#d7d2c8;color:var(--ink)}
+  body{margin:0;font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,sans-serif;background:#EFE7E2;color:var(--ink)}
   .stage{display:contents}
   .hint{display:none}
   .phone{display:contents}
@@ -15,42 +15,47 @@
   .screen{position:relative;background:var(--bg);overflow:hidden;height:100vh;height:100dvh;max-width:480px;margin:0 auto;display:flex;flex-direction:column;box-shadow:0 0 40px rgba(0,0,0,.1)}
   /* nav */
   .nav{background:#fff;border-bottom:1px solid var(--line);padding:14px 14px 8px;display:flex;align-items:center;gap:10px;flex:none}
-  .nav .ico{width:30px;height:30px;border-radius:9px;background:#e7f0e9;display:flex;align-items:center;justify-content:center;font-size:16px}
+  .nav .ico{width:30px;height:30px;border-radius:10px;background:#FCEBE6;display:flex;align-items:center;justify-content:center;font-size:16px}
   .nav .ttl{font-size:15px;font-weight:700}
   .nav .ttl small{display:block;font-size:11px;color:var(--muted);font-weight:400}
   .tabs{display:flex;background:#fff;border-bottom:1px solid var(--line);flex:none}
-  .tabs button{flex:1;border:0;background:#fff;padding:9px 0;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;font-family:inherit}
+  .tabs button{flex:1;border:0;background:#fff;padding:9px 0;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;font-family:inherit;transition:color .15s,border-color .15s}
   .tabs button.on{color:var(--brand-d);border-bottom-color:var(--brand)}
   .tabs .dmdot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--brand);margin-left:5px;vertical-align:1px}
   /* threads */
-  .thread{flex:1;overflow-y:auto;padding:14px 12px 22px}
-  .thread.dm{background:linear-gradient(180deg,#fdf3ec,#f3ece3)}
-  .dmbanner{font-size:11px;color:#a85b32;background:#fdeadd;border:1px solid #f3d3bd;border-radius:9px;padding:6px 10px;margin-bottom:12px;text-align:center}
+  .thread{flex:1;overflow-y:auto;padding:14px 12px 22px;background:#fff}
+  .thread.dm{background:#FCF2EF}
+  .dmbanner{font-size:11px;color:#C5371F;background:#FCEBE6;border:1px solid #F6D2C9;border-radius:10px;padding:6px 10px;margin-bottom:12px;text-align:center}
   .msg{display:flex;gap:8px;margin-bottom:12px;align-items:flex-end;animation:pop .3s ease}
   @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   .av{width:30px;height:30px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff}
-  .av.bot{background:linear-gradient(150deg,var(--brand),#f0a07a)}
-  .bub{max-width:80%;background:#fff;border-radius:15px;border-top-left-radius:4px;padding:10px 13px;font-size:14px;line-height:1.55;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+  .av.bot{background:var(--brand)}
+  .bub{max-width:80%;background:#F1F1F3;border-radius:15px;border-top-left-radius:4px;padding:10px 13px;font-size:14px;line-height:1.55}
   .bub .nm{font-size:11px;color:var(--muted);margin-bottom:3px}
   .msg.me{flex-direction:row-reverse}
-  .msg.me .bub{background:var(--green);border-top-left-radius:15px;border-top-right-radius:4px;color:#10331c}
+  .msg.me .bub{background:var(--green);border-top-left-radius:15px;border-top-right-radius:4px;color:#1E5A38}
   .msg.sys{justify-content:center}.msg.sys span{font-size:11px;color:#7a7268;background:rgba(255,255,255,.7);padding:3px 12px;border-radius:20px}
   /* card in bubble */
-  .card{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:4px;width:235px}
-  .card .hd{padding:8px 11px;font-size:12.5px;font-weight:700;background:#faf6f1;border-bottom:1px solid var(--line)}
+  .card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;margin-top:4px;width:235px}
+  .card .hd{padding:8px 11px;font-size:13px;font-weight:700;background:#FBF3EF;border-bottom:1px solid var(--line)}
   .card .bd{padding:10px 12px;font-size:13px;color:#4a463f;line-height:1.65}
   .card .acts{display:flex;gap:7px;padding:9px 11px;border-top:1px solid var(--line)}
-  .btn{flex:1;text-align:center;padding:8px 0;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;border:0;font-family:inherit}
+  .btn{flex:1;text-align:center;padding:8px 0;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:0;font-family:inherit;transition:background .15s,transform .1s}
+  .btn:active{transform:scale(.97)}
   .btn.pri{background:var(--brand);color:#fff}.btn.pri:hover{background:var(--brand-d)}
   .btn.gho{background:#fff;border:1.5px solid var(--brand);color:var(--brand-d)}
-  .summary{font-size:12.5px;color:#5a564f;background:#f4f7f3;border:1px solid #d8e6dc;border-radius:9px;padding:8px 11px;margin-top:6px}
+  .btn.gho:hover{background:var(--dm)}
+  .btn.pulse{animation:ctaPulse 1.8s ease-out infinite}
+  @keyframes ctaPulse{0%{box-shadow:0 0 0 0 rgba(229,70,47,.5)}70%{box-shadow:0 0 0 12px rgba(229,70,47,0)}100%{box-shadow:0 0 0 0 rgba(229,70,47,0)}}
+  @media(prefers-reduced-motion:reduce){.btn.pulse{animation:none}}
+  .summary{font-size:13px;color:#5C524E;background:#F7F1ED;border:1px solid #EEE4DF;border-radius:10px;padding:8px 11px;margin-top:6px}
   /* LIFF overlay */
   .liff{position:absolute;inset:0;background:#fff;z-index:40;display:none;flex-direction:column}
   .liff.on{display:flex;animation:slide .28s ease}
   @keyframes slide{from{transform:translateY(100%)}to{transform:none}}
   .liff .lhd{flex:none;display:flex;align-items:center;gap:10px;padding:12px 14px;background:#fff;border-bottom:1px solid var(--line)}
   .liff .lhd .x{width:28px;height:28px;border-radius:50%;background:#f1ece4;border:0;font-size:16px;cursor:pointer;color:#555}
-  .liff .lhd .lt{font-size:14px;font-weight:700}.liff .lhd .lt small{display:block;font-size:10.5px;color:var(--muted);font-weight:400}
+  .liff .lhd .lt{font-size:14px;font-weight:700}.liff .lhd .lt small{display:block;font-size:11px;color:var(--muted);font-weight:400}
   .liff iframe{flex:1;width:100%;border:0;background:#faf7f2}
   .home{margin-top:2px;height:5px;width:120px;background:#0f0d14;border-radius:3px;align-self:center;opacity:.25}
 </style>
@@ -95,9 +100,9 @@ function addMsg(view,opts){
   var who=opts.who||'bot', txt=opts.txt||'', card=opts.card||'';
   var html;
   if(who==='sys'){ html='<div class="msg sys"><span>'+txt+'</span></div>'; }
-  else if(who==='me'){ html='<div class="msg me"><div class="av" style="background:#5b8def">我</div><div class="bub">'+txt+card+'</div></div>'; }
+  else if(who==='me'){ html='<div class="msg me"><div class="av" style="background:#6E8B6E">我</div><div class="bub">'+txt+card+'</div></div>'; }
   else if(who==='bot'){ html='<div class="msg"><div class="av bot">波</div><div class="bub"><div class="nm">波波</div>'+txt+card+'</div></div>'; }
-  else { html='<div class="msg"><div class="av" style="background:'+(opts.color||'#9b59b6')+'">'+(opts.name||'同')[0]+'</div><div class="bub"><div class="nm">'+(opts.name||'同事')+'</div>'+txt+card+'</div></div>'; }
+  else { html='<div class="msg"><div class="av" style="background:'+(opts.color||'#5E7C99')+'">'+(opts.name||'同')[0]+'</div><div class="bub"><div class="nm">'+(opts.name||'同事')+'</div>'+txt+card+'</div></div>'; }
   var node=el(html); t.appendChild(node); t.scrollTop=t.scrollHeight; return node;
 }
 
@@ -129,33 +134,68 @@ window.addEventListener('message',function(e){
   if(d.type==='bobo_open_team'){
     state.curated=d.payload;
     state.published=false;            // 每次重新開團都允許再發布一次
-    try{ localStorage.setItem('bobo_team_stage','0'); }catch(_){}   // 新團 → 重置發布/截單階段
+    try{ localStorage.setItem('bobo_team_stage','0'); localStorage.removeItem('bobo_member_orders'); }catch(_){}   // 新團 → 重置發布/截單階段與成員訂單
     var json=JSON.stringify(d.payload);
     var b64=btoa(unescape(encodeURIComponent(json)));
     openLiff('bobo-admin-panel-prototype.html#menu='+b64,'開團面板');
   } else if(d.type==='bobo_team_published'){
     closeLiff();
-    onPublished(d.shop||'本次菜單', d.count||0);
+    onPublished(d);
+  } else if(d.type==='bobo_pickup_ready'){
+    closeLiff();
+    switchView('group');
+    var _pl=(d.list||[]);
+    var _rows=_pl.map(function(x){return '<div style="font-size:13px;padding:5px 0;border-top:1px solid var(--line)"><b>'+x.person+'</b>　'+x.item+(x.spec?('・'+x.spec):'')+'</div>';}).join('');
+    addMsg('group',{who:'bot',txt:'餐點到囉，過來拿一下 👇',
+      card:'<div class="card"><div class="hd">🛵 取餐清單（'+_pl.length+' 杯）</div><div class="bd" style="padding:4px 12px 8px">'+_rows+'</div></div>'});
+    addMsg('group',{who:'sys',txt:'波波 已發送取餐通知'});
   } else if(d.type==='bobo_order_closed'){
     closeLiff();
     switchView('group');
     addMsg('group',{who:'bot',txt:'⏰ <b>'+(d.shop||'本團')+'</b> 已截單！開始幫大家送出訂單，謝謝參與 🙌'});
     addMsg('group',{who:'sys',txt:'團主已截單'});
-  } else if(d.type==='bobo_oos'){
-    // 團主在面板標示缺貨 → 波波到群組自動 tag 當事人
-    addMsg('group',{who:'bot',txt:'⚠️ <b>@'+(d.person||'')+'</b> 你點的「'+(d.item||'')+'」<b>缺貨</b>了，要改點什麼?直接回我就好 🙏'});
-  } else if(d.type==='bobo_order_placed'){
-    // 成員從點餐頁送出 → 回到群組顯示
+  } else if(d.type==='bobo_team_cancelled'){
     closeLiff();
     switchView('group');
-    addMsg('group',{who:'peer',name:(d.person||'我'),color:'#2980b9',txt:'我點好了 🙋'});
-    addMsg('group',{who:'bot',txt:'✅ 已收到 <b>'+(d.person||'')+'</b> 的訂單：'+(d.item||'')+'（'+(d.spec||'')+'）· $'+(d.price||0)+'　<span style="color:var(--muted);font-size:12px">截單前可改</span>'});
+    addMsg('group',{who:'bot',txt:'❌ 本團已由團主取消（原因：<b>'+(d.reason||'臨時有狀況')+'</b>），已下單的朋友不用付款，造成不便請見諒 🙏'});
+    addMsg('group',{who:'sys',txt:'團主已取消本團'});
+  } else if(d.type==='bobo_cutoff_extended'){
+    addMsg('group',{who:'bot',txt:'⏰ 截單延長'+(d.newtime?('至 <b>'+d.newtime+'</b>'):(' '+(d.mins||10)+' 分鐘'))+'，還沒點的快來 👇'});
+  } else if(d.type==='bobo_oos'){
+    // 團主在面板回報某品項缺貨 → 波波到群組自動 tag 所有點該品項的人
+    var _ps=(d.persons&&d.persons.length)?d.persons:(d.person?[d.person]:[]);
+    var _tag=_ps.map(function(p){return '@'+p;}).join(' ');
+    addMsg('group',{who:'bot',txt:'⚠️ <b>'+_tag+'</b> '+(_ps.length>1?'你們':'你')+'點的「'+(d.item||'')+'」<b>缺貨</b>了，要改點什麼?直接回我就好 🙏'});
+  } else if(d.type==='bobo_order_placed'){
+    // 成員下單／改單會即時同步到團主面板（localStorage），但不需要洗版群組，
+    // 群組只保留「開團／截單／缺貨／取消」等真正需要大家看到的重要事件。
+  } else if(d.type==='bobo_order_cancelled'){
+    addMsg('group',{who:'bot',txt:'🗑 <b>'+(d.person||'有人')+'</b> 取消了這次的訂單'});
   }
 });
 
+/* ---- 波波「快樂夥伴」開團文案（人設：菜鳥同事、台味自嘲；一定寫截單時間＋逾時後果；整則最多一個 emoji）----
+   自費＝下午睏／週三厭世／天氣熱三種安全的梗（不影射誰）隨機換款；有人請＝感謝但不暗示小氣。 */
+function boboOpenCopy(shop,d){
+  var mode=(d&&d.billing)||'self', sp=(d&&d.sponsor)||'金主', amt=(d&&d.subsidy)||0, cut=(d&&d.cutoff)||'15:00';
+  if(mode==='full')    return {tag:'好消息，這攤 <b>'+sp+'</b> 佛心請客。開了 <b>'+shop+'</b> 的團，'+cut+' 截單，難得有人買單、手腳要快 👇', badge:{t:sp+' 請客',bg:'#1E9E6B'}, bd:'今天不用付錢，想喝什麼點下去就對了。'};
+  if(mode==='oneEach') return {tag:'<b>'+sp+'</b> 請大家第一杯，第二杯起自己出。開 <b>'+shop+'</b> 的團，'+cut+' 截單，這種好康別遲到 👇', badge:{t:sp+' 請一杯',bg:'#1E9E6B'}, bd:'第一杯免費（升級加料都算金主的），第二杯起才自付。'};
+  if(mode==='subsidy') return {tag:'公司佛心補助每人 <b>$'+amt+'</b>，只補差額。開了 <b>'+shop+'</b> 的團，'+cut+' 截單，晚填就沒補助了 👇', badge:{t:'補助 $'+amt,bg:'#E0851A'}, bd:'每人先折 $'+amt+'，超過才補差額。'};
+  // 自費：三種「大家都有共鳴、不影射誰」的安全梗隨機換款
+  var routes=[
+    {tag:'下午睏意正式發作，需要一杯續命。開了 <b>'+shop+'</b> 的團，'+cut+' 截單，晚一步只能看我喝 👇'},
+    {tag:'禮拜三血條見底，開個 <b>'+shop+'</b> 補補血。'+cut+' 前填一填，太慢的只能聞味道 👇'},
+    {tag:'熱到快融化，來團 <b>'+shop+'</b> 續個命。'+cut+' 截單，錯過就只能喝西北風 👇'}
+  ];
+  var r=routes[Math.floor(Math.random()*routes.length)];
+  return {tag:r.tag, badge:{t:'各付各的',bg:'#8E867F'}, bd:'飲料選好，糖度冰量加料直接送出。'};
+}
+
 /* ---- 開團發布後：把結果帶回群組 ---- */
-function onPublished(shop,count){
+function onPublished(d){
   if(state.published) return; state.published=true;
+  var shop=(d&&d.shop)||'本次菜單';
+  var copy=boboOpenCopy(shop,d);
   // 私訊：確認
   addMsg('dm',{who:'bot',txt:'✅ 已發到群組！截單、換單、收款對帳都在開團面板。',
     card:'<div class="card"><div class="acts"><button class="btn gho" onclick="openLiff(\'bobo-admin-panel-prototype.html\',\'開團面板\')">📋 開啟開團面板</button></div></div>'});
@@ -165,9 +205,10 @@ function onPublished(shop,count){
     var its=state.curated.items.slice(0,3).map(function(i){return i.name+' $'+i.price;});
     sum='<div class="summary">🧋 '+its.join('・')+(state.curated.items.length>3?(' …共 '+state.curated.items.length+' 項'):'')+'</div>';
   }
+  var badge='<span style="background:'+copy.badge.bg+';color:#fff;font-size:10px;padding:1px 7px;border-radius:10px;margin-left:6px">'+copy.badge.t+'</span>';
   addMsg('group',{who:'bot',
-    txt:'☕ <b>'+shop+'</b> 開團囉！截單 15:00，點下方填單 👇',
-    card:'<div class="card"><div class="hd">📋 '+shop+' 點餐表單</div><div class="bd">飲料・糖度・冰量・加料，選好直接送出。'+sum+'</div><div class="acts"><button class="btn pri" onclick="openLiff(\'bobo_order_form.html\',\'我要點餐\')">我要點餐 →</button></div></div>'});
+    txt:((d&&d.chosenCopy)||copy.tag),   // 團主在後台挑選的開團文案優先
+    card:'<div class="card"><div class="hd">📋 '+shop+' 點餐表單'+badge+'</div><div class="bd">'+copy.bd+sum+'</div><div class="acts"><button class="btn pri" onclick="openLiff(\'bobo_order_form.html\',\'我要點餐\')">我要點餐 →</button></div></div>'});
   // 切回群組讓人看到公告
   $('#dmdot').style.display='';
   switchView('group');
@@ -183,19 +224,20 @@ var SHOPS={
 
 /* ---- 初始對話 ---- */
 function seed(){
-  try{ localStorage.removeItem('bobo_team_stage'); }catch(_){}   // 每次重新整理 Demo 都回到乾淨狀態
-  addMsg('group',{who:'peer',name:'Vivi',color:'#9b59b6',txt:'下午好睏，有人要揪飲料嗎 ☕'});
-  addMsg('group',{who:'peer',name:'阿Ken',color:'#2980b9',txt:'+1 想喝奶茶 🙋'});
-  addMsg('group',{who:'peer',name:'Vivi',color:'#9b59b6',txt:'<span style="color:var(--brand-d);font-weight:700">@波波</span> 幫我們揪一下！'});
+  try{ localStorage.removeItem('bobo_team_stage'); localStorage.removeItem('bobo_member_orders'); }catch(_){}   // 每次重新整理 Demo 都回到乾淨狀態
+  addMsg('group',{who:'peer',name:'Vivi',color:'#C2883C',txt:'下午好睏，有人要揪飲料嗎 ☕'});
+  addMsg('group',{who:'peer',name:'阿Ken',color:'#5E7C99',txt:'+1 想喝奶茶 🙋'});
+  addMsg('group',{who:'peer',name:'Vivi',color:'#C2883C',txt:'<span style="color:var(--brand-d);font-weight:700">@波波</span> 幫我們揪一下！'});
   addMsg('group',{who:'bot',txt:'收到！附近這 3 家評價不錯，<b>誰想當團主就點「由我開團」</b> 👇',
-    card:'<div class="card"><div class="hd">🥤 金茶伍 手切Q粿 <span style="background:var(--brand);color:#fff;font-size:10px;padding:1px 7px;border-radius:10px;margin-left:4px">人氣</span></div><div class="bd">⭐ 4.6・步行 3 分・招牌：手切Q粿紅茶、琥珀紅奶茶</div><div class="acts"><button class="btn pri" onclick="chooseShop(\'jincha\')">由我開團 →</button></div></div>'
-      +'<div class="card" style="margin-top:8px"><div class="hd">🧋 彤露 <span style="background:#e7f0e9;color:#2e7d5b;font-size:10px;padding:1px 7px;border-radius:10px;margin-left:4px">已有菜單</span></div><div class="bd">⭐ 4.5・步行 5 分・招牌：極上紅茶、四季春青茶</div><div class="acts"><button class="btn gho" onclick="chooseShop(\'tonglu\')">改選這家 →</button></div></div>'
-      +'<div class="card" style="margin-top:8px"><div class="hd">🍵 雀飲 <span style="background:#e7f0e9;color:#2e7d5b;font-size:10px;padding:1px 7px;border-radius:10px;margin-left:4px">已有菜單</span></div><div class="bd">⭐ 4.7・步行 6 分・招牌：黃金蕎麥茶、蕎麥鮮奶</div><div class="acts"><button class="btn gho" onclick="chooseShop(\'quewin\')">改選這家 →</button></div></div>'});
+    card:'<div class="card"><div class="hd">🥤 金茶伍 手切Q粿 <span style="background:var(--brand);color:#fff;font-size:10px;padding:1px 7px;border-radius:10px;margin-left:4px">人氣</span></div><div class="bd">⭐ 4.6・步行 3 分・招牌：手切Q粿紅茶、琥珀紅奶茶</div><div class="acts"><button class="btn pri pulse" onclick="chooseShop(\'jincha\')">由我開團 →</button></div></div>'
+      +'<div class="card" style="margin-top:8px"><div class="hd">🧋 彤露 <span style="background:#E7F4EE;color:#0F6E56;font-size:10px;padding:1px 7px;border-radius:10px;margin-left:4px">已有菜單</span></div><div class="bd">⭐ 4.5・步行 5 分・招牌：極上紅茶、四季春青茶</div><div class="acts"><button class="btn gho" onclick="chooseShop(\'tonglu\')">由我開團 →</button></div></div>'
+      +'<div class="card" style="margin-top:8px"><div class="hd">🍵 雀飲 <span style="background:#E7F4EE;color:#0F6E56;font-size:10px;padding:1px 7px;border-radius:10px;margin-left:4px">已有菜單</span></div><div class="bd">⭐ 4.7・步行 6 分・招牌：黃金蕎麥茶、蕎麥鮮奶</div><div class="acts"><button class="btn gho" onclick="chooseShop(\'quewin\')">由我開團 →</button></div></div>'});
   addMsg('dm',{who:'sys',txt:'🔒 以下只有團主（你）看得到'});
   addMsg('dm',{who:'bot',txt:'先到群組挑一家店，我就把開團準備好給你確認 👇'});
 }
 function chooseShop(id){
   var s=SHOPS[id]; if(!s) return;
+  var _pb=document.querySelector('.btn.pulse'); if(_pb)_pb.classList.remove('pulse');
   $('#dmdot').style.display='';
   switchView('dm');
   if(state.dmCardFor===id) return;           // 同一家不重複加卡

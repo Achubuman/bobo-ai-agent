@@ -6,9 +6,10 @@
 <title>波波 · 菜單 OCR Demo</title>
 <style>
   :root{
-    --bg:#faf7f2; --card:#fff; --ink:#231F2B; --muted:#6e665c;
-    --brand:#E8674C; --brand-dark:#cf4f37; --line:#ece5db;
-    --good:#2e9e6b; --warn:#e0a23b; --bad:#d9534f; --chip:#f3ede4;
+    --bg:#FCF6F4; --card:#fff; --ink:#231613; --muted:#5C524E;
+    --brand:#E5462F; --brand-dark:#C5371F; --line:#EEE4DF;
+    --good:#1E9E6B; --warn:#E0851A; --bad:#B4291A; --chip:#F4EEEA;
+    --shadow:0 4px 12px rgba(60,30,20,.06); --ring:0 0 0 3px rgba(229,70,47,.15);
   }
   *{box-sizing:border-box}
   body{margin:0;font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,sans-serif;
@@ -19,30 +20,32 @@
   .logo{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--brand)}
   .logo .dot{width:12px;height:12px;border-radius:50%;background:var(--brand)}
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
-    padding:18px;margin-top:16px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+    padding:18px;margin-top:16px;box-shadow:var(--shadow)}
   .card h2{font-size:15px;margin:0 0 4px;letter-spacing:.02em}
-  .card .sub{font-size:12.5px;color:var(--muted);margin:0 0 12px}
+  .card .sub{font-size:13px;color:var(--muted);margin:0 0 12px}
   label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
-  input[type=password],input[type=text],select{width:100%;padding:10px 12px;border:1px solid var(--line);
-    border-radius:9px;font-size:14px;background:#fff;color:var(--ink)}
+  input[type=password],input[type=text],select{width:100%;padding:10px 12px;border:1.5px solid var(--line);
+    border-radius:10px;font-size:14px;background:#fff;color:var(--ink);transition:border-color .15s,box-shadow .15s}
+  input[type=password]:focus,input[type=text]:focus,select:focus{outline:none;border-color:var(--brand);box-shadow:var(--ring)}
   .row{display:flex;gap:12px;flex-wrap:wrap}
   .row > div{flex:1;min-width:200px}
   .hint{font-size:12px;color:var(--muted);margin-top:6px}
-  .drop{border:2px dashed #d8cdbe;border-radius:12px;padding:22px;text-align:center;
-    cursor:pointer;transition:.15s;background:#fdfbf8}
-  .drop:hover{border-color:var(--brand);background:#fff7f1}
+  .drop{border:2px dashed #DCCFC4;border-radius:12px;padding:22px;text-align:center;
+    cursor:pointer;transition:.15s;background:#FDFAF7}
+  .drop:hover{border-color:var(--brand);background:#FFF3EE}
   .drop.has{padding:10px;border-style:solid;border-color:var(--line)}
   .drop img{max-width:100%;max-height:280px;border-radius:8px}
   .drop .ph{color:var(--muted);font-size:14px}
-  button.go{margin-top:14px;width:100%;padding:13px;border:0;border-radius:10px;
-    background:var(--brand);color:#fff;font-size:16px;font-weight:700;cursor:pointer}
+  button.go{margin-top:14px;width:100%;padding:13px;border:0;border-radius:12px;
+    background:var(--brand);color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:background .15s,transform .1s}
   button.go:hover{background:var(--brand-dark)}
-  button.go:disabled{background:#d9cfc2;cursor:not-allowed}
+  button.go:active:not(:disabled){transform:scale(.98)}
+  button.go:disabled{background:#D8CEC4;cursor:not-allowed}
   .status{margin-top:12px;font-size:14px;min-height:20px}
-  .spin{display:inline-block;width:14px;height:14px;border:2px solid #e3d9cc;
+  .spin{display:inline-block;width:14px;height:14px;border:2px solid #E6DDD2;
     border-top-color:var(--brand);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px;margin-right:6px}
   @keyframes sp{to{transform:rotate(360deg)}}
-  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:10px}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:10px}
   .legend b{color:var(--ink);font-weight:600}
   .dotc{display:inline-block;width:9px;height:9px;border-radius:50%;vertical-align:1px;margin-right:4px}
   /* gallery */
@@ -50,43 +53,51 @@
   .thumb{border:1px solid var(--line);border-radius:11px;overflow:hidden;cursor:pointer;background:#fff;
     transition:.12s;display:flex;flex-direction:column}
   .thumb:hover{border-color:var(--brand);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.07)}
-  .thumb .imgbox{height:104px;background:#f1ece4 center/cover no-repeat;display:flex;align-items:center;
-    justify-content:center;color:#b8ac9c;font-size:12px}
+  .thumb .imgbox{height:104px;background:#F4EEE8 center/cover no-repeat;display:flex;align-items:center;
+    justify-content:center;color:#B0A698;font-size:12px}
   .thumb .meta{padding:8px 10px}
   .thumb .nm{font-size:13px;font-weight:600;line-height:1.3}
   .thumb .tc{font-size:11px;color:var(--muted);margin-top:2px}
   .thumb .cf{font-size:11px;font-weight:700;margin-top:4px}
+  .srole{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;margin-top:5px;line-height:1.5}
+  .srole-ok{background:#E7F4EE;color:#0F6E56}
+  .srole-warn{background:#FBEFD9;color:#8A5712}
+  .srole-bad{background:#FBE9E6;color:#B4291A}
   /* scan summary + items */
   .summary{border-radius:12px;padding:14px 16px;margin-bottom:16px;border:1px solid}
-  .summary.ok{background:#eefaf3;border-color:#bfe7d1}
-  .summary.warn{background:#fdf6e7;border-color:#f0dcb0}
-  .summary.bad{background:#fdecea;border-color:#f1c4bf}
+  .summary.ok{background:#E7F4EE;border-color:#BBE3D0}
+  .summary.warn{background:#FBEFD9;border-color:#F0D9A8}
+  .summary.bad{background:#FBE9E6;border-color:#F1C3BC}
   .summary .score{font-size:28px;font-weight:800;line-height:1}
   .summary .lab{font-size:12px;color:var(--muted)}
   .summary .note{flex:1;min-width:0;overflow-wrap:anywhere;font-size:14px}
-  .lowlist{margin:10px 0 0;padding-left:18px;font-size:13px;color:#8a5a2b}
+  .lowlist{margin:10px 0 0;padding-left:18px;font-size:13px;color:#8A5712}
   .lowlist li{margin:2px 0;overflow-wrap:anywhere}
   .catblock.hidden{opacity:.4}
   .cat{font-size:13px;font-weight:700;color:var(--brand-dark);margin:18px 0 8px;
     border-bottom:1px solid var(--line);padding-bottom:4px;display:flex;justify-content:space-between;align-items:center;gap:8px}
-  .cat .mbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 11px;font-size:11.5px;cursor:pointer;color:var(--muted);font-weight:500}
+  .cat .mbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 11px;font-size:12px;cursor:pointer;color:var(--muted);font-weight:500}
   .cat .mbtn:hover{border-color:var(--brand);color:var(--brand-dark)}
-  .openteam{position:sticky;bottom:8px;display:block;width:100%;margin:16px 0 2px;padding:14px;border:0;border-radius:12px;background:var(--brand);color:#fff;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px -6px rgba(232,103,76,.5)}
+  .openteam{position:sticky;bottom:8px;display:block;width:100%;margin:16px 0 2px;padding:14px;border:0;border-radius:12px;background:var(--brand);color:#fff;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px -6px rgba(229,70,47,.45);transition:background .15s,transform .1s}
   .openteam:hover{background:var(--brand-dark)}
+  .openteam:active{transform:scale(.98)}
   .item{border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin-bottom:10px}
   .item .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
   .item .name{font-weight:600;font-size:15px;flex:1;min-width:0;overflow-wrap:anywhere}
   .item .price{font-weight:700;color:var(--brand);white-space:nowrap}
   .item .price.tba{color:var(--muted);font-weight:500}
+  .item .name[contenteditable],.item .price[contenteditable]{cursor:text;border-radius:4px;padding:0 3px;transition:background .12s}
+  .item .name[contenteditable]:hover,.item .price[contenteditable]:hover{background:#FBEAE5}
+  .item .name[contenteditable]:focus,.item .price[contenteditable]:focus{outline:none;background:#fff;box-shadow:0 0 0 2px rgba(229,70,47,.3)}
   .opt{margin-top:9px}
   .opt .k{font-size:12px;color:var(--muted);margin-bottom:3px}
   .chips{display:flex;flex-wrap:wrap;gap:6px}
-  .chip{background:var(--chip);border-radius:20px;padding:3px 11px;font-size:12.5px;color:#5a5147}
+  .chip{background:var(--chip);border-radius:20px;padding:3px 11px;font-size:13px;color:#5C524E}
   details{margin-top:16px}
   details summary{cursor:pointer;font-size:13px;color:var(--muted)}
   pre{background:#2b2b2b;color:#e8e0d4;padding:14px;border-radius:10px;overflow:auto;font-size:12px}
   .err{color:var(--bad);font-size:14px;white-space:pre-wrap}
-  .pill{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;background:#f3ede4;color:var(--muted);margin-left:8px}
+  .pill{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;background:#F4EEEA;color:var(--muted);margin-left:8px}
   .srcbar{font-size:13px;color:var(--muted);margin-bottom:10px}
   .srcbar b{color:var(--ink)}
   .resultgrid{display:flex;flex-direction:column;gap:18px;min-width:0}
@@ -114,33 +125,34 @@
   .lightbox.on{display:flex}
   .lightbox img{max-width:96%;max-height:96%;border-radius:8px}
   .curatehint{font-size:12px;color:var(--muted);margin:0 0 10px}
-  .reupload{background:#fdecea;border:1px solid #f1c4bf;border-radius:12px;padding:13px 15px;margin-top:16px;font-size:13.5px;color:#a23b30;line-height:1.65}
-  .reupload.warn{background:#fdf6e7;border-color:#f0dcb0;color:#8a5a2b}
-  .apidetails{border:1px solid var(--line);border-radius:9px;padding:0 12px;margin-bottom:2px;background:#fdfbf8}
-  .apidetails summary{cursor:pointer;font-size:12.5px;color:var(--muted);padding:9px 2px;list-style:none}
+  .reupload{background:#FBE9E6;border:1px solid #F1C3BC;border-radius:12px;padding:13px 15px;margin-top:16px;font-size:14px;color:#B4291A;line-height:1.65}
+  .reupload.warn{background:#FBEFD9;border-color:#F0D9A8;color:#8A5712}
+  .copynote{background:#E7F4EE;border:1px solid #BBE3D0;border-radius:12px;padding:11px 13px;margin-top:14px;font-size:13px;color:#0F6E56;line-height:1.6}
+  .apidetails{border:1px solid var(--line);border-radius:10px;padding:0 12px;margin-bottom:2px;background:#FDFAF7}
+  .apidetails summary{cursor:pointer;font-size:13px;color:var(--muted);padding:9px 2px;list-style:none}
   .apidetails summary::-webkit-details-marker{display:none}
   .apidetails[open] summary{border-bottom:1px solid var(--line)}
   .cattabs{display:flex;gap:8px;overflow-x:auto;padding:8px 0 10px;position:sticky;top:0;background:var(--card);z-index:6;-webkit-overflow-scrolling:touch}
   .cattabs::-webkit-scrollbar{height:0}
-  .cattab{flex:none;border:1px solid var(--line);background:#fff;border-radius:20px;padding:6px 14px;font-size:12.5px;cursor:pointer;color:var(--muted);white-space:nowrap}
+  .cattab{flex:none;border:1px solid var(--line);background:#fff;border-radius:20px;padding:6px 14px;font-size:13px;cursor:pointer;color:var(--muted);white-space:nowrap;transition:background .15s,color .15s,border-color .15s}
   .cattab.on{background:var(--brand);color:#fff;border-color:var(--brand);font-weight:700}
   .optbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;color:var(--muted);margin-top:9px}
   .optbtn:hover{border-color:var(--brand);color:var(--brand-dark)}
   .optwrap{margin-top:4px}
   .item.hidden{opacity:.4}
   .item .ctl{display:flex;gap:7px;align-items:center}
-  .ctl .mbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 11px;font-size:12.5px;cursor:pointer;color:var(--muted)}
+  .ctl .mbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 11px;font-size:13px;cursor:pointer;color:var(--muted)}
   .ctl .mbtn:hover{border-color:var(--brand);color:var(--brand-dark)}
-  .chip .x{cursor:pointer;color:#b3a692;margin-left:4px;padding:2px 5px;font-weight:700}
+  .chip .x{cursor:pointer;color:#B0A89C;margin-left:4px;padding:2px 5px;font-weight:700}
   .chip .x:hover{color:var(--bad)}
   .chip.off{text-decoration:line-through;opacity:.45}
   .item.removed{opacity:.5}
   .item.removed .name{text-decoration:line-through}
-  .addonnote{font-size:12px;color:#8a5a2b;background:#fdf6e7;border:1px solid #f0dcb0;border-radius:8px;padding:6px 10px;margin:2px 0 10px}
+  .addonnote{font-size:12px;color:#8A5712;background:#FBEFD9;border:1px solid #F0D9A8;border-radius:8px;padding:6px 10px;margin:2px 0 10px}
   .storedef{background:#eef4fb;border:1px solid #cfe0f3;border-radius:10px;padding:10px 12px;margin:2px 0 12px}
   .storedef .hd{font-size:12px;font-weight:700;color:#185FA5;margin-bottom:6px}
-  .price.addon{color:#993C1D}
-  .tbadge{font-size:11px;background:#fdf6e7;color:#8a5a2b;border:1px solid #f0dcb0;border-radius:20px;padding:2px 9px;white-space:nowrap}
+  .price.addon{color:#9E3320}
+  .tbadge{font-size:11px;background:#FBEFD9;color:#8A5712;border:1px solid #F0D9A8;border-radius:20px;padding:2px 9px;white-space:nowrap}
   .tprice{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
   .tprice button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer}
   .tprice button:hover{border-color:var(--brand)}
@@ -184,12 +196,14 @@
     </div>
     <button id="go" class="go" disabled>跑即時 OCR 解析</button>
     <div id="status" class="status"></div>
+    <div class="hint" style="text-align:center;margin-top:10px">不想上傳？下方有<b>已辨識過的菜單</b>可以直接用，免 API Key 👇</div>
   </div>
 
   <div id="result"></div>
 
   <div class="card" id="samplecard">
-    <h2 style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;margin:0" onclick="toggleGallery()">範例菜單（免金鑰，10 張）<span id="galtoggle" style="font-size:13px;color:var(--muted);font-weight:400">收合 ▴</span></h2>
+    <h2 style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;margin:0" onclick="toggleGallery()">已辨識菜單（10 份）<span id="galtoggle" style="font-size:13px;color:var(--muted);font-weight:400">收合 ▴</span></h2>
+    <p class="sub" style="margin:6px 0 0">不想上傳？這些店的菜單先前已辨識過，直接挑一份就能開團。</p>
     <div id="galwrap" style="margin-top:12px"><div id="gallery" class="gal"></div></div>
   </div>
 
@@ -412,7 +426,7 @@ v5 (2026-06-11) 再壓縮：改「分類分組」輸出（type=category 含 item
 <script>
 var SAMPLES = [{"tc": "TC-04", "tcLabel": "套餐", "name": "小木屋鬆餅", "img": "測試菜單/menu_TC-04-01_小木屋鬆餅.jpg", "conf": 0.98, "result": [{"type": "scan_summary", "overall_confidence": 0.98, "low_confidence_items": [], "summary_note": "✅ 本次掃描信心良好（0.98）。套餐飲料『2選1』已列出明確兩款並視為完整集合，無待確認項目。鬆餅、飲料、炸物價格清晰。"}, {"category": "超值加購套餐", "name": "薯塊餐", "price": 69, "custom_options": {"附餐": ["半月帶皮薯塊"], "飲料": ["莊園琥珀紅茶", "沁香四季春茶"], "備註": ["購任一鬆餅可加價升級，每份鬆餅限加購一份套餐"]}}, {"category": "超值加購套餐", "name": "QQ餐", "price": 69, "custom_options": {"附餐": ["雙色地瓜球"], "飲料": ["莊園琥珀紅茶", "沁香四季春茶"], "備註": ["購任一鬆餅可加價升級，每份鬆餅限加購一份套餐"]}}, {"category": "超值加購套餐", "name": "雞塊餐", "price": 79, "custom_options": {"附餐": ["炸雞塊"], "飲料": ["莊園琥珀紅茶", "沁香四季春茶"], "備註": ["購任一鬆餅可加價升級，每份鬆餅限加購一份套餐"]}}, {"category": "找甜的鬆餅", "name": "原味鬆餅", "price": 45, "custom_options": {"食用方式": ["熱餅(立即食用)", "冷餅(外帶/鮮奶油系列)"]}}, {"category": "找甜的鬆餅", "name": "蜂蜜鬆餅", "price": 45, "custom_options": {}}, {"category": "找甜的鬆餅", "name": "香緹鮮奶油鬆餅", "price": 55, "custom_options": {}}, {"category": "找甜的鬆餅", "name": "花生鬆餅", "price": 60, "custom_options": {"標記": ["NEW"]}}, {"category": "找甜的鬆餅", "name": "巧克力鬆餅", "price": 60, "custom_options": {}}, {"category": "找甜的鬆餅", "name": "藍莓果醬鬆餅", "price": 60, "custom_options": {}}, {"category": "找甜的鬆餅", "name": "焦糖肉桂鬆餅", "price": 60, "custom_options": {}}, {"category": "找甜的鬆餅", "name": "蜂蜜鮮奶油鬆餅", "price": 60, "custom_options": {}}, {"category": "找甜的鬆餅", "name": "草莓奶酥鬆餅", "price": 65, "custom_options": {"標記": ["NEW"]}}, {"category": "找甜的鬆餅", "name": "香草卡士達鬆餅", "price": 65, "custom_options": {}}, {"category": "找甜的鬆餅", "name": "可可黑奶油鬆餅", "price": 70, "custom_options": {}}, {"category": "找甜的鬆餅", "name": "椪糖脆脆鮮奶油鬆餅", "price": 70, "custom_options": {}}, {"category": "找甜的鬆餅", "name": "抹茶紅豆鬆餅", "price": 80, "custom_options": {}}, {"category": "找甜的鬆餅", "name": "椪糖脆脆卡士達鬆餅", "price": 80, "custom_options": {}}, {"category": "找甜的鬆餅", "name": "香蕉可可黑奶油鬆餅", "price": 90, "custom_options": {"標記": ["NEW"]}}, {"category": "找甜的鬆餅", "name": "香蕉巧克力卡士達鬆餅", "price": 105, "custom_options": {"標記": ["NEW"]}}, {"category": "找鹹的鬆餅", "name": "金蒜奶油鬆餅", "price": 65, "custom_options": {"加購": ["加起司片(+10)"]}}, {"category": "找鹹的鬆餅", "name": "鮪魚沙拉蔬菜鬆餅", "price": 80, "custom_options": {"加購": ["加起司片(+10)"]}}, {"category": "找鹹的鬆餅", "name": "薯餅起司蔬菜鬆餅", "price": 80, "custom_options": {"加購": ["加起司片(+10)"]}}, {"category": "找鹹的鬆餅", "name": "碳烤雞腿蔬菜鬆餅", "price": 90, "custom_options": {"加購": ["加起司片(+10)"]}}, {"category": "找鹹的鬆餅", "name": "英式塔塔炸魚蔬菜鬆餅", "price": 90, "custom_options": {"加購": ["加起司片(+10)"]}}, {"category": "找鹹的鬆餅", "name": "日式炸豬排蔬菜鬆餅", "price": 95, "custom_options": {"加購": ["加起司片(+10)"], "標記": ["NEW"]}}, {"category": "找鹹的鬆餅", "name": "原味咔啦炸雞蔬菜鬆餅", "price": 95, "custom_options": {"加購": ["加起司片(+10)"]}}, {"category": "找鹹的鬆餅", "name": "青花椒麻炸雞蔬菜鬆餅", "price": 100, "custom_options": {"加購": ["加起司片(+10)"], "標記": ["辣味商品"]}}, {"category": "找鹹的鬆餅", "name": "松露炸雞蔬菜鬆餅", "price": 105, "custom_options": {"加購": ["加起司片(+10)"], "標記": ["NEW"]}}, {"category": "找鹹的鬆餅", "name": "松露炸豬排蔬菜鬆餅", "price": 105, "custom_options": {"加購": ["加起司片(+10)"], "標記": ["NEW"]}}, {"category": "找鹹的鬆餅", "name": "金薯碳烤雞腿蔬菜鬆餅", "price": 115, "custom_options": {"加購": ["加起司片(+10)"]}}, {"category": "國王的鬆餅", "name": "葡萄奶酥鬆餅", "price": 70, "custom_options": {}}, {"category": "國王的鬆餅", "name": "雙倍起司玉米蔬菜鬆餅", "price": 75, "custom_options": {"加購": ["加起司片(+10)"]}}, {"category": "國王的鬆餅", "name": "起司牛肉蔬菜鬆餅", "price": 90, "custom_options": {"加購": ["加起司片(+10)"]}}, {"category": "國王的鬆餅", "name": "青花椒麻牛肉堡蔬菜鬆餅", "price": 90, "custom_options": {"加購": ["加起司片(+10)"], "標記": ["辣味商品"]}}, {"category": "國王的鬆餅", "name": "花生牛肉堡蔬菜鬆餅", "price": 95, "custom_options": {"加購": ["加起司片(+10)"], "標記": ["NEW"]}}, {"category": "純粹好茶", "name": "莊園琥珀紅茶", "price": 35, "custom_options": {"甜度": ["正常糖", "七分糖", "半糖", "三分糖", "無糖"], "冰量": ["正常冰", "少冰", "去冰", "溫飲", "熱飲"]}}, {"category": "純粹好茶", "name": "沁香四季春茶", "price": 35, "custom_options": {"甜度": ["正常糖", "七分糖", "半糖", "三分糖", "無糖"], "冰量": ["正常冰", "少冰", "去冰", "溫飲", "熱飲"]}}, {"category": "純粹好茶", "name": "格雷伯爵紅茶", "price": 40, "custom_options": {"甜度": ["正常糖", "七分糖", "半糖", "三分糖", "無糖"], "冰量": ["正常冰", "少冰", "去冰", "溫飲", "熱飲"]}}, {"category": "純粹好茶", "name": "皇家太妃紅茶", "price": 40, "custom_options": {"甜度": ["正常糖", "七分糖", "半糖", "三分糖", "無糖"], "冰量": ["正常冰", "少冰", "去冰", "溫飲", "熱飲"]}}, {"category": "純粹好茶", "name": "貴妃荔香綠茶", "price": 40, "custom_options": {"甜度": ["正常糖", "七分糖", "半糖", "三分糖", "無糖"], "冰量": ["正常冰", "少冰", "去冰", "溫飲", "熱飲"]}}, {"category": "純粹好茶", "name": "白桃香馥烏龍", "price": 40, "custom_options": {"甜度": ["正常糖", "七分糖", "半糖", "三分糖", "無糖"], "冰量": ["正常冰", "少冰", "去冰", "溫飲", "熱飲"]}}, {"category": "純粹好茶", "name": "金香桂花烏龍", "price": 40, "custom_options": {"甜度": ["正常糖", "七分糖", "半糖", "三分糖", "無糖"], "冰量": ["正常冰", "少冰", "去冰", "溫飲", "熱飲"]}}, {"category": "純粹好茶", "name": "糯香國寶玉露", "price": 40, "custom_options": {"甜度": ["正常糖", "七分糖", "半糖", "三分糖", "無糖"], "冰量": ["正常冰", "少冰", "去冰", "溫飲", "熱飲"], "標記": ["NEW", "無咖啡因"]}}, {"category": "純粹好茶", "name": "檸檬四季春茶", "price": 50, "custom_options": {"甜度": ["正常糖", "七分糖", "半糖", "三分糖", "無糖"], "冰量": ["正常冰", "少冰", "去冰"]}}, {"category": "純粹好茶", "name": "春梅果茶", "price": 50, "custom_options": {"甜度": ["正常糖", "七分糖", "半糖", "三分糖", "無糖"], "冰量": ["正常冰", "少冰", "去冰"]}}, {"category": "乳香世家鮮乳茶", "name": "莊園琥珀鮮乳茶", "price": 65, "custom_options": {"甜度": ["正常糖", "七分糖", "半糖", "三分糖", "無糖"], "冰量": ["正常冰", "少冰", "去冰", "溫飲", "熱飲"]}}, {"category": "乳香世家鮮乳茶", "name": "格雷伯爵鮮乳茶", "price": 70, "custom_options": {"甜度": ["正常糖", "七分糖", "半糖", "三分糖", "無糖"], "冰量": ["正常冰", "少冰", "去冰", "溫飲", "熱飲"]}}, {"category": "乳香世家鮮乳茶", "name": "沁桃烏龍鮮乳茶", "price": 70, "custom_options": {"甜度": ["正常糖", "七分糖", "半糖", "三分糖", "無糖"], "冰量": ["正常冰", "少冰", "去冰", "溫飲", "熱飲"], "標記": ["NEW"]}}, {"category": "乳香世家鮮乳茶", "name": "焙香觀音鮮乳茶", "price": 70, "custom_options": {"甜度": ["正常糖", "七分糖", "半糖", "三分糖", "無糖"], "冰量": ["正常冰", "少冰", "去冰", "溫飲", "熱飲"]}}, {"category": "乳香世家鮮乳茶", "name": "椪糖脆脆鮮乳茶", "price": 75, "custom_options": {"甜度": ["正常糖", "七分糖", "半糖", "三分糖", "無糖"], "冰量": ["正常冰", "少冰", "去冰"], "備註": ["限冷飲"]}}, {"category": "黑蜜冬瓜露", "name": "黑蜜冬瓜露", "price": 40, "custom_options": {"冰量": ["正常冰", "少冰", "去冰"], "備註": ["甜度固定", "無咖啡因"]}}, {"category": "黑蜜冬瓜露", "name": "春梅冬瓜露", "price": 55, "custom_options": {"冰量": ["正常冰", "少冰", "去冰"], "備註": ["甜度固定", "無咖啡因"]}}, {"category": "黑蜜冬瓜露", "name": "檸檬黑蜜冬瓜露", "price": 55, "custom_options": {"冰量": ["正常冰", "少冰", "去冰"], "備註": ["甜度固定", "無咖啡因"]}}, {"category": "黑蜜冬瓜露", "name": "黑蜜冬瓜鮮奶", "price": 65, "custom_options": {"冰量": ["正常冰", "少冰", "去冰"], "備註": ["甜度固定", "無咖啡因"]}}, {"category": "炸物點心", "name": "美式脆薯", "price": 39, "custom_options": {}}, {"category": "炸物點心", "name": "酥炸魚條(2條)", "price": 39, "custom_options": {}}, {"category": "炸物點心", "name": "香酥雞球", "price": 49, "custom_options": {}}, {"category": "炸物點心", "name": "雙色地瓜球", "price": 49, "custom_options": {}}, {"category": "炸物點心", "name": "半月帶皮薯塊", "price": 49, "custom_options": {}}, {"category": "炸物點心", "name": "炸雞塊(5塊)", "price": 59, "custom_options": {}}, {"category": "炸物點心", "name": "招牌杏鮑菇", "price": 59, "custom_options": {}}, {"category": "炸物點心", "name": "好吃鹹酥雞", "price": 79, "custom_options": {}}]}, {"tc": "TC-01", "tcLabel": "純飲料店", "name": "雀飲", "img": "測試菜單/menu_TC-01-01_雀飲.jpg", "conf": 0.97, "result": [{"type": "scan_summary", "overall_confidence": 0.97, "low_confidence_items": [{"name": "燒仙草 / 紅豆湯圓（季節限定）", "issue": "菜單未標示價格，無法擷取金額，price 以 null 表示"}], "summary_note": "✅ 本次掃描信心良好（0.97）。全店『升級喝法』加料選項已套用至各飲料；M/L 尺寸全數正確拆分；單一價格品項已依欄位判定尺寸。僅季節限定 2 品項缺價需團主確認。"}, {"category": "蕎麥系列", "name": "黃金蕎麥茶(L)", "price": 30, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "蕎麥系列", "name": "蕎麥玉露(L)", "price": 35, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "蕎麥系列", "name": "蕎麥鮮奶奶(M)", "price": 50, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "蕎麥系列", "name": "蕎麥鮮奶奶(L)", "price": 55, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "蕎麥系列", "name": "蕎蜜奶奶(M)", "price": 50, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "蕎麥系列", "name": "蕎蜜奶奶(L)", "price": 55, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "蕎麥系列", "name": "覓蜜蕎麥(M)", "price": 50, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "蕎麥系列", "name": "覓蜜蕎麥(L)", "price": 55, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "蕎麥系列", "name": "雲朵蕎麥", "price": 60, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "蕎麥系列", "name": "冬瓜蕎麥", "price": 35, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "備註": ["冬瓜為固定甜度"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "純茶系列", "name": "莓瑰紅茶", "price": 30, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "風味": ["莓果", "玫瑰香氣"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "純茶系列", "name": "紅韻錫蘭", "price": 30, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "純茶系列", "name": "古早紅", "price": 30, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "純茶系列", "name": "沁香綠茶", "price": 30, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "純茶系列", "name": "職人冷杉金萱", "price": 30, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "純茶系列", "name": "高冷露青", "price": 40, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "備註": ["4-10月固定無糖"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "純茶系列", "name": "焙韻四季青", "price": 30, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "純茶系列", "name": "輕香烏龍", "price": 30, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "純茶系列", "name": "原味冬瓜", "price": 30, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "備註": ["冬瓜為固定甜度"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "純茶系列", "name": "冬瓜青茶", "price": 35, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "奶蓋系列(鹹芝士)", "name": "雲朵莓瑰", "price": 60, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "風味": ["莓果", "玫瑰香氣"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "奶蓋系列(鹹芝士)", "name": "雲朵紅韻", "price": 60, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "奶蓋系列(鹹芝士)", "name": "雲朵沁香綠", "price": 60, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "奶蓋系列(鹹芝士)", "name": "雲朵金萱", "price": 60, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "奶蓋系列(鹹芝士)", "name": "雲朵四季青", "price": 60, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "奶蓋系列(鹹芝士)", "name": "雲朵烏龍", "price": 60, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "覓蜜系列", "name": "覓蜜青檸(M)", "price": 50, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "蜂蜜量": ["正常", "少"], "加料": ["蘆薈 (免費)", "波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)"]}}, {"category": "覓蜜系列", "name": "覓蜜青檸(L)", "price": 55, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "蜂蜜量": ["正常", "少"], "加料": ["蘆薈 (免費)", "波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)"]}}, {"category": "覓蜜系列", "name": "覓蜜沁香綠(M)", "price": 50, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "蜂蜜量": ["正常", "少"], "加料": ["蘆薈 (免費)", "波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)"]}}, {"category": "覓蜜系列", "name": "覓蜜沁香綠(L)", "price": 55, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "蜂蜜量": ["正常", "少"], "加料": ["蘆薈 (免費)", "波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)"]}}, {"category": "覓蜜系列", "name": "覓蜜金萱(M)", "price": 50, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "蜂蜜量": ["正常", "少"], "加料": ["蘆薈 (免費)", "波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)"]}}, {"category": "覓蜜系列", "name": "覓蜜金萱(L)", "price": 55, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "蜂蜜量": ["正常", "少"], "加料": ["蘆薈 (免費)", "波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)"]}}, {"category": "覓蜜系列", "name": "覓蜜紅茶(M)", "price": 50, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "蜂蜜量": ["正常", "少"], "加料": ["蘆薈 (免費)", "波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)"]}}, {"category": "覓蜜系列", "name": "覓蜜紅茶(L)", "price": 55, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "蜂蜜量": ["正常", "少"], "加料": ["蘆薈 (免費)", "波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)"]}}, {"category": "覓蜜系列", "name": "覓蜜烏龍(M)", "price": 50, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "蜂蜜量": ["正常", "少"], "加料": ["蘆薈 (免費)", "波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)"]}}, {"category": "覓蜜系列", "name": "覓蜜烏龍(L)", "price": 55, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "蜂蜜量": ["正常", "少"], "加料": ["蘆薈 (免費)", "波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)"]}}, {"category": "覓蜜系列", "name": "覓蜜檸檬(M)", "price": 55, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "蜂蜜量": ["正常", "少"], "加料": ["蘆薈 (免費)", "波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)"]}}, {"category": "覓蜜系列", "name": "覓蜜檸檬(L)", "price": 60, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "蜂蜜量": ["正常", "少"], "加料": ["蘆薈 (免費)", "波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)"]}}, {"category": "鮮奶茶系列", "name": "莓瑰/四季青鮮奶奶(M)", "price": 50, "custom_options": {"茶底": ["莓瑰", "四季青"], "甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "鮮奶茶系列", "name": "莓瑰/四季青鮮奶奶(L)", "price": 55, "custom_options": {"茶底": ["莓瑰", "四季青"], "甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "鮮奶茶系列", "name": "烏龍/沁香綠鮮奶奶(M)", "price": 50, "custom_options": {"茶底": ["烏龍", "沁香綠"], "甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "鮮奶茶系列", "name": "烏龍/沁香綠鮮奶奶(L)", "price": 55, "custom_options": {"茶底": ["烏龍", "沁香綠"], "甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "鮮奶茶系列", "name": "紅韻粉粿鮮奶奶(M)", "price": 60, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "鮮奶茶系列", "name": "紅韻粉粿鮮奶奶(L)", "price": 65, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "鮮奶茶系列", "name": "紅豆粉粿鮮奶奶(M)", "price": 60, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "鮮奶茶系列", "name": "紅豆粉粿鮮奶奶(L)", "price": 65, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "鮮奶茶系列", "name": "黑糖粉粿鮮奶", "price": 70, "custom_options": {"備註": ["糖、冰固定"]}}, {"category": "鮮奶茶系列", "name": "黑糖波霸鮮奶", "price": 70, "custom_options": {"備註": ["糖、冰固定"]}}, {"category": "鮮奶茶系列", "name": "粉粿鮮奶(M)", "price": 65, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "鮮奶茶系列", "name": "波霸鮮奶(L)", "price": 80, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "鮮奶茶系列", "name": "甘蔗鮮奶(M)", "price": 70, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "鮮奶茶系列", "name": "甘蔗鮮奶(L)", "price": 75, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "鮮奶茶系列", "name": "冬瓜鮮奶(M)", "price": 50, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "鮮奶茶系列", "name": "冬瓜鮮奶(L)", "price": 55, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "鮮奶茶系列", "name": "阿華田鮮奶(M)", "price": 55, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "鮮奶茶系列", "name": "阿華田鮮奶(L)", "price": 60, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "沁香多多綠(M)", "price": 45, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "沁香多多綠(L)", "price": 50, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "高山脆梅綠(M)", "price": 45, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "高山脆梅綠(L)", "price": 50, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "荔荔烏龍(M)", "price": 50, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["蘆薈 (含/免費)", "波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)"]}}, {"category": "特調系列", "name": "荔荔烏龍(L)", "price": 55, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["蘆薈 (含/免費)", "波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)"]}}, {"category": "特調系列", "name": "香韻桂花烏龍(M)", "price": 45, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "香韻桂花烏龍(L)", "price": 50, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "梅子冰茶(M)", "price": 45, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "梅子冰茶(L)", "price": 50, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "甘蔗青茶(M)", "price": 55, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "甘蔗青茶(L)", "price": 60, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "甘蔗檸檬紅(M)", "price": 55, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "甘蔗檸檬紅(L)", "price": 60, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "莓荔佳人(M)", "price": 45, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "莓荔佳人(L)", "price": 50, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "可爾莓瑰紅(M)", "price": 50, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "可爾莓瑰紅(L)", "price": 55, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "金桔檸檬(M)", "price": 50, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "加料": ["梅子 (隨附)", "波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "金桔檸檬(L)", "price": 55, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰", "熱"], "加料": ["梅子 (隨附)", "波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "檸檬多多(M)", "price": 50, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "檸檬多多(L)", "price": 55, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "冬瓜檸檬(M)", "price": 40, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "冬瓜檸檬(L)", "price": 45, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "豆漿紅茶(M)", "price": 40, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "豆漿紅茶(L)", "price": 45, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "特濃豆漿(瓶裝)", "price": 35, "custom_options": {"備註": ["瓶裝"]}}, {"category": "特調系列", "name": "芭樂多多(M)", "price": 60, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "芭樂多多(L)", "price": 65, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "香檸芭樂(M)", "price": 50, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "特調系列", "name": "香檸芭樂(L)", "price": 55, "custom_options": {"甜度": ["無糖", "一分糖", "微糖", "半糖", "少糖", "全糖"], "冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "季節限定", "name": "芒果莎莎", "price": 85, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "季節限定", "name": "青青芒果", "price": 85, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "季節限定", "name": "雲朵芒果莎莎", "price": 90, "custom_options": {"冰量": ["完全去冰", "去冰", "微冰", "少冰", "正常冰"], "加料": ["波霸 (+10)", "粉粿 (+10)", "茶凍 (+10)", "紅豆 (+10)", "蘆薈 (+10)"]}}, {"category": "季節限定", "name": "燒仙草", "price": null, "custom_options": {"備註": ["菜單未標價，請洽店家確認"]}}, {"category": "季節限定", "name": "紅豆湯圓", "price": null, "custom_options": {"備註": ["菜單未標價，請洽店家確認"]}}]}, {"tc": "TC-03", "tcLabel": "點心/炸物", "name": "魔王狂暴雞排", "img": "測試菜單/menu_TC-03-01_魔王狂暴雞排.jpg", "conf": 0.97, "result": [{"type": "scan_summary", "overall_confidence": 0.97, "low_confidence_items": [], "summary_note": "✅ 本次掃描信心良好（0.97），菜單清晰。雞排已帶入菜單實際印製的完整調味清單；其餘炸物套用炸物類調味模板；A餐超值組已生成套餐主餐欄位。建議加購紙盒（每個 $5）已記於備註。"}, {"category": "魔王厚切超大雞排", "name": "魔王厚切超大雞排", "price": 80, "custom_options": {"調味": ["原味不加", "胡椒", "狂爆小辣", "狂爆中辣", "狂爆大辣", "芥末", "海苔", "梅子", "咖哩", "香蒜", "起司", "檸檬"], "加購": ["紙盒 (+5)"]}}, {"category": "經典炸物", "name": "鹹酥雞", "price": 55, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"], "標記": ["推薦"]}}, {"category": "經典炸物", "name": "雞軟骨", "price": 55, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"], "標記": ["推薦"]}}, {"category": "經典炸物", "name": "三角骨", "price": 55, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"], "標記": ["推薦"]}}, {"category": "經典炸物", "name": "炸魷魚", "price": 55, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "經典炸物", "name": "美國脆薯", "price": 35, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "經典炸物", "name": "細薯", "price": 30, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "經典炸物", "name": "甘梅地瓜", "price": 30, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "經典炸物", "name": "雞皮", "price": 30, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "經典炸物", "name": "洋蔥圈", "price": 30, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "經典炸物", "name": "玉米布丁酥", "price": 30, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "經典炸物", "name": "花枝丸", "price": 25, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "經典炸物", "name": "德式香腸", "price": 25, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "經典炸物", "name": "煉乳銀絲卷", "price": 25, "custom_options": {"備註": ["附煉乳"]}}, {"category": "經典炸物", "name": "起司乳酪條", "price": 25, "custom_options": {}}, {"category": "經典炸物", "name": "脆皮杏鮑菇", "price": 30, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"], "標記": ["推薦"]}}, {"category": "小炸物", "name": "雞肉香腸", "price": 20, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "百頁豆腐", "price": 20, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "麥克雞塊", "price": 20, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "熱狗3條", "price": 20, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "麻糬蛋黃芋丸", "price": 20, "custom_options": {}}, {"category": "小炸物", "name": "雙色QQ球", "price": 20, "custom_options": {}}, {"category": "小炸物", "name": "花生湯圓", "price": 20, "custom_options": {}}, {"category": "小炸物", "name": "青椒", "price": 20, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "四季豆", "price": 20, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "玉米筍", "price": 20, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "高麗菜", "price": 20, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "雞心", "price": 20, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "雞胗", "price": 20, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "魚板", "price": 20, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "甜不辣", "price": 20, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "黑輪片", "price": 20, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "芋粿", "price": 20, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "米血", "price": 20, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "小肉豆", "price": 20, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "薯餅", "price": 20, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "蘿蔔糕", "price": 20, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "糯米腸", "price": 25, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "黃金魚蛋", "price": 25, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "小炸物", "name": "雞屁股", "price": 25, "custom_options": {"調味": ["原味", "胡椒鹽", "梅粉", "加辣"]}}, {"category": "超值套餐", "name": "A餐超值組", "price": 105, "custom_options": {"主餐": ["三角骨", "杏鮑菇", "細薯"], "調味": ["原味", "胡椒鹽", "梅粉", "加辣"], "備註": ["三角骨+杏鮑菇+細薯"]}}]}, {"tc": "TC-05", "tcLabel": "混搭店", "name": "彤露", "img": "測試菜單/menu_TC-05-01_彤露.jpg", "conf": 0.95, "result": [{"type": "scan_summary", "overall_confidence": 0.95, "low_confidence_items": [{"name": "蜂蜜檸檬 / 金桔檸檬 / 桑椹鮮奶 等單欄價格", "issue": "部分特調與拿鐵品項僅標單一價格，已依欄位位置判定尺寸，惟少數欄位對齊略有透視變形，建議團主確認"}], "summary_note": "✅ 本次掃描信心良好（0.95）。M/L 尺寸已拆分，全店加料（波霸/椰果/仙草凍/黃金粉角 +10、布丁 +15）已套用；黑糖與拿鐵系列依菜單標示提供 1分/3分/正常 甜度。"}, {"category": "彤露嚴選茶品", "name": "極上紅茶(M)", "price": 25, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "加料": ["波霸 (+10)", "椰果 (+10)", "仙草凍 (+10)", "黃金粉角 (+10)", "布丁 (+15)"]}}, {"category": "彤露嚴選茶品", "name": "極上紅茶(L)", "price": 30, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "加料": ["波霸 (+10)", "椰果 (+10)", "仙草凍 (+10)", "黃金粉角 (+10)", "布丁 (+15)"]}}, {"category": "彤露嚴選茶品", "name": "茉香綠茶(M)", "price": 25, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "加料": ["波霸 (+10)", "椰果 (+10)", "仙草凍 (+10)", "黃金粉角 (+10)", "布丁 (+15)"]}}, {"category": "彤露嚴選茶品", "name": "茉香綠茶(L)", "price": 30, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "加料": ["波霸 (+10)", "椰果 (+10)", "仙草凍 (+10)", "黃金粉角 (+10)", "布丁 (+15)"]}}, {"category": "彤露嚴選茶品", "name": "四季春青茶(M)", "price": 25, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "加料": ["波霸 (+10)", "椰果 (+10)", "仙草凍 (+10)", "黃金粉角 (+10)", "布丁 (+15)"]}}, {"category": "彤露嚴選茶品", "name": "四季春青茶(L)", "price": 30, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "加料": ["波霸 (+10)", "椰果 (+10)", "仙草凍 (+10)", "黃金粉角 (+10)", "布丁 (+15)"]}}, {"category": "彤露嚴選茶品", "name": "焙香烏龍茶(M)", "price": 25, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "加料": ["波霸 (+10)", "椰果 (+10)", "仙草凍 (+10)", "黃金粉角 (+10)", "布丁 (+15)"]}}, {"category": "彤露嚴選茶品", "name": "焙香烏龍茶(L)", "price": 30, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "加料": ["波霸 (+10)", "椰果 (+10)", "仙草凍 (+10)", "黃金粉角 (+10)", "布丁 (+15)"]}}, {"category": "彤露嚴選茶品", "name": "黃金蕎麥茶(M)", "price": 35, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "加料": ["波霸 (+10)", "椰果 (+10)", "仙草凍 (+10)", "黃金粉角 (+10)", "布丁 (+15)"]}}, {"category": "彤露嚴選茶品", "name": "黃金蕎麥茶(L)", "price": 40, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "加料": ["波霸 (+10)", "椰果 (+10)", "仙草凍 (+10)", "黃金粉角 (+10)", "布丁 (+15)"]}}, {"category": "冬瓜系列", "name": "古釀冬瓜茶(M)", "price": 35, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "備註": ["自煮冬瓜露，可正常比例或冬瓜少"]}}, {"category": "冬瓜系列", "name": "古釀冬瓜茶(L)", "price": 40, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "備註": ["自煮冬瓜露，可正常比例或冬瓜少"]}}, {"category": "冬瓜系列", "name": "完美混搭(冬瓜x紅茶)(M)", "price": 40, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "加料": ["波霸 (+10)", "椰果 (+10)", "仙草凍 (+10)", "黃金粉角 (+10)", "布丁 (+15)"]}}, {"category": "冬瓜系列", "name": "完美混搭(冬瓜x紅茶)(L)", "price": 45, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "加料": ["波霸 (+10)", "椰果 (+10)", "仙草凍 (+10)", "黃金粉角 (+10)", "布丁 (+15)"]}}, {"category": "冬瓜系列", "name": "冬瓜青茶(M)", "price": 40, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "冬瓜系列", "name": "冬瓜青茶(L)", "price": 45, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "冬瓜系列", "name": "冬瓜烏龍(M)", "price": 40, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "冬瓜系列", "name": "冬瓜烏龍(L)", "price": 45, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "冬瓜系列", "name": "冬瓜蕎麥(M)", "price": 40, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "冬瓜系列", "name": "冬瓜蕎麥(L)", "price": 45, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "彤露特調", "name": "招牌奶茶(M)", "price": 45, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "加料": ["波霸 (+10)", "椰果 (+10)", "仙草凍 (+10)", "黃金粉角 (+10)", "布丁 (+15)"], "備註": ["奶精"]}}, {"category": "彤露特調", "name": "招牌奶茶(L)", "price": 50, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "加料": ["波霸 (+10)", "椰果 (+10)", "仙草凍 (+10)", "黃金粉角 (+10)", "布丁 (+15)"], "備註": ["奶精"]}}, {"category": "彤露特調", "name": "話梅綠茶(M)", "price": 45, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "彤露特調", "name": "話梅綠茶(L)", "price": 50, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "彤露特調", "name": "多多綠茶(M)", "price": 45, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "彤露特調", "name": "多多綠茶(L)", "price": 55, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "彤露特調", "name": "特選龍眼花蜜茶(M)", "price": 50, "custom_options": {"蜜量": ["正常蜜", "減蜜"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "彤露特調", "name": "特選龍眼花蜜茶(L)", "price": 55, "custom_options": {"蜜量": ["正常蜜", "減蜜"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "彤露特調", "name": "蜂蜜綠茶(M)", "price": 50, "custom_options": {"茶底": ["紅", "青"], "蜜量": ["正常蜜", "減蜜"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "彤露特調", "name": "蜂蜜綠茶(L)", "price": 55, "custom_options": {"茶底": ["紅", "青"], "蜜量": ["正常蜜", "減蜜"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "彤露特調", "name": "蜂蜜檸檬(L)", "price": 55, "custom_options": {"蜜量": ["正常蜜", "減蜜"], "冰量": ["正常冰", "少冰", "微冰", "去冰"], "備註": ["僅標單一價，已判定為 L，待確認"]}}, {"category": "彤露特調", "name": "金桔檸檬(L)", "price": 55, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰"], "備註": ["僅標單一價，已判定為 L，待確認"]}}, {"category": "彤露特調", "name": "百香多多(L)", "price": 55, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰"]}}, {"category": "彤露特調", "name": "冬瓜雙Q果(L)", "price": 55, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰"], "備註": ["含波霸x椰果"]}}, {"category": "翠粹甘草芭樂", "name": "翠粹甘草芭樂(60/包)", "price": 60, "custom_options": {"口味": ["招牌無花果", "梅子無花果", "招牌甘草", "金桔檸檬", "金桔甘草", "檸檬梅子", "檸檬無花果"], "備註": ["口味任選，每包 60 元"]}}, {"category": "招牌古法黑糖", "name": "黑糖波霸鮮奶(M)", "price": 60, "custom_options": {"甜度": ["1分", "3分", "正常"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "備註": ["甜度來自黑糖"]}}, {"category": "招牌古法黑糖", "name": "黑糖波霸鮮奶(L)", "price": 70, "custom_options": {"甜度": ["1分", "3分", "正常"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "備註": ["甜度來自黑糖"]}}, {"category": "招牌古法黑糖", "name": "黑糖仙草凍鮮奶(M)", "price": 60, "custom_options": {"甜度": ["1分", "3分", "正常"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "備註": ["甜度來自黑糖"]}}, {"category": "招牌古法黑糖", "name": "黑糖仙草凍鮮奶(L)", "price": 70, "custom_options": {"甜度": ["1分", "3分", "正常"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "備註": ["甜度來自黑糖"]}}, {"category": "招牌古法黑糖", "name": "黑糖波霸咖啡鮮奶(M)", "price": 90, "custom_options": {"甜度": ["1分", "3分", "正常"], "冰量": ["正常冰", "少冰", "微冰", "去冰"], "備註": ["甜度來自黑糖"]}}, {"category": "招牌古法黑糖", "name": "黑糖波霸咖啡鮮奶(L)", "price": 100, "custom_options": {"甜度": ["1分", "3分", "正常"], "冰量": ["正常冰", "少冰", "微冰", "去冰"], "備註": ["甜度來自黑糖"]}}, {"category": "招牌古法黑糖", "name": "黑糖波霸仙草凍鮮奶(M)", "price": 65, "custom_options": {"甜度": ["1分", "3分", "正常"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "備註": ["甜度來自黑糖"]}}, {"category": "招牌古法黑糖", "name": "黑糖波霸仙草凍鮮奶(L)", "price": 75, "custom_options": {"甜度": ["1分", "3分", "正常"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "備註": ["甜度來自黑糖"]}}, {"category": "招牌古法黑糖", "name": "黑糖布丁鮮奶(M)", "price": 70, "custom_options": {"甜度": ["1分", "3分", "正常"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "備註": ["甜度來自黑糖"]}}, {"category": "招牌古法黑糖", "name": "黑糖布丁鮮奶(L)", "price": 85, "custom_options": {"甜度": ["1分", "3分", "正常"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "備註": ["甜度來自黑糖"]}}, {"category": "招牌古法黑糖", "name": "黑糖鮮奶(M)", "price": 70, "custom_options": {"甜度": ["1分", "3分", "正常"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "備註": ["甜度來自黑糖"]}}, {"category": "招牌古法黑糖", "name": "黑糖鮮奶(L)", "price": 85, "custom_options": {"甜度": ["1分", "3分", "正常"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "備註": ["甜度來自黑糖"]}}, {"category": "一番鮮100%特級鮮乳", "name": "經典紅茶拿鐵(M)", "price": 50, "custom_options": {"茶底": ["紅", "烏", "青"], "甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "一番鮮100%特級鮮乳", "name": "經典紅茶拿鐵(L)", "price": 60, "custom_options": {"茶底": ["紅", "烏", "青"], "甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "一番鮮100%特級鮮乳", "name": "炒糖鮮奶茶(M)", "price": 50, "custom_options": {"甜度": ["1分", "3分", "正常"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "一番鮮100%特級鮮乳", "name": "炒糖鮮奶茶(L)", "price": 60, "custom_options": {"甜度": ["1分", "3分", "正常"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "一番鮮100%特級鮮乳", "name": "黃金蕎麥拿鐵(M)", "price": 55, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "一番鮮100%特級鮮乳", "name": "黃金蕎麥拿鐵(L)", "price": 65, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "一番鮮100%特級鮮乳", "name": "和風玄米拿鐵(M)", "price": 55, "custom_options": {"蜜量": ["1分蜜", "3分蜜"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "備註": ["含蜂蜜"]}}, {"category": "一番鮮100%特級鮮乳", "name": "和風玄米拿鐵(L)", "price": 65, "custom_options": {"蜜量": ["1分蜜", "3分蜜"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"], "備註": ["含蜂蜜"]}}, {"category": "一番鮮100%特級鮮乳", "name": "冬瓜鮮奶茶(M)", "price": 55, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "一番鮮100%特級鮮乳", "name": "冬瓜鮮奶茶(L)", "price": 65, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "一番鮮100%特級鮮乳", "name": "波霸紅茶拿鐵(M)", "price": 55, "custom_options": {"茶底": ["紅", "烏", "青"], "甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "一番鮮100%特級鮮乳", "name": "波霸紅茶拿鐵(L)", "price": 65, "custom_options": {"茶底": ["紅", "烏", "青"], "甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "一番鮮100%特級鮮乳", "name": "粉角紅茶拿鐵(M)", "price": 55, "custom_options": {"茶底": ["紅", "烏", "青"], "甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "一番鮮100%特級鮮乳", "name": "粉角紅茶拿鐵(L)", "price": 65, "custom_options": {"茶底": ["紅", "烏", "青"], "甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "一番鮮100%特級鮮乳", "name": "仙草凍拿鐵(M)", "price": 55, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "一番鮮100%特級鮮乳", "name": "仙草凍拿鐵(L)", "price": 65, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "一番鮮100%特級鮮乳", "name": "布丁烏龍拿鐵(M)", "price": 55, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "一番鮮100%特級鮮乳", "name": "布丁烏龍拿鐵(L)", "price": 65, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "一番鮮100%特級鮮乳", "name": "阿華田拿鐵(M)", "price": 60, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "一番鮮100%特級鮮乳", "name": "阿華田拿鐵(L)", "price": 70, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰", "熱"]}}, {"category": "一番鮮100%特級鮮乳", "name": "桑椹鮮奶(L)", "price": 70, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰"], "備註": ["僅標單一價，已判定為 L，待確認"]}}, {"category": "小農新鮮果汁", "name": "金鑽鳳梨冰茶(M)", "price": 50, "custom_options": {"甜度": ["無糖", "1分糖", "半糖", "正常糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰"], "備註": ["建議無糖/1分糖"]}}, {"category": "小農新鮮果汁", "name": "金鑽鳳梨冰茶(L)", "price": 60, "custom_options": {"甜度": ["無糖", "1分糖", "半糖", "正常糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰"], "備註": ["建議無糖/1分糖"]}}, {"category": "小農新鮮果汁", "name": "甘蔗青茶(M)", "price": 55, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰"]}}, {"category": "小農新鮮果汁", "name": "甘蔗青茶(L)", "price": 60, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰"]}}, {"category": "小農新鮮果汁", "name": "青檸烏龍(M)", "price": 55, "custom_options": {"茶底": ["紅", "綠", "青"], "甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰"]}}, {"category": "小農新鮮果汁", "name": "青檸烏龍(L)", "price": 60, "custom_options": {"茶底": ["紅", "綠", "青"], "甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰"]}}, {"category": "小農新鮮果汁", "name": "鮮榨冬瓜(M)", "price": 55, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰"]}}, {"category": "小農新鮮果汁", "name": "鮮榨冬瓜(L)", "price": 60, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰"]}}, {"category": "小農新鮮果汁", "name": "鮮榨百香綠茶(M)", "price": 55, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰"]}}, {"category": "小農新鮮果汁", "name": "鮮榨百香綠茶(L)", "price": 60, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰"]}}, {"category": "小農新鮮果汁", "name": "鮮榨葡萄柚綠茶(M)", "price": 55, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰"]}}, {"category": "小農新鮮果汁", "name": "鮮榨葡萄柚綠茶(L)", "price": 60, "custom_options": {"甜度": ["正常糖", "少糖", "半糖", "微糖", "無糖"], "冰量": ["正常冰", "少冰", "微冰", "去冰"]}}, {"category": "小農新鮮果汁", "name": "鮮葡萄柚蜜茶(M)", "price": 55, "custom_options": {"蜜量": ["正常蜜", "減蜜"], "冰量": ["正常冰", "少冰", "微冰", "去冰"]}}, {"category": "小農新鮮果汁", "name": "鮮葡萄柚蜜茶(L)", "price": 60, "custom_options": {"蜜量": ["正常蜜", "減蜜"], "冰量": ["正常冰", "少冰", "微冰", "去冰"]}}, {"category": "小農新鮮果汁", "name": "桑椹檸檬(M)", "price": 65, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰"], "備註": ["甜度固定"]}}, {"category": "小農新鮮果汁", "name": "桑椹檸檬(L)", "price": 70, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰"], "備註": ["甜度固定"]}}, {"category": "小農新鮮果汁", "name": "甘蔗檸檬(M)", "price": 55, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰"]}}, {"category": "小農新鮮果汁", "name": "甘蔗檸檬(L)", "price": 75, "custom_options": {"冰量": ["正常冰", "少冰", "微冰", "去冰"]}}, {"category": "羽吉軒(13:00後供應)", "name": "純原味奶包鯛", "price": 60, "custom_options": {"份量": ["每份五隻小魚"], "加購": ["雙重起司 (+20)"], "備註": ["不供選搭/混裝"]}}, {"category": "羽吉軒(13:00後供應)", "name": "牛奶卡士達", "price": 60, "custom_options": {"份量": ["每份五隻小魚"], "加購": ["雙重起司 (+20)"]}}, {"category": "羽吉軒(13:00後供應)", "name": "蜜紅小紅豆", "price": 60, "custom_options": {"份量": ["每份五隻小魚"], "加購": ["雙重起司 (+20)"]}}, {"category": "羽吉軒(13:00後供應)", "name": "巧克力可可", "price": 65, "custom_options": {"份量": ["每份五隻小魚"], "加購": ["雙重起司 (+20)"]}}, {"category": "羽吉軒(13:00後供應)", "name": "伯爵茶奶油", "price": 65, "custom_options": {"份量": ["每份五隻小魚"], "加購": ["雙重起司 (+20)"]}}, {"category": "羽吉軒(13:00後供應)", "name": "元氣玉米鮪魚", "price": 65, "custom_options": {"份量": ["每份五隻小魚"], "加購": ["雙重起司 (+20)"]}}, {"category": "羽吉軒(13:00後供應)", "name": "田野黑起司", "price": 65, "custom_options": {"份量": ["每份五隻小魚"], "加購": ["雙重起司 (+20)"]}}, {"category": "羽吉軒(13:00後供應)", "name": "德式香腸起司", "price": 70, "custom_options": {"份量": ["每份五隻小魚"], "加購": ["雙重起司 (+20)"]}}, {"category": "羽吉軒(13:00後供應)", "name": "雙重濃起司", "price": 70, "custom_options": {"份量": ["每份五隻小魚"]}}, {"category": "鄭記蔥肉餅(13:00後供應)", "name": "鄭記蔥肉餅", "price": 40, "custom_options": {"備註": ["每片 40 元"]}}]}, {"tc": "TC-02", "tcLabel": "便當/正餐", "name": "佳福川味牛肉麵", "img": "測試菜單/menu_TC-02-01_佳福川味牛肉麵.jpg", "conf": 0.94, "result": [{"type": "scan_summary", "overall_confidence": 0.94, "low_confidence_items": [{"name": "湯餃加購『加牛肚』價格", "issue": "湯餃可加牛肉/加牛肚，『加牛肚』加價數字字體小，原辨識不確定，經團主確認為 +40，已更正"}], "summary_note": "✅ 本次掃描信心良好（0.94）。正餐/麵食類已自動生成『辣度、主食選擇（泡飯/冬粉/蝴蝶麵/Q麵）、加麵』等欄位；餃子生成『內餡（韭菜/高麗菜/各半）』與『加購（加牛肉/加牛肚）』；滷味與小菜為單一價無客製。"}, {"category": "想吃牛", "name": "四川椒麻雙寶牛肉麵", "price": 220, "custom_options": {"辣度": ["小辣", "標準", "中辣", "大辣"], "主食選擇": ["麵", "泡飯", "冬粉", "蝴蝶麵", "Q麵"], "加購": ["加麵 (+15)"]}}, {"category": "想吃牛", "name": "四川椒麻牛肉麵", "price": 170, "custom_options": {"辣度": ["小辣", "標準", "中辣", "大辣"], "主食選擇": ["麵", "泡飯", "冬粉", "蝴蝶麵", "Q麵"], "加購": ["加麵 (+15)"]}}, {"category": "想吃牛", "name": "川味牛肉麵", "price": 150, "custom_options": {"主食選擇": ["麵", "泡飯", "冬粉", "蝴蝶麵", "Q麵"], "加購": ["加麵 (+15)"]}}, {"category": "想吃牛", "name": "四川椒麻牛肉湯麵(無牛肉)", "price": 120, "custom_options": {"辣度": ["小辣", "標準", "中辣", "大辣"], "主食選擇": ["麵", "泡飯", "冬粉", "蝴蝶麵", "Q麵"], "加購": ["加麵 (+15)"]}}, {"category": "想吃牛", "name": "川味牛肉湯麵(無牛肉)", "price": 100, "custom_options": {"主食選擇": ["麵", "泡飯", "冬粉", "蝴蝶麵", "Q麵"], "加購": ["加麵 (+15)"]}}, {"category": "麵麵俱到", "name": "餛飩麵(湯/乾)", "price": 80, "custom_options": {"湯乾": ["湯", "乾"], "加購": ["加餛飩 ($10/3顆)"]}}, {"category": "麵麵俱到", "name": "四川椒麻牛肉乾拌麵", "price": 70, "custom_options": {"辣度": ["小辣", "標準", "中辣", "大辣"], "主食選擇": ["麵", "泡飯", "冬粉"]}}, {"category": "麵麵俱到", "name": "酸辣麵", "price": 70, "custom_options": {}}, {"category": "麵麵俱到", "name": "麻醬麵", "price": 70, "custom_options": {}}, {"category": "麵麵俱到", "name": "府城沙茶乾拌麵", "price": 60, "custom_options": {}}, {"category": "麵麵俱到", "name": "陽春麵(湯/乾)", "price": 50, "custom_options": {"湯乾": ["湯", "乾"]}}, {"category": "麵麵俱到", "name": "肉燥飯(小)", "price": 25, "custom_options": {"配菜": ["酸菜", "蒜泥"]}}, {"category": "麵麵俱到", "name": "肉燥飯(大)", "price": 35, "custom_options": {"配菜": ["酸菜", "蒜泥"]}}, {"category": "吃餃子", "name": "四川椒麻湯餃(10顆)", "price": 145, "custom_options": {"辣度": ["小辣", "標準", "中辣", "大辣"], "內餡": ["韭菜", "高麗菜", "各半"], "加購": ["加牛肉 (+50)", "加牛肚 (+40)"]}}, {"category": "吃餃子", "name": "川味牛肉湯餃(10顆)", "price": 115, "custom_options": {"內餡": ["韭菜", "高麗菜", "各半"], "加購": ["加牛肉 (+50)", "加牛肚 (+40)"]}}, {"category": "吃餃子", "name": "酸辣湯餃(10顆)", "price": 100, "custom_options": {}}, {"category": "吃餃子", "name": "手工水餃(10顆)", "price": 70, "custom_options": {"內餡": ["韭菜", "高麗菜", "各半"]}}, {"category": "吃餃子", "name": "紅油炒手(10顆)", "price": 70, "custom_options": {"辣度": ["小辣", "中辣", "大辣"]}}, {"category": "湯類", "name": "川味牛肉湯(無牛肉)", "price": 50, "custom_options": {"加購": ["加四川椒麻 (+30)", "加牛肉 (+50)"]}}, {"category": "湯類", "name": "餛飩湯", "price": 40, "custom_options": {}}, {"category": "湯類", "name": "酸辣湯", "price": 35, "custom_options": {}}, {"category": "湯類", "name": "魚丸湯", "price": 35, "custom_options": {}}, {"category": "湯類", "name": "青菜豆腐湯", "price": 35, "custom_options": {}}, {"category": "小菜", "name": "麻辣牛肚", "price": 110, "custom_options": {}}, {"category": "小菜", "name": "麻辣鴨血", "price": 40, "custom_options": {}}, {"category": "小菜", "name": "麻辣豆腐", "price": 40, "custom_options": {}}, {"category": "小菜", "name": "麻辣魚蛋", "price": 40, "custom_options": {}}, {"category": "小菜", "name": "麻辣雙拼(豆腐+鴨血)", "price": 40, "custom_options": {}}, {"category": "小菜", "name": "煙燻豬耳朵", "price": 35, "custom_options": {}}, {"category": "小菜", "name": "燙青菜", "price": 40, "custom_options": {}}, {"category": "滷味", "name": "菊花肉(60g)", "price": 55, "custom_options": {}}, {"category": "滷味", "name": "豬耳朵(55g)", "price": 45, "custom_options": {}}, {"category": "滷味", "name": "豬腸瓜(55g)", "price": 55, "custom_options": {}}, {"category": "滷味", "name": "豬腳蹄", "price": 40, "custom_options": {}}, {"category": "滷味", "name": "百頁豆腐", "price": 40, "custom_options": {}}, {"category": "滷味", "name": "黑厚豆干", "price": 25, "custom_options": {}}, {"category": "滷味", "name": "甜不辣", "price": 15, "custom_options": {}}, {"category": "滷味", "name": "黃豆干", "price": 10, "custom_options": {}}, {"category": "滷味", "name": "白豆干", "price": 15, "custom_options": {}}, {"category": "滷味", "name": "豆包", "price": 20, "custom_options": {}}, {"category": "滷味", "name": "海帶", "price": 15, "custom_options": {}}, {"category": "滷味", "name": "米血", "price": 15, "custom_options": {}}, {"category": "滷味", "name": "滷蛋", "price": 10, "custom_options": {}}]}, {"tc": "TC-07", "tcLabel": "手寫/改價", "name": "蔥油餅手寫", "img": "測試菜單/menu_TC-07-01_蔥油餅手寫.png", "conf": 0.92, "result": [{"type": "scan_summary", "overall_confidence": 0.92, "low_confidence_items": [{"name": "捲餅 / 豬肉餡餅 的尺寸標記", "issue": "菜單上『捲餅(一張)』的『一張』與『豬肉餡餅(半張)』的『半張』被藍筆劃掉（刪除線），代表該尺寸標記作廢，已從品名移除"}, {"name": "豬肉餡餅", "issue": "價格經紅筆手寫由 30 改為 35，字跡清楚，已採新價 35；列此提醒團主確認"}, {"name": "韭菜盒(一份)", "issue": "價格經紅筆手寫由 30 改為 35，字跡清楚，已採新價 35；列此提醒團主確認"}], "summary_note": "✅ 整體辨識清晰（信心 0.92）。此為手寫編輯菜單：含『改價』（紅筆 30→35，2 項）與『刪除』（藍筆劃掉尺寸標記，捲餅/豬肉餡餅）。劃線的尺寸已視為刪除、不列入品名。建議團主開單前確認改價與刪除。"}, {"category": "蔥油餅", "name": "蔥油餅(一張)", "price": 120, "custom_options": {"調味": ["原味(含胡椒鹽)", "不要胡椒鹽"]}}, {"category": "蔥油餅", "name": "蔥油餅(半張)", "price": 60, "custom_options": {"調味": ["原味(含胡椒鹽)", "不要胡椒鹽"]}}, {"category": "蔥油餅", "name": "蔥油餅(一份)", "price": 30, "custom_options": {"調味": ["原味(含胡椒鹽)", "不要胡椒鹽"]}}, {"category": "捲餅", "name": "捲餅", "price": 45, "custom_options": {"內餡": ["酸菜+榨菜豆干"], "調味": ["原味(含胡椒鹽)", "不要胡椒鹽"]}}, {"category": "餡餅／盒子", "name": "豬肉餡餅", "price": 35, "custom_options": {"調味": ["原味(含胡椒鹽)", "不要胡椒鹽"], "備註": ["原價 30，紅筆手寫改為 35，待店家確認"]}}, {"category": "餡餅／盒子", "name": "韭菜盒(一份)", "price": 35, "custom_options": {"調味": ["原味(含胡椒鹽)", "不要胡椒鹽"], "備註": ["原價 30，紅筆手寫改為 35，待店家確認"]}}]}, {"tc": "TC-02", "tcLabel": "便當/正餐", "name": "永吉便當", "img": "測試菜單/menu_TC-02-02_永吉便當.jpg", "conf": 0.46, "result": [{"type": "scan_summary", "overall_confidence": 0.46, "low_confidence_items": [{"name": "鮭魚飯 / 金線魚飯 / 土魠魚飯", "issue": "價格標示為『時價』，無固定金額，price 以 null 表示"}, {"name": "鹽酥魚飯 / 筋肉飯 / 燒肉飯 / 魚肚飯 價格", "issue": "招牌為低解析度且傾斜，價格數字（100/110）對應的品項不易精確對齊，數值待確認"}, {"name": "整體", "issue": "此為店面招牌照片、非完整菜單，品名與價格皆需團主重新確認"}], "summary_note": "⚠️ 本張為低解析度便當招牌（信心 0.46）。多數魚類為『時價』已標 null，其餘價格因傾斜對齊不確定。系統未硬填價格，建議團主重拍清晰菜單。"}, {"category": "便當", "name": "鮭魚飯", "price": null, "custom_options": {"備註": ["時價，請洽店家"]}}, {"category": "便當", "name": "金線魚飯", "price": null, "custom_options": {"備註": ["時價，請洽店家"]}}, {"category": "便當", "name": "土魠魚飯", "price": null, "custom_options": {"備註": ["時價，請洽店家"]}}, {"category": "便當", "name": "鹽酥魚飯", "price": 100, "custom_options": {"備註": ["招牌模糊，價格疑似 100，待確認"]}}, {"category": "便當", "name": "筋肉飯", "price": 110, "custom_options": {"備註": ["招牌模糊，品名與價格待確認"]}}, {"category": "便當", "name": "燒肉飯", "price": 100, "custom_options": {"備註": ["招牌模糊，價格疑似 100，待確認"]}}, {"category": "便當", "name": "魚肚飯", "price": 110, "custom_options": {"備註": ["招牌模糊，價格疑似 110，待確認"]}}]}, {"tc": "TC-06", "tcLabel": "模糊邊界", "name": "蔥肉餅模糊", "img": "測試菜單/menu_TC-06-01_蔥肉餅模糊.jpeg", "conf": 0.42, "result": [{"type": "scan_summary", "overall_confidence": 0.42, "low_confidence_items": [{"name": "整張菜單", "issue": "圖片解析度極低且反光，多數品項名稱與價格無法可靠辨識，以下為僅能勉強判讀的部分，數值高度不確定"}, {"name": "加蛋／加蔬菜價格", "issue": "數字模糊，疑似 40 與 45，但無法確認"}], "summary_note": "⚠️ 本張為低解析度小圖，整體信心僅 0.42。系統選擇『不硬猜』，僅輸出可勉強判讀者並全部標為低信心。建議團主重拍清晰菜單後再開單。"}, {"category": "蔥肉餅(疑似)", "name": "原味蔥肉餅", "price": 30, "custom_options": {"調味": ["原味", "加辣"], "備註": ["品名與價格皆模糊，待重拍確認"]}}, {"category": "蔥肉餅(疑似)", "name": "加蛋", "price": 40, "custom_options": {"備註": ["價格模糊，疑似 40，待確認"]}}, {"category": "蔥肉餅(疑似)", "name": "加蔬菜", "price": 45, "custom_options": {"備註": ["價格模糊，疑似 45，待確認"]}}]}, {"tc": "TC-06", "tcLabel": "模糊邊界", "name": "魔王炸雞排模糊", "img": "測試菜單/menu_TC-06-02_魔王炸雞排模糊.png", "conf": 0.38, "result": [{"type": "scan_summary", "overall_confidence": 0.38, "low_confidence_items": [{"name": "所有主餐與小菜價格", "issue": "圖片過小且文字密集，逐項價格數字無法辨識，僅能讀出店名、電話與套餐名稱"}, {"name": "A餐超值組內容", "issue": "可看到『三肉串+季節菜+80$』字樣，但組合細節與是否含飲料無法確認"}], "summary_note": "⚠️ 本張為低解析度小圖（炸物便當類），整體信心僅 0.38。系統未捏造任何品項價格，僅保留可確認的店家資訊與套餐名稱，其餘請團主重拍後再解析。"}, {"category": "店家資訊", "name": "魔王炸雞排 台南永和店", "price": null, "custom_options": {"電話": ["06-2906711"], "地址": ["台南市東區崇善路117號"], "備註": ["店家資訊可辨識，品項價格不可辨識"]}}, {"category": "超值套餐(疑似)", "name": "A餐超值組", "price": null, "custom_options": {"主餐": ["三肉串"], "附餐": ["季節菜"], "備註": ["疑似標示『+80$』，組合細節不明，請洽店家確認"]}}]}, {"tc": "TC-09", "tcLabel": "抗幻覺(非菜單)", "name": "羊粑粑", "img": "測試菜單/menu_TC-09-01_羊粑粑.jpg", "conf": 0.0, "result": [{"type": "scan_summary", "overall_confidence": 0.0, "low_confidence_items": [], "summary_note": "⛔ 這張圖片不是菜單（內容為戶外場景中的數隻羊），無任何餐點品項、分類或價格可供擷取。系統未捏造任何品項。請團主改上傳店家菜單照片。", "is_menu": false}]}];
 var $ = function(s){ return document.querySelector(s); };
-var imgB64 = null, imgType = null, gFileName = '';
+var imgB64 = null, imgType = null, gFileName = '', gShopName = '';
 
 function escapeHtml(s){ return (s==null?'':String(s)).replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
 
@@ -484,23 +498,36 @@ function repairArray(text){
 }
 
 /* ---- gallery ---- */
-function confColor(c){ return c>=0.95 ? 'var(--good)' : (c<0.5 ? 'var(--bad)' : 'var(--warn)'); }
+function confColor(c){ return c>=0.95 ? '#0F6E56' : (c<0.5 ? '#B4291A' : '#8A5712'); }
+/* 每張範例「在演什麼」：低信心/非菜單=抗幻覺擋下、高信心但有待確認欄位=高信心仍需確認、其餘=辨識清晰 */
+function sampleRole(s){
+  var r=(s.result||[]), sum=null;
+  for(var k=0;k<r.length;k++){ if(r[k] && (r[k].type==='scan_summary' || r[k].overall_confidence!=null || r[k].is_menu!=null)){ sum=r[k]; break; } }
+  var low = (sum && sum.low_confidence_items) ? sum.low_confidence_items.length : 0;
+  var notMenu = sum && sum.is_menu===false;
+  if((s.conf||0) < 0.5 || notMenu) return {t:'🛡 抗幻覺·擋下', c:'bad'};
+  if(low > 0) return {t:'✎ 高信心仍需確認', c:'warn'};
+  return {t:'✅ 辨識清晰', c:'ok'};
+}
 function buildGallery(){
   var g = $('#gallery'), html='';
   SAMPLES.forEach(function(s, i){
     var pct = Math.round(s.conf*100);
+    var role = sampleRole(s);
     var imgStyle = s.img ? ('background-image:url("'+s.img+'")') : '';
     html += '<div class="thumb" data-i="'+i+'">'
       + '<div class="imgbox" style="'+imgStyle+'">'+(s.img?'':'（無縮圖）')+'</div>'
       + '<div class="meta"><div class="nm">'+escapeHtml(s.name)+'</div>'
       + '<div class="tc">'+s.tc+' · '+escapeHtml(s.tcLabel)+'</div>'
-      + '<div class="cf" style="color:'+confColor(s.conf)+'">信心 '+pct+'%</div></div></div>';
+      + '<div class="cf" style="color:'+confColor(s.conf)+'">信心 '+pct+'%</div>'
+      + '<div class="srole srole-'+role.c+'">'+role.t+'</div></div></div>';
   });
   g.innerHTML = html;
   g.querySelectorAll('.thumb').forEach(function(t){
     t.addEventListener('click', function(){
       var s = SAMPLES[+t.getAttribute('data-i')];
-      render(s.result, '範例菜單：'+s.name+'（'+s.tc+' '+s.tcLabel+'）· 預存結果', s.img);
+      gShopName = s.name;   // 範例菜單用店名當開團店名（否則會落到「菜單」）
+      render(s.result, '已辨識菜單：'+s.name+'（'+s.tc+' '+s.tcLabel+'）· 預存結果', s.img);
       collapseGallery();
       $('#result').scrollIntoView({behavior:'smooth', block:'start'});
     });
@@ -520,6 +547,8 @@ fileInput.addEventListener('change', function(e){ if(e.target.files[0]) loadFile
 function loadFile(f){
   if(!f.type || f.type.indexOf('image/')!==0){ alert('請上傳圖片檔'); return; }
   gFileName = f.name || '上傳菜單';
+  // 上傳檔：用檔名去掉副檔名與常見前綴當店名（例：menu_金茶伍季節限定.jpg → 金茶伍季節限定）
+  gShopName = gFileName.replace(/\.[^.]+$/, '').replace(/^(menu|result|img|image|photo)[_\-\s]*/i, '').trim();
   var reader = new FileReader();
   reader.onload = function(e){
     var img = new Image();
@@ -573,7 +602,7 @@ async function runOCR(){
   var key = $('#key').value.trim();
   if(!imgB64){ alert('請先上傳菜單'); return; }
   if(!key){
-    $('#status').innerHTML = '<div class="err">需要 API Key 才能真即時解析。你也可以直接點下方任一張範例菜單看預存結果。</div>';
+    $('#status').innerHTML = '<div class="err">需要 API Key 才能真即時解析。你也可以直接點下方任一份已辨識菜單看預存結果。</div>';
     return;
   }
   var provider = $('#provider').value;
@@ -676,10 +705,10 @@ async function runOCR(){
     clearInterval(timer); clearTimeout(killer);
     var es = ((Date.now()-t0)/1000).toFixed(1);
     var msg = (err && err.name === 'AbortError')
-      ? '超過 120 秒自動中止 — 菜單可能太大或網路較慢。上方已顯示的品項仍可參考；建議改用範例、或把菜單分區後再上傳。'
+      ? '超過 120 秒自動中止 — 菜單可能太大或網路較慢。上方已顯示的品項仍可參考；建議改用已辨識菜單、或把菜單分區後再上傳。'
       : err.message;
     $('#status').innerHTML = '<div class="err">即時解析中止（耗時 '+es+' 秒）：'+escapeHtml(msg)+'</div>'
-      + '<button class="mini" id="fb">改用範例菜單看結果</button>';
+      + '<button class="mini" id="fb">改用已辨識菜單看結果</button>';
     var fb = $('#fb'); if(fb) fb.addEventListener('click', function(){ $('#gallery').scrollIntoView({behavior:'smooth'}); });
     logRun({ menu: gFileName, model: $('#model').value, secs: es, items: (gItems||0), chars: (typeof raw==='string'?raw.length:0), status: (err && err.name==='AbortError') ? '逾時中止' : '失敗' });
   }finally{
@@ -720,12 +749,12 @@ function render(arr, sourceLabel, imgSrc){
       + '<button class="optbtn" data-act="reupload" style="margin-top:10px">↻ 重新上傳</button></div>';
   } else {
     right += '<h2 style="font-size:15px;margin:0 0 4px">填單預覽 <span class="pill">'+items.length+' 個品項 · 團主可隱藏/刪改</span></h2>';
-    right += '<div class="curatehint">團主視角：品項可「隱藏／刪除」、選項可「×」移除——<b>全部可還原（再點一次即恢復）</b>；時價品項需先決定處理方式（OCR 給草稿，團主做減法）。</div>';
+    right += '<div class="curatehint">團主可<b>點品名或價格直接修改</b>，或隱藏／刪除品項；時價或 $0 品項需先決定處理方式。</div>';
     if(storeDefaults){
-      right += '<div class="storedef"><div class="hd">全店通用選項（糖／冰／加料，已套用至下列所有品項）</div>';
+      right += '<div class="storedef"><div class="hd">全店通用選項（已套用至所有品項，點 × 可整批移除）</div>';
       Object.keys(storeDefaults).forEach(function(k){
         right += '<div class="opt"><div class="k">'+escapeHtml(k)+'</div><div class="chips">';
-        (storeDefaults[k]||[]).forEach(function(v){ right += '<span class="chip">'+escapeHtml(String(v))+'</span>'; });
+        (storeDefaults[k]||[]).forEach(function(v){ right += '<span class="chip">'+escapeHtml(String(v))+'<span class="x" data-act="rmstore">×</span></span>'; });
         right += '</div></div>';
       });
       right += '</div>';
@@ -745,10 +774,10 @@ function render(arr, sourceLabel, imgSrc){
       right += '<div class="cat"><span>'+escapeHtml(cat)+(isAddon?' <span class="tbadge">加購／升級</span>':'')+'</span><button class="mbtn" data-act="hidecat">隱藏整類</button></div>';
       if(isAddon){ right += '<div class="addonnote">這是「加購／升級」項目：需搭配主餐購買、價格以加價（＋$）顯示。例：小木屋每份鬆餅限加購一份套餐。</div>'; }
       groups[cat].forEach(function(it){
-        var isNull = (it.price===null||it.price===undefined);
-        var priceHtml = isNull ? '<span class="tbadge">時價 · 需處理</span>'
-          : (isAddon ? '<span class="price addon">＋$'+it.price+'</span>' : '<span class="price">$'+it.price+'</span>');
-        right += '<div class="item"><div class="top"><span class="name">'+escapeHtml(it.name||'')+'</span>'
+        var isNull = (it.price===null||it.price===undefined||it.price===0);
+        var priceHtml = isNull ? '<span class="tbadge">'+(it.price===0?'$0 · 需確認':'時價 · 需處理')+'</span>'
+          : (isAddon ? '<span class="price addon" contenteditable="true" spellcheck="false">＋$'+it.price+'</span>' : '<span class="price" contenteditable="true" spellcheck="false">$'+it.price+'</span>');
+        right += '<div class="item"><div class="top"><span class="name" contenteditable="true" spellcheck="false">'+escapeHtml(it.name||'')+'</span>'
           + '<span class="ctl">'+priceHtml
           + '<button class="mbtn" data-act="hide">隱藏</button><button class="mbtn" data-act="del">刪除</button></span></div>';
         if(isNull){
@@ -777,9 +806,11 @@ function render(arr, sourceLabel, imgSrc){
     } else if(lowButItems){
       right += '<div class="reupload warn">⚠️ 整體辨識信心偏低（'+Math.round(conf0*100)+'%），部分品項可能有誤，請先逐項確認。建議重新上傳更清晰的照片；若已確認過，也可編輯後開團。'
         + '<button class="optbtn" data-act="reupload" style="margin-top:10px">↻ 重新上傳</button></div>';
-      right += '<button class="openteam" data-act="openteam">已逐項確認，編輯後開團 →</button>';
+      right += '<div class="copynote">📝 波波也順手擬了 <b>3 種開團文案</b>，到開團面板挑一個就好。</div>';
+      right += '<button class="openteam" data-act="openteam">已逐項確認，去設定開團 →</button>';
     } else {
-      right += '<button class="openteam" data-act="openteam">✅ 用這份菜單開團 →</button>';
+      right += '<div class="copynote">📝 波波也順手擬了 <b>3 種開團文案</b>，到開團面板挑一個就好。</div>';
+      right += '<button class="openteam" data-act="openteam">✅ 用這份菜單，去設定開團 →</button>';
     }
   }
 
@@ -800,6 +831,17 @@ function render(arr, sourceLabel, imgSrc){
 }
 
 $('#lb').addEventListener('click', function(){ this.classList.remove('on'); });
+/* 團主就地編輯品名／價格：Enter 收尾、失焦時清理(價格只留數字) */
+$('#result').addEventListener('keydown', function(e){ if(e.key==='Enter' && e.target.isContentEditable){ e.preventDefault(); e.target.blur(); } });
+$('#result').addEventListener('focusout', function(e){ var el=e.target; if(!el.classList) return;
+  if(el.classList.contains('price')){
+    var d=el.textContent.replace(/[^0-9]/g,''); var pre=el.classList.contains('addon')?'＋$':'$';
+    if(!d || d==='0'){ el.textContent=pre+'0'; el.style.boxShadow='0 0 0 2px rgba(224,133,26,.55)';
+      alert('💡 此品項價格目前為 $0，請再次確認是否正確。'); }
+    else { el.textContent=pre+d; el.style.boxShadow=''; }
+  }
+  else if(el.classList.contains('name')){ el.textContent=el.textContent.trim(); }
+});
 
 /* ---- 測試紀錄（自動記錄每次即時解析的績效）---- */
 var RUNLOG = [];
@@ -809,7 +851,7 @@ function logRun(rec){
   var c = $('#logcard'); if(!c) return;
   c.style.display = '';
   $('#logcount').textContent = RUNLOG.length + ' 筆';
-  var h = '<table style="width:100%;border-collapse:collapse;font-size:12.5px;white-space:nowrap">'
+  var h = '<table style="width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap">'
     + '<tr style="color:var(--muted);text-align:left"><th style="padding:4px 6px">#</th><th>時間</th><th>菜單</th><th>模型</th><th>耗時(s)</th><th>品項</th><th>輸出字數</th><th>狀態</th></tr>';
   RUNLOG.forEach(function(r,i){
     var col = r.status==='完成' ? 'var(--good)' : (r.status==='截斷' ? 'var(--warn)' : 'var(--bad)');
@@ -852,11 +894,26 @@ $('#result').addEventListener('click', function(e){
   } else if(act === 'rmopt'){
     var chip = t.closest('.chip');
     if(chip){ chip.classList.toggle('off'); t.textContent = chip.classList.contains('off') ? '↺' : '×'; }
+  } else if(act === 'rmstore'){
+    // 全店通用選項：在頂部移除某個值 → 連動所有品項中相同(選項類別+值)的 chip 一起停用
+    var schip = t.closest('.chip'); if(!schip) return;
+    var sg = schip.closest('.opt'); var skEl = sg && sg.querySelector('.k');
+    var sk = skEl ? skEl.textContent.trim() : '';
+    var sv = (schip.childNodes[0] && schip.childNodes[0].textContent || '').replace(/[×↺]/g,'').trim();
+    var soff = !schip.classList.contains('off');
+    schip.classList.toggle('off', soff); t.textContent = soff ? '↺' : '×';
+    document.querySelectorAll('#result .item .opt').forEach(function(o){
+      var ok = o.querySelector('.k'); if(!ok || ok.textContent.trim()!==sk) return;
+      o.querySelectorAll('.chip').forEach(function(c){
+        var cv = (c.childNodes[0] && c.childNodes[0].textContent || '').replace(/[×↺]/g,'').trim();
+        if(cv===sv){ c.classList.toggle('off', soff); var cx=c.querySelector('.x'); if(cx) cx.textContent = soff ? '↺' : '×'; }
+      });
+    });
   } else if(act === 'setprice'){
     var p = prompt('請輸入此品項價格（純數字）：');
     if(p !== null && p !== ''){
       var badge = item.querySelector('.top .tbadge');
-      if(badge){ badge.outerHTML = '<span class="price">$'+(parseInt(p,10)||0)+'</span>'; }
+      if(badge){ badge.outerHTML = '<span class="price" contenteditable="true" spellcheck="false">$'+(parseInt(p,10)||0)+'</span>'; }
       var tp = item.querySelector('.tprice'); if(tp) tp.remove();
     }
   } else if(act === 'onsite'){
@@ -891,27 +948,69 @@ function collectCuratedMenu(){
       var price = null, priceEl = item.querySelector('.price');
       if(priceEl){ var digits = priceEl.textContent.replace(/[^0-9]/g,''); if(digits) price = parseInt(digits,10); }
       if(price === null && item.querySelector('.top .tbadge')) return; // 未處理的時價品項不帶入
-      var opts = [];
+      var opts = [], options = [];
       item.querySelectorAll('.opt').forEach(function(o){
         var kEl = o.querySelector('.k'); var k = kEl ? kEl.textContent.trim() : '';
-        var vals = [];
+        if(/備註|註記|標記|電話|說明|提醒/.test(k)) return;   // OCR 給團主看的辨識備註/標記，不帶進點餐選項
+        var vals = [], gvals = [];
         o.querySelectorAll('.chip').forEach(function(c){
           if(c.classList.contains('off')) return;
           var txt = (c.childNodes[0] && c.childNodes[0].textContent || c.textContent).replace(/[×↺]/g,'').trim();
-          if(txt) vals.push(txt);
+          if(!txt) return;
+          vals.push(txt);
+          var mm = txt.match(/^(.*?)\s*[（(]?\s*[＋+]\s*\$?(\d+)\s*[）)]?\s*$/);
+          if(mm){ gvals.push({name:mm[1].trim(), add:parseInt(mm[2],10)||0}); }
+          else { gvals.push({name:txt, add:0}); }
         });
-        if(vals.length) opts.push(k + '：' + vals.join('/'));
+        if(vals.length){ opts.push(k + '：' + vals.join('/')); options.push({k:k, vals:gvals, multi:/加料|配料|加購|加值/.test(k)}); }
       });
-      out.push({ name:name, price:(price==null?0:price), opts:(opts.join('；') || '無加選'), category:cat });
+      var _s=function(x){return String(x==null?'':x).replace(/[<>]/g,'');};   // 去掉 < > 避免下游被當 HTML
+      out.push({ name:_s(name), price:(price==null?0:price), opts:_s(opts.join('；') || '無加選'), options:options, category:_s(cat) });
     });
   });
   return out;
 }
+/* 波波「快樂夥伴」：辨識合格後順手擬 3 種開團文案（3 種梗路線）。
+   店名寫死、截單時間留 {cutoff} 佔位，由開團面板依實際截單時間填入。整則最多一個 emoji。 */
+/* 依品項判斷店型：便當/正餐 meal、下午茶/點心 snack、飲料 drink（預設） */
+function boboShopType(items){
+  var meal=0, snack=0, drink=0;
+  (items||[]).forEach(function(it){
+    var s=((it.name||'')+' '+(it.category||'')+' '+(it.opts||''));
+    if(/便當|飯|麵|定食|餐盒|焢肉|排骨|雞腿|滷|燴|粥|水餃|鍋|咖哩/.test(s)) meal++;
+    else if(/鬆餅|蛋糕|餅|甜甜圈|布丁|鹽酥|炸|薯|雞塊|點心|吐司|貝果|可頌|塔|鬆/.test(s)) snack++;
+    else if(/茶|奶|咖啡|拿鐵|果汁|冰沙|氣泡|多多|檸檬|可可|豆漿|飲|昔/.test(s)) drink++;
+  });
+  if(meal>=snack && meal>=drink && meal>0) return 'meal';
+  if(snack>=drink && snack>0) return 'snack';
+  return 'drink';
+}
+/* 依店型給 3 種梗路線文案（結構刻意不一樣；店名寫死、{cutoff} 佔位；整則最多一個 emoji） */
+function boboCopyTemplates(shop, type){
+  var T={
+    drink:[
+      {route:'tired',     label:'😴 下午睏意', text:'下午睏意發作，需要一杯續命。'+shop+' 開團，{cutoff} 截單，晚一步只能看我喝 👇'},
+      {route:'wednesday', label:'🗓 週三厭世', text:'禮拜三血條見底，開個 '+shop+' 補補血。{cutoff} 前填一填，太慢的只能聞味道 👇'},
+      {route:'treat',     label:'🎁 有人請客', text:'難得有人請喝的！'+shop+' 開團，{cutoff} 截單，這波不喝對不起自己 👇'}
+    ],
+    meal:[
+      {route:'tired',     label:'😴 中午發懶', text:'中午吃什麼想破頭，直接開 '+shop+' 的團。{cutoff} 截單，晚了只能啃鍵盤 👇'},
+      {route:'wednesday', label:'🗓 週三厭世', text:'禮拜三沒力氣走出去，開個 '+shop+' 補頓正餐。{cutoff} 截單，手刀跟上 👇'},
+      {route:'treat',     label:'🎁 有人請客', text:'難得有人請吃飯！'+shop+' 開團，{cutoff} 截單，這頓不吃虧大了 👇'}
+    ],
+    snack:[
+      {route:'tired',     label:'😴 嘴饞想睡', text:'下午嘴饞又想睡，開個 '+shop+' 續個嘴。{cutoff} 截單，慢了就沒你的份 👇'},
+      {route:'wednesday', label:'🗓 週三厭世', text:'禮拜三需要一點甜的續命，'+shop+' 開團！{cutoff} 截單，太慢只能看照片 👇'},
+      {route:'treat',     label:'🎁 有人請客', text:'難得有人請下午茶！'+shop+' 開團，{cutoff} 截單，嘴甜的手刀來 👇'}
+    ]
+  };
+  return T[type]||T.drink;
+}
 function openTeam(){
   var items = collectCuratedMenu();
   if(!items.length){ alert('目前沒有可開團的品項（可能都被隱藏，或時價尚未處理）。'); return; }
-  var shop = (gFileName || '菜單').replace(/\.[^.]+$/, '');
-  var payload = { shop:shop, items:items, ts:Date.now() };
+  var shop = (gShopName || (gFileName||'').replace(/\.[^.]+$/, '').replace(/^(menu|result|img|image|photo)[_\-\s]*/i, '').trim() || '這家店').replace(/[<>]/g,'').trim();
+  var payload = { shop:shop, items:items, copies:boboCopyTemplates(shop, boboShopType(items)), ts:Date.now() };
   var json = JSON.stringify(payload);
   try{ localStorage.setItem('bobo_open_team_menu', json); }catch(_){}
   // 內嵌於整合 Demo（LIFF）時：回拋給外殼，由外殼載入開團面板；否則自行跳轉。
@@ -932,7 +1031,8 @@ function autoLoadSample(){
   SAMPLES.forEach(function(s,i){ if(s.name===nm) idx=i; });
   if(idx<0) return;
   var s=SAMPLES[idx];
-  render(s.result,'範例菜單：'+s.name+'（已辨識過 · 預存結果）',s.img);
+  gShopName = s.name;   // 由整合 Demo 帶入的範例：用店名當開團店名
+  render(s.result,'已辨識菜單：'+s.name+'（已辨識過 · 預存結果）',s.img);
   collapseGallery();
   setTimeout(function(){ var r=$('#result'); if(r) r.scrollIntoView({behavior:'smooth',block:'start'}); },60);
 }

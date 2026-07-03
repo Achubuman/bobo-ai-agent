@@ -6,30 +6,31 @@
 <title>波波｜團主開團面板</title>
 <style>
 :root {
-  --coral:#E8674C; --coral-d:#cf4f37; --coral-light:#fdf0ec;
-  --teal:#1E9E84; --teal-light:#e8f6f3;
-  --amber:#E8A019; --amber-light:#fef7e8;
-  --purple-light:#f5f0fc; --purple:#6b4fc4;
-  --ink:#231F2B; --ink-soft:#4a4553; --muted:#6b6671;
-  --cream:#F6EFE7; --card:#ffffff; --line:#e7e0d6;
+  --coral:#E5462F; --coral-d:#C5371F; --coral-light:#FCEBE6;
+  --teal:#1E9E6B; --teal-light:#E7F4EE;
+  --amber:#E0851A; --amber-light:#FBEFD9;
+  --purple-light:#EAEEF3; --purple:#4E6A87;
+  --ink:#231613; --ink-soft:#5C524E; --muted:#6E655E;
+  --cream:#FCF6F4; --card:#ffffff; --line:#EEE4DF;
   --font:"PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
-  --shadow:0 2px 8px rgba(60,40,30,.10);
+  --shadow:0 4px 12px rgba(60,30,20,.08);
+  --ring:0 0 0 3px rgba(229,70,47,.15);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;}
 body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:430px;margin:0 auto;min-height:100vh;}
 
 /* ── Header ── */
-.hdr{background:linear-gradient(135deg,var(--coral),#f0855f);color:#fff;padding:14px 16px 12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(232,103,76,.35);}
+.hdr{background:var(--coral);color:#fff;padding:14px 16px 12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(229,70,47,.30);}
 .hdr-top{display:flex;align-items:center;gap:10px;}
 .hdr-logo{width:36px;height:36px;background:rgba(255,255,255,.22);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;flex-none;}
-.hdr-info h1{font-size:15.5px;font-weight:700;}
-.hdr-info p{font-size:11.5px;opacity:.85;margin-top:1px;}
+.hdr-info h1{font-size:16px;font-weight:700;}
+.hdr-info p{font-size:12px;opacity:.95;margin-top:1px;}
 .hdr-pill{margin-left:auto;background:rgba(255,255,255,.2);border-radius:20px;padding:4px 10px;font-size:11px;font-weight:600;white-space:nowrap;}
 
 /* ── Tabs ── */
 .tabs{display:flex;background:#fff;border-bottom:1.5px solid var(--line);position:sticky;top:64px;z-index:90;}
-.tab{flex:1;padding:10px 4px 9px;text-align:center;font-size:11.5px;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1.5px;transition:.15s;font-weight:500;line-height:1.3;}
+.tab{flex:1;padding:10px 4px 9px;text-align:center;font-size:12px;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1.5px;transition:.15s;font-weight:500;line-height:1.3;}
 .tab .ti{font-size:16px;display:block;margin-bottom:2px;}
 .tab.active{color:var(--coral);border-bottom-color:var(--coral);font-weight:700;}
 
@@ -45,9 +46,9 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
 /* ── Fields ── */
 .field{margin-bottom:10px;}
 .field:last-child{margin-bottom:0;}
-.field label{font-size:11.5px;color:var(--muted);display:block;margin-bottom:4px;font-weight:600;letter-spacing:.2px;}
-.field input,.field select{width:100%;padding:9px 11px;border:1.5px solid var(--line);border-radius:9px;font-size:13.5px;font-family:var(--font);color:var(--ink);background:#fff;transition:border-color .15s;-webkit-appearance:none;}
-.field input:focus,.field select:focus{outline:none;border-color:var(--coral);}
+.field label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px;font-weight:600;letter-spacing:.2px;}
+.field input,.field select{width:100%;padding:9px 11px;border:1.5px solid var(--line);border-radius:10px;font-size:14px;font-family:var(--font);color:var(--ink);background:#fff;transition:border-color .15s;-webkit-appearance:none;}
+.field input:focus,.field select:focus{outline:none;border-color:var(--coral);box-shadow:var(--ring);}
 .field-row{display:flex;gap:10px;}
 .field-row .field{flex:1;}
 
@@ -55,13 +56,13 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
 .pr{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);}
 .pr:last-child{border-bottom:none;padding-bottom:0;}
 .av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-none;}
-.pname{font-size:13.5px;font-weight:600;flex:1;}
-.psub{font-size:11.5px;color:var(--muted);margin-top:1px;}
+.pname{font-size:14px;font-weight:600;flex:1;}
+.psub{font-size:12px;color:var(--muted);margin-top:1px;}
 
 /* ── Toggle ── */
 .tog{position:relative;width:40px;height:22px;flex-none;}
 .tog input{opacity:0;width:0;height:0;position:absolute;}
-.sl{position:absolute;inset:0;background:#ddd;border-radius:22px;cursor:pointer;transition:.2s;}
+.sl{position:absolute;inset:0;background:#DAD4CC;border-radius:22px;cursor:pointer;transition:.2s;}
 .sl::before{content:"";position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;left:3px;bottom:3px;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:.2s;}
 .tog input:checked+.sl{background:var(--coral);}
 .tog input:checked+.sl::before{transform:translateX(18px);}
@@ -71,12 +72,12 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
 .mi:last-child{border-bottom:none;}
 .mi-name{flex:1;font-size:13px;line-height:1.4;}
 .mi-sub{font-size:11px;color:var(--muted);}
-.mi-price{font-size:13.5px;font-weight:700;color:var(--coral-d);white-space:nowrap;}
+.mi-price{font-size:14px;font-weight:700;color:var(--coral-d);white-space:nowrap;}
 .mi-del{color:var(--muted);font-size:18px;cursor:pointer;padding:8px 10px;line-height:1;transition:color .15s;}
 .mi-del:hover{color:var(--coral);}
 .mi.mi-off{opacity:.4;}
 .mi.mi-off .mi-name{text-decoration:line-through;}
-.mcattabs{display:flex;gap:7px;overflow-x:auto;padding:2px 0 10px;position:sticky;top:0;background:var(--cream,#F6EFE7);z-index:5;-webkit-overflow-scrolling:touch;}
+.mcattabs{display:flex;gap:7px;overflow-x:auto;padding:2px 0 10px;position:sticky;top:0;background:var(--cream,#FCF6F4);z-index:5;-webkit-overflow-scrolling:touch;}
 .mcattabs::-webkit-scrollbar{height:0;}
 .mcattab{flex:none;border:1px solid var(--line);background:#fff;border-radius:20px;padding:6px 13px;font-size:12px;cursor:pointer;color:var(--muted);white-space:nowrap;font-family:var(--font);}
 .mcattab.on{background:var(--coral);color:#fff;border-color:var(--coral);font-weight:700;}
@@ -88,16 +89,16 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
 .prog-wrap{margin:4px 0 10px;}
 .prog-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:5px;}
 .prog-labels strong{color:var(--ink);}
-.prog-bar{height:9px;background:#f0ece6;border-radius:20px;overflow:hidden;}
-.prog-fill{height:100%;border-radius:20px;transition:width .4s;background:linear-gradient(90deg,var(--teal),#25c09e);}
-.prog-fill.full{background:linear-gradient(90deg,var(--teal),#25c09e);}
-.prog-fill.warn{background:linear-gradient(90deg,var(--amber),#f0b530);}
+.prog-bar{height:9px;background:#EFEAE3;border-radius:20px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:20px;transition:width .4s;background:var(--teal);}
+.prog-fill.full{background:var(--teal);}
+.prog-fill.warn{background:var(--amber);}
 
 /* ── Stats grid ── */
 .stats{display:flex;gap:10px;margin-top:8px;}
 .stat{flex:1;background:var(--cream);border-radius:11px;padding:10px 8px;text-align:center;}
 .stat-num{font-size:21px;font-weight:700;line-height:1.1;}
-.stat-lbl{font-size:10.5px;color:var(--muted);margin-top:3px;}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:3px;}
 
 /* ── Order rows ── */
 .or{display:flex;align-items:flex-start;gap:9px;padding:10px 0;border-bottom:1px solid var(--line);}
@@ -105,56 +106,78 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
 .or-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-none;margin-top:1px;}
 .or-body{flex:1;min-width:0;}
 .or-name{font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
-.or-detail{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.45;}
+.or-detail{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.45;}
 .or-price{font-size:13px;font-weight:700;white-space:nowrap;padding-top:2px;}
 
+/* ── 訂單檢視切換 + 出餐清單 ── */
+.ov-toggle{display:inline-flex;background:#EFEAE3;border-radius:9px;padding:2px;gap:2px;}
+.ov-btn{border:0;background:transparent;font-size:11px;font-weight:600;color:var(--muted);padding:5px 10px;border-radius:7px;cursor:pointer;font-family:var(--font);transition:background .15s,color .15s;}
+.ov-btn.on{background:#fff;color:var(--coral);box-shadow:0 1px 2px rgba(0,0,0,.08);}
+.shop-head{font-size:13px;color:var(--ink-soft);margin:0 0 10px;}
+.shop-item{padding:9px 0;border-bottom:1px solid var(--line);}
+.shop-item:last-of-type{border-bottom:none;}
+.shop-item-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;}
+.shop-name{font-size:15px;font-weight:600;color:var(--ink);min-width:0;overflow-wrap:anywhere;}
+.shop-qty{font-size:16px;font-weight:800;color:var(--coral-d);white-space:nowrap;}
+.shop-specs{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.6;}
+
 /* ── Tags ── */
-.tag{display:inline-block;font-size:10.5px;padding:2px 7px;border-radius:20px;font-weight:600;}
+.tag{display:inline-block;font-size:11px;padding:2px 7px;border-radius:20px;font-weight:600;}
 .t-oos{background:var(--coral-light);color:var(--coral-d);}
-.t-ok{background:var(--teal-light);color:#0e7862;}
+.t-ok{background:var(--teal-light);color:#0F6E56;}
 .t-abs{background:var(--purple-light);color:var(--purple);}
 .t-wait{background:var(--purple-light);color:var(--purple);}
-.t-lead{background:var(--amber-light);color:#7a5000;}
+.t-lead{background:var(--amber-light);color:#8A5712;}
 
 /* ── OOS box ── */
-.oos-box{background:var(--coral-light);border:1px solid #f5cfc4;border-radius:9px;padding:9px 11px;margin-top:7px;transition:background .3s,border-color .3s;}
-.oos-lbl{font-size:11.5px;color:var(--coral-d);font-weight:600;margin-bottom:6px;}
-.oos-sel{width:100%;font-size:12.5px;padding:6px 10px;border:1.5px solid #f5cfc4;border-radius:8px;font-family:var(--font);background:#fff;color:var(--ink);-webkit-appearance:none;}
+.oos-box{background:var(--coral-light);border:1px solid #F3D0C7;border-radius:10px;padding:9px 11px;margin-top:7px;transition:background .3s,border-color .3s;}
+.oos-lbl{font-size:12px;color:var(--coral-d);font-weight:600;margin-bottom:6px;}
+.oos-sel{width:100%;font-size:13px;padding:6px 10px;border:1.5px solid #F3D0C7;border-radius:8px;font-family:var(--font);background:#fff;color:var(--ink);-webkit-appearance:none;}
+.oos-report{background:var(--coral-light);border:1px solid #F3D0C7;border-radius:10px;padding:11px 12px;margin-bottom:11px;}
+.oos-report-t{font-size:12px;font-weight:700;color:var(--coral-d);margin-bottom:7px;}
+.oos-report select{flex:1;font-size:13px;padding:7px 10px;border:1.5px solid #F3D0C7;border-radius:8px;font-family:var(--font);background:#fff;color:var(--ink);-webkit-appearance:none;min-width:0;}
+.oos-report button{flex:none;border:0;border-radius:8px;background:var(--coral);color:#fff;font-size:12px;font-weight:700;padding:7px 13px;cursor:pointer;font-family:var(--font);}
+.oos-report .hint{font-size:11px;color:var(--muted);margin-top:6px;}
+.menu-confirm{background:var(--teal-light);border:1px solid #BBE3D0;border-radius:10px;padding:11px 13px;font-size:13px;color:#0F6E56;}
 
 /* ── Payment rows ── */
 .pay-hdr{display:flex;font-size:11px;color:var(--muted);font-weight:700;padding:0 0 7px;border-bottom:1.5px solid var(--line);letter-spacing:.3px;}
-.pay-row{display:flex;align-items:center;gap:6px;padding:9px 0;border-bottom:1px solid var(--line);}
+.pay-row{display:flex;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px solid var(--line);}
 .pay-row:last-child{border-bottom:none;}
-.pay-name{flex:1;font-size:13px;font-weight:500;}
-.pay-should{width:38px;text-align:right;font-size:12px;color:var(--muted);flex-none;}
-.pay-amt{display:flex;align-items:center;gap:3px;width:72px;flex-none;}
-.pay-amt span{font-size:12px;color:var(--muted);}
-.pay-in{width:52px;padding:5px 7px;border:1.5px solid var(--line);border-radius:8px;font-size:13px;text-align:right;font-family:var(--font);color:var(--ink);transition:border-color .15s;}
-.pay-in:focus{outline:none;border-color:var(--teal);}
-.pay-st{font-size:10.5px;font-weight:600;padding:2px 6px;border-radius:20px;white-space:nowrap;width:48px;text-align:center;flex-none;}
-.st-ok{background:var(--teal-light);color:#0e7862;}
+.pay-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex:none;}
+.pay-av.muted{background:#DAD4CC;}
+.pay-body{flex:1;min-width:0;}
+.pay-name{font-size:14px;font-weight:600;display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.pay-sub{font-size:12px;margin-top:1px;font-weight:500;}
+.pay-amt{font-size:15px;font-weight:700;color:var(--ink);flex:none;cursor:pointer;padding:6px 6px;border-bottom:1px dotted #CFC6BC;transition:background .15s,border-color .15s;white-space:nowrap;}
+.pay-amt:hover{background:var(--coral-light);border-bottom-color:var(--coral);border-radius:5px;}
+.pay-amt.due{color:var(--muted);font-weight:600;}
+.pay-note{font-size:12px;color:var(--muted);flex:none;white-space:nowrap;min-width:44px;text-align:right;}
+.pay-chk{width:30px;display:flex;justify-content:center;align-items:center;flex:none;}
+.pay-chk input{width:20px;height:20px;accent-color:var(--teal);cursor:pointer;}
+.st-ok{background:var(--teal-light);color:#0F6E56;}
 .st-owe{background:var(--coral-light);color:var(--coral-d);}
-.st-over{background:var(--amber-light);color:#7a5000;}
+.st-over{background:var(--amber-light);color:#8A5712;}
 .st-none{background:var(--purple-light);color:var(--purple);}
-.st-abs{background:#f0ece6;color:var(--muted);}
+.st-abs{background:#EFEAE3;color:var(--muted);}
 
 /* ── Summary ── */
-.sum-box{background:linear-gradient(135deg,var(--teal),#16876e);color:#fff;border-radius:12px;padding:14px 16px;margin-top:2px;}
+.sum-box{background:var(--teal);color:#fff;border-radius:12px;padding:14px 16px;margin-top:2px;}
 .sum-box h3{font-size:12px;opacity:.8;margin-bottom:8px;font-weight:600;}
 .sum-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;}
 .sum-row:last-child{margin-bottom:0;}
 .sum-row strong{font-weight:700;}
 .owe-list{margin-top:11px;}
-.owe-item{font-size:12.5px;margin-bottom:5px;padding-left:2px;}
+.owe-item{font-size:13px;margin-bottom:5px;padding-left:2px;}
 .owe-item:last-child{margin-bottom:0;}
 
 /* ── Notices ── */
-.notice{background:var(--amber-light);border:1px solid #f5dca0;border-radius:10px;padding:9px 12px;font-size:12px;color:#7a5000;line-height:1.6;margin-bottom:10px;}
-.notice-g{background:var(--teal-light);border:1px solid #a0dcd3;border-radius:10px;padding:9px 12px;font-size:12px;color:#0e7862;line-height:1.6;margin-bottom:10px;}
+.notice{background:var(--amber-light);border:1px solid #F0D9A8;border-radius:10px;padding:9px 12px;font-size:12px;color:#8A5712;line-height:1.6;margin-bottom:10px;}
+.notice-g{background:var(--teal-light);border:1px solid #BBE3D0;border-radius:10px;padding:9px 12px;font-size:12px;color:#0F6E56;line-height:1.6;margin-bottom:10px;}
 
 /* ── Link box ── */
-.link-box{background:#f9f6ff;border:1px solid #ddd4f8;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;margin-top:6px;}
-.link-url{flex:1;font-size:11.5px;color:var(--purple);word-break:break-all;}
+.link-box{background:#EAEEF3;border:1px solid #D7DEE6;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;margin-top:6px;}
+.link-url{flex:1;font-size:12px;color:var(--purple);word-break:break-all;}
 .link-copy{font-size:12px;color:var(--coral);font-weight:700;cursor:pointer;white-space:nowrap;padding:3px 8px;border:1.5px solid var(--coral);border-radius:8px;}
 
 /* ── Buttons ── */
@@ -162,13 +185,27 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
 .btn:active{transform:scale(.98);opacity:.9;}
 .btn-p{background:var(--coral);color:#fff;}
 .btn-s{background:var(--teal);color:#fff;}
-.btn-g{background:#f0ece6;color:var(--ink-soft);}
+.btn-g{background:#EFEAE3;color:var(--ink-soft);}
+
+/* ── Copy options（開團文案挑選） ── */
+.copyopt{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;cursor:pointer;transition:border-color .15s,background .15s;}
+.copyopt:last-child{margin-bottom:0;}
+.copyopt.on{border-color:var(--coral);background:var(--coral-light);}
+.copyopt-hd{display:flex;align-items:center;gap:7px;margin-bottom:5px;}
+.copyopt-radio{color:var(--coral);font-size:13px;line-height:1;}
+.copyopt-label{font-size:12px;font-weight:700;color:var(--ink);}
+.copyopt-edit{margin-left:auto;font-size:11px;color:var(--coral);font-weight:600;white-space:nowrap;}
+.copyopt-edit a{cursor:pointer;text-decoration:underline;}
+.copyopt-text{font-size:13px;color:var(--ink-soft);line-height:1.6;}
+.copyopt-text[contenteditable]{outline:none;border:1px dashed var(--line);border-radius:8px;padding:6px 8px;margin-top:2px;background:#fff;color:var(--ink);transition:border-color .15s,box-shadow .15s;}
+.copyopt-text[contenteditable]:hover{border-color:var(--coral);}
+.copyopt-text[contenteditable]:focus{border-color:var(--coral);box-shadow:var(--ring);}
 
 /* ── Section label ── */
-.slbl{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;margin:14px 0 6px;}
+.slbl{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;margin:14px 0 6px;}
 
 /* ── Bottom bar ── */
-.btm{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;padding:10px 14px 18px;background:#fff;border-top:1px solid var(--line);box-shadow:0 -3px 12px rgba(60,40,30,.08);z-index:80;}
+.btm{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;padding:10px 14px 18px;background:#fff;border-top:1px solid var(--line);box-shadow:0 -3px 12px rgba(60,30,20,.08);z-index:80;}
 </style>
 </head>
 <body>
@@ -205,7 +242,7 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
     <div class="field-row">
       <div class="field">
         <label>截單時間</label>
-        <input type="datetime-local" value="2026-06-03T15:30">
+        <input type="datetime-local" id="cutoff-time" value="2026-06-03T15:30" oninput="onCutoffChange(this)">
       </div>
       <div class="field">
         <label>外送門檻（$）</label>
@@ -214,11 +251,14 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
     </div>
     <div class="field">
       <label>收款人（誰墊錢訂餐？）</label>
-      <select>
+      <select id="payee-sel" onchange="changePayee(this)">
         <option selected>Amy（我，本次團主）</option>
         <option>Vivi</option>
         <option>阿Ken</option>
-        <option>指定其他人…</option>
+        <option>Jenny</option>
+        <option>Leo</option>
+        <option>欣欣</option>
+        <option>Ben</option>
       </select>
     </div>
     <div class="field-row">
@@ -227,7 +267,7 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
         <input type="datetime-local" id="arrival-time" value="2026-06-03T16:30" oninput="document.getElementById('arrival-time-display').textContent=this.value.replace('T',' ')">
       </div>
     </div>
-    <p style="font-size:11px;color:var(--muted);margin:-6px 0 10px">到時波波會私訊提醒你確認，再由你決定是否發取餐通知給群組。</p>
+    <p style="font-size:11px;color:var(--muted);margin:2px 0 10px;line-height:1.5">到時波波會私訊提醒你確認，再由你決定是否發取餐通知給群組。</p>
     <div class="field-row">
       <div class="field">
         <label>外送費（$）</label>
@@ -242,6 +282,11 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
         </select>
       </div>
     </div>
+  </div>
+
+  <!-- 計費模式（獨立卡，降低設定卡密度） -->
+  <div class="card">
+    <div class="card-title"><span class="ci">💰</span>計費模式</div>
     <div class="field">
       <label>計費模式</label>
       <select id="billing-mode" onchange="changeBillingMode(this)">
@@ -252,34 +297,31 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
       </select>
     </div>
     <!-- 計費模式附加欄位 -->
-    <div id="billing-extra" style="display:none;background:var(--amber-light);border:1px solid #f5dca0;border-radius:10px;padding:10px 12px;margin-top:2px;">
+    <div id="billing-extra" style="display:none;background:var(--amber-light);border:1px solid #F0D9A8;border-radius:10px;padding:10px 12px;margin-top:2px;">
       <div id="extra-full" style="display:none;">
         <div class="field" style="margin-bottom:0;">
           <label>金主（誰請客？）</label>
-          <select id="sponsor-select">
-            <option>老闆陳志遠</option>
-            <option>Amy</option>
-            <option>Vivi</option>
-          </select>
+          <select id="sponsor-select" onchange="recalcBilling()"></select>
         </div>
-        <p style="font-size:11px;color:#7a5000;margin-top:6px;">金主支付全部費用給收款人，其餘成員應付 $0。</p>
+        <p style="font-size:11px;color:#8A5712;margin-top:6px;">金主支付全部費用給收款人，其餘成員應付 $0。</p>
       </div>
       <div id="extra-subsidy" style="display:none;">
+        <div class="field">
+          <label>補助金主（誰出這筆補助？）</label>
+          <select id="sponsor-subsidy-select" onchange="recalcBilling()"></select>
+        </div>
         <div class="field" style="margin-bottom:0;">
           <label>每人補助金額 $</label>
           <input type="number" id="subsidy-amt" value="50" min="0" oninput="recalcBilling()">
         </div>
-        <p style="font-size:11px;color:#7a5000;margin-top:6px;">每人應付 = 訂單金額 − 補助額（不足補助的品項則免費）。</p>
+        <p style="font-size:11px;color:#8A5712;margin-top:6px;">每人應付 = 訂單金額 − 補助額（不足補助的品項則免費）；補助由金主支付給收款人。</p>
       </div>
       <div id="extra-oneEach" style="display:none;">
         <div class="field" style="margin-bottom:0;">
           <label>金主（誰請每人一份？）</label>
-          <select id="sponsor-one-select">
-            <option>老闆陳志遠</option>
-            <option>Amy</option>
-          </select>
+          <select id="sponsor-one-select" onchange="recalcBilling()"></select>
         </div>
-        <p style="font-size:11px;color:#7a5000;margin-top:6px;">金主支付每人最高單價品項（$<span id="max-item-price">75</span>）；超過部分由個人自費。</p>
+        <p style="font-size:11px;color:#8A5712;margin-top:6px;">金主支付每人「點的第一個品項」原價（金額無上限）；同一人第二項起自費。</p>
       </div>
     </div>
   </div>
@@ -287,7 +329,7 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
   <!-- 出席確認 -->
   <div class="card">
     <div class="card-title"><span class="ci">🙋</span>出席確認</div>
-    <p style="font-size:11.5px;color:var(--muted);margin-bottom:10px;">開「請假」的人不被催單、不列入湊門檻人數計算。</p>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">標為「缺席」的人不被催單、不列入湊門檻人數計算。</p>
 
     <div id="people-list">
       <!-- JS 產生 -->
@@ -297,9 +339,14 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
   <!-- 菜單確認 -->
   <div class="card">
     <div class="card-title"><span class="ci">🧾</span>菜單品項（OCR 解析結果）</div>
-    <p style="font-size:11.5px;color:var(--muted);margin-bottom:10px;">由波波從截圖自動解析，確認無誤後再生成填單連結。</p>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">由波波從截圖自動解析，確認無誤後再生成填單連結。</p>
     <div id="menu-list"></div>
-    <button class="btn btn-g" id="add-item-btn" style="font-size:12.5px;padding:9px;margin-top:8px;" onclick="addMenuItem()">＋ 手動新增品項</button>
+  </div>
+
+  <!-- 開團文案（波波擬 3 種，團主挑一個） -->
+  <div class="card">
+    <div class="card-title"><span class="ci">📝</span>開團文案<span style="font-size:11px;color:var(--muted);font-weight:500;margin-left:4px">波波擬了 3 種，挑一個發到群組</span></div>
+    <div id="copy-options"></div>
   </div>
 
   <!-- 生成連結 -->
@@ -310,6 +357,10 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
       <div class="link-url">https://bobo.app/form/design-dept-20260602</div>
       <div class="link-copy" onclick="copyLink(this)">複製</div>
     </div>
+  </div>
+
+  <div style="text-align:center;margin-top:20px">
+    <button onclick="cancelTeam()" style="border:0;background:none;color:var(--muted);font-size:12px;font-weight:600;text-decoration:underline;cursor:pointer;font-family:var(--font)">⚠️ 取消整團</button>
   </div>
 
 </div>
@@ -353,19 +404,34 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
 
   <!-- 各人訂單 -->
   <div class="card">
-    <div class="card-title"><span class="ci">🥤</span>各人訂單</div>
+    <div class="card-title" style="justify-content:space-between;gap:8px">
+      <span style="display:flex;align-items:center;gap:6px"><span class="ci">🥤</span>訂單</span>
+      <span class="ov-toggle">
+        <button class="ov-btn on" data-ov="byPerson" onclick="switchOrderView('byPerson')">各人訂單</button>
+        <button class="ov-btn" data-ov="byItem" onclick="switchOrderView('byItem')">出餐清單</button>
+      </span>
+    </div>
     <div id="order-list"></div>
   </div>
 
-  <button class="btn btn-s" id="remind-btn" onclick="remind()">📣 催Ben填單（截單前 30 分）</button>
+  <button class="btn btn-s" id="remind-btn" onclick="remind()">📣 催未填單者（截單前 30 分）</button>
   <div id="remind-result" style="display:none;margin-top:6px;"></div>
+
+  <!-- 截單提醒（M1-B） -->
+  <div class="card" id="cutoff-card" style="margin-top:11px">
+    <div class="card-title"><span class="ci">⏰</span>截單提醒</div>
+    <div id="cutoff-status">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:8px">截單時間 <span id="cutoff-time-display">2026-06-03 15:30</span> 到時，波波會私訊提醒你要延長還是截單。</p>
+      <button class="btn btn-g" style="font-size:13px;padding:9px;margin-top:0" onclick="simCutoff()">👆 模擬：截單時間到了</button>
+    </div>
+  </div>
 
   <!-- 取餐通知 -->
   <div class="card" style="margin-top:11px">
     <div class="card-title"><span class="ci">🛵</span>取餐通知</div>
     <div id="arrival-status">
-      <p style="font-size:12.5px;color:var(--muted);margin-bottom:8px">預計 <span id="arrival-time-display">2026-06-03 16:30</span> 波波會私訊提醒你確認到餐。</p>
-      <button class="btn btn-g" style="font-size:12.5px;padding:9px;margin-top:0" onclick="simArrival()">👆 模擬：波波提醒到餐了</button>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:8px">預計 <span id="arrival-time-display">2026-06-03 16:30</span> 波波會私訊提醒你確認到餐。</p>
+      <button class="btn btn-g" style="font-size:13px;padding:9px;margin-top:0" onclick="simArrival()">👆 模擬：波波提醒到餐了</button>
     </div>
   </div>
 
@@ -376,17 +442,11 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
 ════════════════════════════════════════════ -->
 <div class="panel" id="panel-2">
 
-  <div class="notice">
-    💡 輸入每人實際繳了多少，波波自動計算欠款、儲值（多繳→下團扣抵）。
-  </div>
-
   <div class="card">
     <div class="card-title"><span class="ci">💵</span>收款輸入</div>
     <div class="pay-hdr">
-      <div style="flex:1">姓名</div>
-      <div style="width:38px;text-align:right">應付</div>
-      <div style="width:72px;text-align:center">已收</div>
-      <div style="width:48px;text-align:center">狀態</div>
+      <div style="flex:1">收款對象 · 狀態</div>
+      <div>金額（點可改）· 收款</div>
     </div>
     <div id="pay-list"></div>
   </div>
@@ -394,7 +454,7 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
   <div class="card" id="sum-card">
     <div class="card-title"><span class="ci">📊</span>這團結算</div>
     <div class="sum-box">
-      <h3>收款人：Amy</h3>
+      <h3 id="payee-h3">收款人：Amy</h3>
       <div class="sum-row"><span>訂單總額</span><strong id="s-total">$415</strong></div>
       <div id="s-delivery-row" class="sum-row" style="display:none"><span id="s-delivery-lbl">外送費</span><strong id="s-delivery">$0</strong></div>
       <div class="sum-row"><span>已收款</span><strong id="s-collected">$315</strong></div>
@@ -404,6 +464,7 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
   </div>
 
   <button class="btn btn-s" onclick="notifyOwers()">📩 波波通知欠款者</button>
+  <div id="settle-area" style="margin-top:10px"></div>
 
 </div>
 
@@ -411,14 +472,14 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
 <script>
 /* ── master data ── */
 const people = [
-  {name:'Amy', color:'#E8674C', absent:false, lead:true},
-  {name:'Vivi',  color:'#9B59B6', absent:false},
-  {name:'阿Ken',  color:'#2980B9', absent:false},
-  {name:'Jenny',  color:'#27AE60', absent:false},
-  {name:'Leo',  color:'#E67E22', absent:false},
-  {name:'欣欣',  color:'#16A085', absent:false},
-  {name:'David',  color:'#95A5A6', absent:true},
-  {name:'Ben',  color:'#8E44AD', absent:false},
+  {name:'Amy', color:'#E5462F', absent:false, lead:true},
+  {name:'Vivi',  color:'#C2883C', absent:false},
+  {name:'阿Ken',  color:'#5E7C99', absent:false},
+  {name:'Jenny',  color:'#3E9D74', absent:false},
+  {name:'Leo',  color:'#B06A4E', absent:false},
+  {name:'欣欣',  color:'#4F8E86', absent:false},
+  {name:'David',  color:'#95938C', absent:true},
+  {name:'Ben',  color:'#7E8B5A', absent:false},
 ];
 
 const menuItems = [
@@ -430,17 +491,24 @@ const menuItems = [
 ];
 
 const orders = [
-  {person:'Amy', color:'#E8674C', item:'四季春茶大杯', spec:'半糖少冰', price:65, oos:false, absent:false, filled:true},
-  {person:'Vivi',  color:'#9B59B6', item:'椰果奶茶大杯', spec:'全糖正常冰', price:75, oos:false, absent:false, filled:true},
-  {person:'阿Ken',  color:'#2980B9', item:'翡翠檸檬綠茶大杯', spec:'微糖少冰', price:70, oos:true, absent:false, filled:true},
-  {person:'Jenny',  color:'#27AE60', item:'烏龍茶拿鐵大杯', spec:'半糖少冰', price:75, oos:false, absent:false, filled:true},
-  {person:'Leo',  color:'#E67E22', item:'四季春茶大杯', spec:'無糖去冰', price:65, oos:false, absent:false, filled:true},
-  {person:'欣欣',  color:'#16A085', item:'翡翠青茶大杯', spec:'微糖少冰', price:65, oos:false, absent:false, filled:true},
-  {person:'David',  color:'#95A5A6', item:'', spec:'', price:0, oos:false, absent:true, filled:false},
-  {person:'Ben',  color:'#8E44AD', item:'', spec:'', price:0, oos:false, absent:false, filled:false},
+  {person:'Amy', color:'#E5462F', item:'四季春茶大杯', spec:'半糖少冰', price:65, oos:false, absent:false, filled:true},
+  {person:'Vivi',  color:'#C2883C', item:'椰果奶茶大杯', spec:'全糖正常冰', price:75, oos:false, absent:false, filled:true},
+  {person:'阿Ken',  color:'#5E7C99', item:'翡翠檸檬綠茶大杯', spec:'微糖少冰', price:70, oos:false, absent:false, filled:true},
+  {person:'Jenny',  color:'#3E9D74', item:'烏龍茶拿鐵大杯', spec:'半糖少冰', price:75, oos:false, absent:false, filled:true},
+  {person:'Jenny',  color:'#3E9D74', item:'翡翠檸檬綠茶大杯', spec:'微糖少冰', price:70, oos:false, absent:false, filled:true},
+  {person:'Leo',  color:'#B06A4E', item:'四季春茶大杯', spec:'無糖去冰', price:65, oos:false, absent:false, filled:true},
+  {person:'欣欣',  color:'#4F8E86', item:'翡翠青茶大杯', spec:'微糖少冰', price:65, oos:false, absent:false, filled:true},
+  {person:'David',  color:'#95938C', item:'', spec:'', price:0, oos:false, absent:true, filled:false},
+  {person:'Ben',  color:'#7E8B5A', item:'', spec:'', price:0, oos:false, absent:false, filled:false},
 ];
 
-const payments = [65,75,70,75,65,65,0,0];
+var paymentsByName = {};   // 以姓名為鍵記錄實收（支援一人多品項彙整、金主付款）
+var payee = 'Amy';
+function changePayee(s){
+  payee = (s.value.split('（')[0]).trim();
+  var h=document.getElementById('payee-h3'); if(h) h.textContent='收款人：'+payee;
+  buildPay(); updateSummary();
+}
 
 /* ── billing mode state ── */
 let billingMode  = 'self';
@@ -448,29 +516,176 @@ let subsidyAmt   = 50;
 let deliveryFee  = 0;
 let deliveryMode = 'none';
 
-function activeCount(){ return orders.filter(o=>!o.absent && o.price>0).length; }
-
-function calcShouldPay(){
-  const maxMenuPrice = Math.max(...menuItems.map(m=>m.price));
-  const el = document.getElementById('max-item-price');
-  if(el) el.textContent = maxMenuPrice;
-  const perPerson = (deliveryMode==='split' && deliveryFee>0 && activeCount()>0)
-    ? deliveryFee / activeCount() : 0;
-  return orders.map(o => {
-    if(o.absent || o.price===0) return 0;
-    let base;
-    switch(billingMode){
-      case 'full':    base=0; break;
-      case 'subsidy': base=Math.max(0, o.price - subsidyAmt); break;
-      case 'oneEach': base=Math.max(0, o.price - maxMenuPrice); break;
-      default:        base=o.price;
+/* ── 開團文案（波波擬 3 種梗路線，團主挑一個發到群組）── */
+var boboCopies = [];        // [{route,label,text（含 {cutoff} 佔位）}]
+var boboChosenCopy = 0;
+/* 依品項判斷店型：便當/正餐 meal、下午茶/點心 snack、飲料 drink（預設） */
+function boboShopType(items){
+  var meal=0, snack=0, drink=0;
+  (items||[]).forEach(function(it){
+    var s=((it.name||'')+' '+(it.category||'')+' '+(it.opts||''));
+    if(/便當|飯|麵|定食|餐盒|焢肉|排骨|雞腿|滷|燴|粥|水餃|鍋|咖哩/.test(s)) meal++;
+    else if(/鬆餅|蛋糕|餅|甜甜圈|布丁|鹽酥|炸|薯|雞塊|點心|吐司|貝果|可頌|塔|鬆/.test(s)) snack++;
+    else if(/茶|奶|咖啡|拿鐵|果汁|冰沙|氣泡|多多|檸檬|可可|豆漿|飲|昔/.test(s)) drink++;
+  });
+  if(meal>=snack && meal>=drink && meal>0) return 'meal';
+  if(snack>=drink && snack>0) return 'snack';
+  return 'drink';
+}
+/* 依店型給 3 種梗路線文案（結構刻意不一樣；店名寫死、{cutoff} 佔位；整則最多一個 emoji） */
+function boboCopyTemplates(shop, type){
+  var T={
+    drink:[
+      {route:'tired',     label:'😴 下午睏意', text:'下午睏意發作，需要一杯續命。'+shop+' 開團，{cutoff} 截單，晚一步只能看我喝 👇'},
+      {route:'wednesday', label:'🗓 週三厭世', text:'禮拜三血條見底，開個 '+shop+' 補補血。{cutoff} 前填一填，太慢的只能聞味道 👇'},
+      {route:'treat',     label:'🎁 有人請客', text:'難得有人請喝的！'+shop+' 開團，{cutoff} 截單，這波不喝對不起自己 👇'}
+    ],
+    meal:[
+      {route:'tired',     label:'😴 中午發懶', text:'中午吃什麼想破頭，直接開 '+shop+' 的團。{cutoff} 截單，晚了只能啃鍵盤 👇'},
+      {route:'wednesday', label:'🗓 週三厭世', text:'禮拜三沒力氣走出去，開個 '+shop+' 補頓正餐。{cutoff} 截單，手刀跟上 👇'},
+      {route:'treat',     label:'🎁 有人請客', text:'難得有人請吃飯！'+shop+' 開團，{cutoff} 截單，這頓不吃虧大了 👇'}
+    ],
+    snack:[
+      {route:'tired',     label:'😴 嘴饞想睡', text:'下午嘴饞又想睡，開個 '+shop+' 續個嘴。{cutoff} 截單，慢了就沒你的份 👇'},
+      {route:'wednesday', label:'🗓 週三厭世', text:'禮拜三需要一點甜的續命，'+shop+' 開團！{cutoff} 截單，太慢只能看照片 👇'},
+      {route:'treat',     label:'🎁 有人請客', text:'難得有人請下午茶！'+shop+' 開團，{cutoff} 截單，嘴甜的手刀來 👇'}
+    ]
+  };
+  return T[type]||T.drink;
+}
+var boboCopyEdits = {};   // 團主手動編輯過的文案（index → 文字；有編輯就以此為準）
+function boboCutoffStr(){ var ct=document.getElementById('cutoff-time'); return (ct&&ct.value)? ct.value.split('T')[1] : '15:00'; }
+function escHtml(s){ return (s==null?'':String(s)).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
+/* 讓字串可安全放進 onclick="fn('...')"（同時處理 HTML 屬性與 JS 單引號字串）*/
+function escArg(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/[\r\n]/g,' '); }
+/* 顯示／發布用文字：編輯過用編輯版，否則用範本並填入目前截單時間 */
+function boboDisplayCopy(i){
+  if(boboCopyEdits[i]!=null) return boboCopyEdits[i];
+  var c=boboCopies[i]; return c ? (c.text||'').replace('{cutoff}', boboCutoffStr()) : '';
+}
+function boboCopyText(i){ return boboDisplayCopy(i); }
+function buildCopyOptions(){
+  var host=document.getElementById('copy-options'); if(!host) return;
+  host.innerHTML = boboCopies.map(function(c,i){
+    var on=(i===boboChosenCopy), edited=(boboCopyEdits[i]!=null), txt=escHtml(boboDisplayCopy(i));
+    if(on){
+      return '<div class="copyopt on">'
+        +'<div class="copyopt-hd" onclick="chooseCopy('+i+')"><span class="copyopt-radio">●</span><span class="copyopt-label">'+c.label+'</span>'
+        +'<span class="copyopt-edit">✏️ 可直接編輯'+(edited?' <a onclick="resetCopy(event,'+i+')">· 還原</a>':'')+'</span></div>'
+        +'<div class="copyopt-text" contenteditable="true" spellcheck="false" oninput="editCopy('+i+',this)">'+txt+'</div></div>';
     }
-    return base + perPerson;
+    return '<div class="copyopt" onclick="chooseCopy('+i+')">'
+      +'<div class="copyopt-hd"><span class="copyopt-radio">○</span><span class="copyopt-label">'+c.label+'</span></div>'
+      +'<div class="copyopt-text">'+txt+'</div></div>';
+  }).join('');
+}
+function chooseCopy(i){ boboChosenCopy=i; buildCopyOptions(); }
+function editCopy(i, el){ boboCopyEdits[i] = el.innerText; }   // 即時存起來，不重繪以免游標跳掉
+function resetCopy(ev, i){ if(ev){ ev.stopPropagation(); } delete boboCopyEdits[i]; buildCopyOptions(); }
+function defaultCopyForBilling(){
+  // 請客模式（全請／一人一份）預設反白「有人請客」那則；其餘預設第一則
+  var ti=-1; boboCopies.forEach(function(c,i){ if(c.route==='treat') ti=i; });
+  if((billingMode==='full'||billingMode==='oneEach') && ti>=0) boboChosenCopy=ti;
+  else if(boboChosenCopy===ti) boboChosenCopy=0;
+}
+function onCutoffChange(inp){
+  var e=document.getElementById('cutoff-time-display'); if(e) e.textContent=(inp.value||'').replace('T',' ');
+  buildCopyOptions();   // 截單時間改了 → 文案裡的時間跟著更新
+}
+
+/* ── 以「人」為單位彙整訂單（支援一人多品項）── */
+function personAgg(){
+  const seen={}, order=[];
+  orders.forEach(o=>{
+    if(!seen[o.person]){ seen[o.person]={name:o.person,color:o.color,absent:!!o.absent,lines:[],filledAny:false,allCancelled:true}; order.push(o.person); }
+    const p=seen[o.person];
+    p.lines.push(o);
+    if(o.absent) p.absent=true;
+    if(o.filled && !o.absent && !o.memberCancelled && !o.removed) p.filledAny=true;
+    if(!o.memberCancelled) p.allCancelled=false;
+  });
+  return order.map(n=>{
+    const p=seen[n];
+    p.total=p.lines.reduce((s,o)=> s + ((o.absent||o.removed||o.memberCancelled)?0:(o.price||0)), 0);
+    p.filled=p.filledAny;
+    p.active=!p.absent && !p.allCancelled;
+    return p;
+  });
+}
+function personByName(n){ return personAgg().filter(p=>p.name===n)[0]||null; }
+function activePersonCount(){ return personAgg().filter(p=>p.active && p.total>0).length; }
+function maxMenuPrice(){ return menuItems.length?Math.max(...menuItems.map(m=>m.price)):0; }
+/* 一人一份：金主支付每人「點的第一個品項」原價（無上限） */
+function firstItemPrice(p){
+  if(!p || p.absent) return 0;
+  for(let k=0;k<p.lines.length;k++){ const o=p.lines[k]; if(!o.removed && !o.memberCancelled && (o.price||0)>0) return o.price; }
+  return 0;
+}
+
+/* 外送費平攤：大家繳一樣多（無條件進位到整數）；湊出來的零頭由收款人多收，
+   當作公用基金，下一次有外送費時收款人少收／多繳補回，長期打平。 */
+function deliveryShareFor(p){
+  if(!(deliveryMode==='split' && deliveryFee>0) || !p || p.absent || p.total===0) return 0;
+  const n=activePersonCount(); if(!n) return 0;
+  return Math.ceil(deliveryFee/n);
+}
+/* 單一成員本次應付（依計費模式；含平攤外送費） */
+function personShouldPay(p){
+  if(!p || p.absent || p.total===0) return 0;
+  const perDelivery=deliveryShareFor(p);
+  let base;
+  switch(billingMode){
+    case 'full':    base=0; break;
+    case 'subsidy': base=Math.max(0, p.total - subsidyAmt); break;
+    case 'oneEach': base=Math.max(0, p.total - firstItemPrice(p)); break;
+    default:        base=p.total;
+  }
+  return Math.round(base + perDelivery);
+}
+
+/* 金主（全請／一人一份／補助 都可指定一位同事） */
+function currentSponsor(){
+  if(billingMode==='full'){ const s=document.getElementById('sponsor-select'); return s?s.value:''; }
+  if(billingMode==='oneEach'){ const s=document.getElementById('sponsor-one-select'); return s?s.value:''; }
+  if(billingMode==='subsidy'){ const s=document.getElementById('sponsor-subsidy-select'); return s?s.value:''; }
+  return '';
+}
+/* 金主應付給收款人的金額（＝被請客／被補助的部分） */
+function sponsorOwes(){
+  const persons=personAgg();
+  if(billingMode==='full')    return persons.reduce((s,p)=> s + (p.absent?0:p.total), 0);
+  if(billingMode==='oneEach') return persons.reduce((s,p)=> s + ((p.absent||p.total===0)?0:firstItemPrice(p)), 0);
+  if(billingMode==='subsidy') return persons.reduce((s,p)=> s + ((p.absent||p.total===0)?0:Math.min(p.total, subsidyAmt)), 0);
+  return 0;
+}
+/* 金主下拉一律用「出席確認的同事名單」；預設挑一位非收款人的同事 */
+function populateSponsors(){
+  var names = people.map(function(p){ return p.name; });
+  ['sponsor-select','sponsor-one-select','sponsor-subsidy-select'].forEach(function(id){
+    var sel=document.getElementById(id); if(!sel) return;
+    var prev=sel.value;
+    sel.innerHTML = names.map(function(n){ return '<option>'+n+'</option>'; }).join('');
+    var def = names.filter(function(n){ return n!==payee; })[0] || names[0];
+    sel.value = (prev && names.indexOf(prev)>=0) ? prev : def;
   });
 }
 
+/* 需要付錢給收款人的清單（成員 + 金主），供結算／催款共用 */
+function payerList(){
+  const persons=personAgg(), sName=currentSponsor(), payers=[]; let sponsorPlaced=false;
+  persons.forEach(p=>{
+    // 金主同時也點了餐 → 除了付請客／補助總額，還要付自己被扣除後的自付額
+    if(sName && p.name===sName){ payers.push({name:sName, owe:sponsorOwes()+personShouldPay(p), sponsor:true}); sponsorPlaced=true; return; }
+    if(p.absent || p.name===payee || p.total===0) return;
+    const owe=personShouldPay(p); if(owe>0) payers.push({name:p.name, owe:owe});
+  });
+  if(sName && sName!==payee && !sponsorPlaced) payers.push({name:sName, owe:sponsorOwes(), sponsor:true});
+  if(sName && sName===payee) return payers.filter(x=>x.name!==sName); // 金主＝收款人：自己買單，不列催款
+  return payers;
+}
+
 function recalcDelivery(){
-  deliveryFee  = parseInt(document.getElementById('delivery-fee')?.value)||0;
+  deliveryFee  = Math.max(0, parseInt(document.getElementById('delivery-fee')?.value)||0);
   deliveryMode = document.getElementById('delivery-mode')?.value||'none';
   buildPay(); updateSummary();
 }
@@ -485,12 +700,13 @@ function changeBillingMode(sel){
   efull.style.display = billingMode==='full'    ? 'block' : 'none';
   esub.style.display  = billingMode==='subsidy' ? 'block' : 'none';
   eone.style.display  = billingMode==='oneEach' ? 'block' : 'none';
+  defaultCopyForBilling(); buildCopyOptions();   // 請客模式自動反白「有人請客」那則
   buildPay();
   updateSummary();
 }
 
 function recalcBilling(){
-  subsidyAmt = parseInt(document.getElementById('subsidy-amt').value)||0;
+  subsidyAmt = Math.max(0, parseInt(document.getElementById('subsidy-amt').value)||0);
   buildPay();
   updateSummary();
 }
@@ -509,7 +725,7 @@ function buildPeople(){
       <div class="av" style="background:${p.color}">${p.name[0]}</div>
       <div style="flex:1">
         <div class="pname">${p.name}${p.lead?` <span class="tag t-lead">團主</span>`:''}</div>
-        <div class="psub" id="psub-${i}" style="color:${p.absent?'var(--coral)':'var(--muted)'}">${p.absent?'請假（不催單、不列入門檻）':'出席'}</div>
+        <div class="psub" id="psub-${i}" style="color:${p.absent?'var(--coral)':'var(--muted)'}">${p.absent?'缺席':'出席'}</div>
       </div>
       <label class="tog">
         <input type="checkbox" ${!p.absent?'checked':''} onchange="toggleAbsent(this,${i})">
@@ -520,10 +736,10 @@ function buildPeople(){
 }
 
 function toggleAbsent(cb,i){
-  // 開關 ON = 出席（預設）；關掉 = 請假
+  // 開關 ON = 出席（預設）；關掉 = 缺席
   people[i].absent = !cb.checked;
   const sub = document.getElementById('psub-'+i);
-  sub.textContent = cb.checked ? '出席' : '請假（不催單、不列入門檻）';
+  sub.textContent = cb.checked ? '出席' : '缺席';
   sub.style.color = cb.checked ? 'var(--muted)' : 'var(--coral)';
 }
 
@@ -534,54 +750,12 @@ function teamLocked(){ try{ return (parseInt(localStorage.getItem('bobo_team_sta
 function buildMenu(){
   const el = document.getElementById('menu-list');
   const locked = teamLocked();
-  const groups={}; menuItems.forEach((m,i)=>{ const c=m.category||'其他'; (groups[c]=groups[c]||[]).push(i); });
-  const cats=Object.keys(groups);
-  let html='';
-  if(locked) html+='<div style="background:#f1eee9;border-radius:9px;padding:8px 11px;margin-bottom:8px;font-size:12px;color:var(--muted)">🔒 已截單，菜單已鎖定，無法再增減品項</div>';
-  if(cats.length>=3){
-    html+='<div class="mcattabs"><button class="mcattab on" data-cat="__all" onclick="filterMenuCat(this)">全部 '+menuItems.length+'</button>';
-    cats.forEach(c=>{ html+='<button class="mcattab" data-cat="'+c+'" onclick="filterMenuCat(this)">'+c+' '+groups[c].length+'</button>'; });
-    html+='</div>';
-  }
-  cats.forEach(c=>{
-    html+='<div class="mcatblock" data-cat="'+c+'">';
-    if(cats.length>=3) html+='<div class="mcat-h">'+c+'</div>';
-    groups[c].forEach(i=>{ const m=menuItems[i];
-      html+=`<div class="mi" id="mi-${i}">
-        <div style="flex:1;min-width:0">
-          <div class="mi-name">${m.name}</div>
-          <div class="mi-sub">${m.opts}</div>
-        </div>
-        <div class="mi-price">$${m.price}</div>
-        ${locked?'':`<div class="mi-del" onclick="delItem(${i})" title="隱藏／還原">✕</div>`}
-      </div>`;
-    });
-    html+='</div>';
-  });
-  // 已截單時隱藏「手動新增品項」按鈕
-  const addBtn=document.getElementById('add-item-btn'); if(addBtn) addBtn.style.display=locked?'none':'';
-  el.innerHTML=html;
-}
-
-function filterMenuCat(btn){
-  const cat=btn.dataset.cat;
-  document.querySelectorAll('.mcattab').forEach(b=>b.classList.toggle('on',b===btn));
-  document.querySelectorAll('.mcatblock').forEach(b=>{ b.style.display=(cat==='__all'||b.dataset.cat===cat)?'':'none'; });
-}
-
-function delItem(i){   // 可還原：點一次隱藏、再點還原
-  const el=document.getElementById('mi-'+i); if(!el) return;
-  el.classList.toggle('mi-off');
-}
-
-function addMenuItem(){
-  if(teamLocked()){ alert('已截單，無法再增減品項'); return; }
-  const name = prompt('品項名稱（例：珍珠奶茶大杯）');
-  if(!name) return;
-  const price = prompt('單價（數字）');
-  if(!price) return;
-  menuItems.push({name, opts:'糖/冰可選', price:parseInt(price)||0});
-  buildMenu();
+  // 策展與編輯已在菜單 OCR 步驟完成，這裡只做唯讀確認（缺貨改在「訂單狀況」分頁處理）
+  el.innerHTML = `<div class="menu-confirm">✓ 已帶入菜單 OCR 確認的 <b>${menuItems.length}</b> 項菜單${locked?'（已截單鎖定）':''}
+    <details style="margin-top:7px"><summary style="font-size:12px;color:var(--muted);cursor:pointer;font-weight:500">展開檢視品項</summary>
+      <div style="margin-top:8px;color:var(--ink)">${menuItems.map(m=>`<div class="mi" style="cursor:default"><div style="flex:1;min-width:0"><div class="mi-name">${m.name}</div><div class="mi-sub">${m.opts||''}</div></div><div class="mi-price">$${m.price}</div></div>`).join('')}</div>
+    </details>
+  </div>`;
 }
 
 function genLink(){
@@ -596,16 +770,99 @@ function copyLink(el){
 }
 
 /* ── Tab 2: orders ── */
-const subOptions = ['四季春茶大杯（$65）','翡翠青茶大杯（$65）','烏龍茶拿鐵大杯（$75）','請阿Ken自己選（波波通知）'];
+var subOptions = ['四季春茶大杯（$65）','翡翠青茶大杯（$65）','烏龍茶拿鐵大杯（$75）','🗑 移除此單（不換了）'];
+
+/* 缺貨狀態的名字標籤 */
+function orTag(o){
+  if(o.removed) return ' <span class="tag t-abs">已移除</span>';
+  if(o.subbed)  return ' <span class="tag t-ok">已換單</span>';
+  if(o.oos)     return ' <span class="tag t-oos">缺貨</span>';
+  return '';
+}
+/* 缺貨處理控制項：全程由團主設定；換單／移除後仍可再調整或改回原點 */
+function oosControl(o,i){
+  if(!(o.oos||o.subbed||o.removed)) return '';
+  let lbl, bg, bc, lc;
+  if(o.removed){ lbl='🗑 已移除此單，'+o.person+' 不用付款'; bg='#EFEAE3'; bc='#DAD4CC'; lc='var(--muted)'; }
+  else if(o.subbed){ lbl='✅ 已換為 '+o.item+'（$'+o.price+'）'; bg='var(--teal-light)'; bc='#BBE3D0'; lc='#0F6E56'; }
+  else { lbl='⚠️ 此品項無庫存'+(o.notified?('，波波已通知 '+o.person):'')+'，由你選替代品：'; bg='var(--coral-light)'; bc='#F3D0C7'; lc='var(--coral-d)'; }
+  // 原品項已缺貨，不提供「改回原點」；僅能換其他替代品或移除
+  let opts='<option value="">'+((o.subbed||o.removed)?'改成其他…':'選擇替代品…')+'</option>';
+  subOptions.forEach(s=>{ if(!o._orig || s.replace(/（\$\d+）\s*$/,'')!==o._orig.item) opts+='<option>'+s+'</option>'; });
+  return '<div class="oos-box" id="oos-'+i+'" style="background:'+bg+';border-color:'+bc+'">'
+    +'<div class="oos-lbl" style="color:'+lc+'">'+lbl+'</div>'
+    +'<select class="oos-sel" onchange="handleSub(this,'+i+')">'+opts+'</select></div>';
+}
+
+/* ── 訂單檢視切換：各人訂單 ／ 出餐清單（合併同品項＋規格細分，加料算不同份）── */
+var orderView = 'byPerson';
+function switchOrderView(v){
+  orderView = v;
+  document.querySelectorAll('.ov-btn').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-ov')===v); });
+  buildOrders();
+}
+/* 只彙整「已確認」的訂單：排除缺席／未填／已移除／成員取消／缺貨待換；以品項＋規格為鍵計數 */
+function aggregateForShop(){
+  var byItem={}, itemOrder=[], totalCups=0, pendingOOS=0;
+  orders.forEach(function(o){
+    if(o.absent || !o.filled || o.removed || o.memberCancelled) return;
+    if(o.oos){ pendingOOS++; return; }               // 缺貨待換 → 尚未確定，先不計入
+    if(!o.item || !(o.price>0)) return;
+    var item=o.item, spec=(o.spec && o.spec!=='標準') ? o.spec : '原味／不加料';
+    totalCups++;
+    if(!byItem[item]){ byItem[item]={item:item, total:0, specs:{}, specOrder:[]}; itemOrder.push(item); }
+    var g=byItem[item]; g.total++;
+    if(g.specs[spec]==null){ g.specs[spec]=0; g.specOrder.push(spec); }
+    g.specs[spec]++;
+  });
+  return { items:itemOrder.map(function(it){ return byItem[it]; }), totalCups:totalCups, pendingOOS:pendingOOS };
+}
+function buildShopList(){
+  var agg=aggregateForShop(), el=document.getElementById('order-list');
+  var oosNote = agg.pendingOOS ? '<div class="notice" style="margin:0 0 10px">⚠️ 還有 '+agg.pendingOOS+' 項缺貨待換，換好才會計入清單。</div>' : '';
+  if(!agg.items.length){
+    el.innerHTML = oosNote + '<div class="notice-g" style="margin:0">目前沒有已確認的訂單可彙整。</div>';
+    return;
+  }
+  var rows = agg.items.map(function(g){
+    var specLine = g.specOrder.map(function(sp){ return escHtml(sp)+' ×'+g.specs[sp]; }).join('　·　');
+    return '<div class="shop-item"><div class="shop-item-top"><span class="shop-name">'+escHtml(g.item)+'</span><span class="shop-qty">×'+g.total+'</span></div><div class="shop-specs">'+specLine+'</div></div>';
+  }).join('');
+  el.innerHTML = oosNote
+    + '<div class="shop-head">🧾 給店家的出餐清單　·　共 <b>'+agg.totalCups+'</b> 份　·　'+agg.items.length+' 種品項</div>'
+    + rows
+    + '<button class="btn btn-g" id="copy-shop-btn" onclick="copyShopList()" style="margin-top:12px">📋 複製清單（貼給店家）</button>';
+}
+function copyShopList(){
+  var agg=aggregateForShop();
+  var lines=agg.items.map(function(g){
+    var specs=g.specOrder.map(function(sp){ return sp+'×'+g.specs[sp]; }).join('、');
+    return g.item+' ×'+g.total+'（'+specs+'）';
+  });
+  var text='【出餐清單｜共 '+agg.totalCups+' 份】\n'+lines.join('\n');
+  var btn=document.getElementById('copy-shop-btn');
+  function done(){ if(!btn) return; var t=btn.textContent; btn.textContent='✓ 已複製到剪貼簿'; setTimeout(function(){ if(btn) btn.textContent=t; },1600); }
+  function fallback(){ try{ var ta=document.createElement('textarea'); ta.value=text; ta.style.cssText='position:fixed;opacity:0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); }catch(_){} }
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done, function(){ fallback(); done(); }); }
+  else { fallback(); done(); }
+}
 
 function buildOrders(){
+  if(orderView==='byItem'){ return buildShopList(); }
   const el = document.getElementById('order-list');
-  el.innerHTML = orders.map((o,i)=>{
+  // 缺貨品項下拉：只列還在訂單內、尚可回報的品項（一人多品項也各自成列）
+  const ordered = [...new Set(orders.filter(o=>o.filled && !o.absent && !o.memberCancelled && !o.removed && !o.subbed && o.price>0).map(o=>o.item))];
+  const ctrl = `<div class="oos-report"><div class="oos-report-t">🚫 回報缺貨</div>`
+    + `<div style="display:flex;gap:8px"><select id="oos-item-sel"><option value="">選擇缺貨品項…</option>`
+    + ordered.map(it=>`<option>${it}</option>`).join('')
+    + `</select><button onclick="reportOOSByItem()">通知換單</button></div>`
+    + `<div class="hint">選一個品項，波波會到群組 tag 所有點該品項的人，替代品由你設定。</div></div>`;
+  el.innerHTML = ctrl + orders.map((o,i)=>{
     if(o.absent) return `
       <div class="or">
         <div class="or-av" style="background:${o.color}">${o.person[0]}</div>
         <div class="or-body">
-          <div class="or-name">${o.person} <span class="tag t-abs">請假</span></div>
+          <div class="or-name">${o.person} <span class="tag t-abs">缺席</span></div>
           <div class="or-detail">不列入本次訂單</div>
         </div>
         <div class="or-price" style="color:var(--muted)">—</div>
@@ -619,105 +876,89 @@ function buildOrders(){
         </div>
         <div class="or-price" style="color:var(--muted)">—</div>
       </div>`;
-    const oosHtml = o.oos ? `
-      <div class="oos-box" id="oos-${i}">
-        <div class="oos-lbl" id="oos-lbl-${i}">⚠️ 此品項無庫存${o.notified?`，波波已自動通知 ${o.person} 改單`:''}，請選替代品：</div>
-        <select class="oos-sel" onchange="handleSub(this,${i})" id="oos-sel-${i}">
-          <option value="">選擇替代品…</option>
-          ${subOptions.map(s=>`<option>${s}</option>`).join('')}
-        </select>
-      </div>` : '';
+    if(o.memberCancelled) return `
+      <div class="or">
+        <div class="or-av" style="background:${o.color}">${o.person[0]}</div>
+        <div class="or-body">
+          <div class="or-name">${o.person} <span class="tag t-abs">已取消</span></div>
+          <div class="or-detail" style="color:var(--muted)">成員自行取消，不列入訂單</div>
+        </div>
+        <div class="or-price" style="color:var(--muted)">—</div>
+      </div>`;
     return `
       <div class="or" id="or-${i}">
         <div class="or-av" style="background:${o.color}">${o.person[0]}</div>
         <div class="or-body">
-          <div class="or-name" id="orname-${i}">${o.person}${o.oos?` <span class="tag t-oos">缺貨</span>`:''}</div>
-          <div class="or-detail">${o.item}・${o.spec}</div>
-          ${o.oos ? '' : `<button class="oos-mark" onclick="markOOS(${i})">標示缺貨</button>`}
-          ${oosHtml}
+          <div class="or-name" id="orname-${i}">${o.person}${orTag(o)}</div>
+          <div class="or-detail">${o.removed?'缺貨未換，不列入訂單':o.item+'・'+o.spec}</div>
+          ${oosControl(o,i)}
         </div>
-        <div class="or-price" id="orprice-${i}">$${o.price}</div>
+        <div class="or-price" id="orprice-${i}">${o.removed?'—':'$'+o.price}</div>
       </div>`;
   }).join('');
 }
 
-/* 團主標示某筆訂單缺貨 → 設旗標、重繪、並請波波到群組 tag 當事人 */
-function markOOS(i){
-  orders[i].oos=true; orders[i].notified=true;
+/* 團主回報某品項缺貨 → 標記所有點該品項的人、重繪、並請波波到群組一次 tag 他們 */
+function reportOOSByItem(){
+  const sel = document.getElementById('oos-item-sel');
+  const item = sel ? sel.value : '';
+  if(!item){ alert('請先選擇缺貨的品項'); return; }
+  const affected = [];
+  orders.forEach(o=>{
+    if(o.filled && !o.absent && !o.memberCancelled && !o.removed && !o.subbed && o.item===item && !o.oos){
+      o.oos=true; o.notified=true; if(!o._orig) o._orig={item:o.item, spec:o.spec, price:o.price}; affected.push(o.person);
+    }
+  });
+  if(!affected.length){ alert('目前沒有人點這個品項，或都已處理過'); return; }
   buildOrders();
+  const persons=[...new Set(affected)];
   if(window.parent && window.parent!==window){
-    window.parent.postMessage({type:'bobo_oos', person:orders[i].person, item:orders[i].item},'*');
+    window.parent.postMessage({type:'bobo_oos', persons:persons, item:item},'*');
   }
 }
 
+/* 團主設定缺貨替代品／移除／改回原點；換單或移除後仍可再調整 */
 function handleSub(sel,i){
   const val = sel.value;
   if(!val) return;
-  const box = document.getElementById('oos-'+i);
-  const lbl = document.getElementById('oos-lbl-'+i);
-  const nm  = document.getElementById('orname-'+i);
+  const o = orders[i];
+  if(!o._orig) o._orig={item:o.item, spec:o.spec, price:o.price};
   const notify = document.getElementById('sub-notify-area');
-
-  if(val.includes('自己選')){
-    sel.disabled = true;
-    box.style.background='var(--amber-light)';
-    box.style.borderColor='#f5dca0';
-    lbl.style.color='#7a5000';
-    lbl.textContent='⏳ 等待阿Ken回覆…';
-    notify.innerHTML=`<div class="notice" style="margin-bottom:10px;">
-      📩 波波已私訊阿Ken：「翡翠檸檬沒有了，你要換什麼？10 分鐘內回我，否則幫你換四季春。」
-      <button onclick="simReply(${i})" style="display:block;width:100%;margin-top:8px;padding:7px;background:#fff;border:1.5px solid var(--amber);border-radius:8px;font-size:12px;font-weight:600;color:#7a5000;cursor:pointer;font-family:var(--font)">
-        👆 模擬：阿Ken回覆「換四季春茶大杯」
-      </button>
-    </div>`;
-    notify.scrollIntoView({behavior:'smooth',block:'nearest'});
-    return;
+  let msg='';
+  if(val.indexOf('移除此單')>=0){
+    o.price=0; o.oos=false; o.subbed=false; o.removed=true;
+    msg='✅ 已移除 '+o.person+' 的單（缺貨未換），並私訊通知不用付款。';
+  } else {
+    const m=val.match(/\$(\d+)/);
+    o.item=val.replace(/（\$\d+）\s*$/,''); if(m) o.price=parseInt(m[1],10);
+    o.oos=false; o.subbed=true; o.removed=false;
+    msg='✅ 已幫 '+o.person+' 換單為「'+val+'」，帳單已更新。';
   }
-  const m = val.match(/\$(\d+)/);
-  if(m){
-    const newPrice = parseInt(m[1]);
-    orders[i].price = newPrice;
-    orders[i].oos = false;
-    document.getElementById('orprice-'+i).textContent = '$'+newPrice;
-    nm.innerHTML = orders[i].person + ' <span class="tag t-ok">已換單</span>';
-    box.style.background='var(--teal-light)';
-    box.style.borderColor='#a0dcd3';
-    lbl.style.color='#0e7862';
-    lbl.textContent='✅ 已換：'+val;
-    sel.style.display='none';
-    notify.innerHTML=`<div class="notice-g" style="margin-bottom:10px;">✅ 已幫阿Ken換單為「${val}」，帳單已更新。</div>`;
-    recalcStats();
-    updateSummary();
-  }
-}
-
-function simReply(i){
-  const notify = document.getElementById('sub-notify-area');
-  orders[i].item  = '四季春茶大杯';
-  orders[i].price = 65;
-  orders[i].oos   = false;
-  notify.innerHTML=`<div class="notice-g" style="margin-bottom:10px;">✅ 阿Ken回覆了！已換為「四季春茶大杯（$65）」，訂單已自動更新。</div>`;
-  buildOrders();
-  recalcStats();
-  updateSummary();
+  if(notify){ notify.innerHTML='<div class="notice-g" style="margin-bottom:10px;">'+msg+'</div>'; notify.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+  buildOrders(); recalcStats(); updateSummary(); buildPay();
 }
 
 function remind(){
   const btn = document.getElementById('remind-btn');
   const res = document.getElementById('remind-result');
-  btn.disabled = true;
-  btn.style.opacity = '.6';
+  const unfilled = orders.filter(function(o){ return !o.filled && !o.absent; }).map(function(o){ return o.person; });
   res.style.display = 'block';
-  res.innerHTML = `<div class="notice-g">✅ 波波已在群組 tag Ben：「Ben～15:30 截單，還沒填喔，快去填 👉 連結」</div>`;
+  if(!unfilled.length){ res.innerHTML = `<div class="notice-g">✅ 全員都已填單，無需催單。</div>`; return; }
+  btn.disabled = true; btn.style.opacity = '.6';
+  const tag = unfilled.map(function(n){ return '@'+n; }).join(' ');
+  res.innerHTML = `<div class="notice-g">✅ 波波已在群組 tag ${tag}：「15:30 截單，還沒填喔，快去填 👉 連結」</div>`;
 }
 
 function recalcStats(){
-  const filled = orders.filter(o=>!o.absent && o.filled);
-  const active = orders.filter(o=>!o.absent);
-  const total = orders.reduce((s,o)=>s+o.price,0);
-  document.getElementById('filled-count').textContent = filled.length+'/'+active.length;
+  // 以「人」為單位（一人多品項只算一位）
+  const persons = personAgg();
+  const filled = persons.filter(p=>p.filled).length;
+  const active = persons.filter(p=>p.active).length;
+  const total  = persons.reduce((s,p)=> s + (p.absent?0:p.total), 0);
+  document.getElementById('filled-count').textContent = active>0 ? (filled+'/'+active) : '—';
   document.getElementById('total-amt').textContent = '$'+total;
   document.getElementById('cur-amt').textContent = '$'+total;
+  const pc = document.getElementById('pending-count'); if(pc) pc.textContent = Math.max(0, active-filled);
   const thresh = 300;
   const pct = Math.min(100, Math.round(total/thresh*100));
   document.getElementById('prog-fill').style.width = pct+'%';
@@ -731,93 +972,148 @@ function recalcStats(){
   }
 }
 
-/* ── Tab 3: payments ── */
+/* ── Tab 3: payments（以「人」為單位；狀態貼在名字後、金額可點編輯）── */
+function payAvatar(name, color, muted){
+  return '<div class="pay-av'+(muted?' muted':'')+'"'+(muted?'':' style="background:'+color+'"')+'>'+escHtml(name?name.charAt(0):'?')+'</div>';
+}
+function payStatusSub(name, owe){
+  const val = paymentsByName[name]||0, diff = val - owe;
+  if(val===0)  return {word:'未收', color:'var(--muted)'};
+  if(diff===0) return {word:'✓ 已收', color:'#0F6E56'};
+  if(diff>0)   return {word:'多繳 $'+diff+'（待退）', color:'#8A5712'};
+  return {word:'欠 $'+Math.abs(diff), color:'var(--coral-d)'};
+}
+/* 一般說明列（收款人／缺席／未點餐／金主請客）：頭像＋名字＋狀態小字＋右側備註 */
+function payRowInfo(name, color, muted, tagHtml, sub, right){
+  return `<div class="pay-row">${payAvatar(name,color,muted)}
+    <div class="pay-body"><div class="pay-name"${muted?' style="color:var(--muted)"':''}>${escHtml(name)}${tagHtml||''}</div>${sub?('<div class="pay-sub" style="color:var(--muted)">'+sub+'</div>'):''}</div>
+    <div class="pay-note">${right||''}</div></div>`;
+}
+/* 需付款列：頭像＋名字＋狀態小字＋可點編輯金額＋勾選 */
+function payRowPayer(name, color, owe, isSponsor){
+  const val = paymentsByName[name]||0, st = payStatusSub(name, owe);
+  const tag = isSponsor ? ' <span class="tag t-lead">金主</span>' : '';
+  const amt = val>0 ? ('$'+val) : ('應付 $'+owe);
+  const amtCls = val>0 ? 'pay-amt' : 'pay-amt due';
+  return `<div class="pay-row">${payAvatar(name,color,false)}
+    <div class="pay-body"><div class="pay-name">${escHtml(name)}${tag}</div><div class="pay-sub" style="color:${st.color}">${st.word}</div></div>
+    <div class="${amtCls}" onclick="editPay('${escArg(name)}',${owe},this)" title="點金額改實收">${amt}</div>
+    <label class="pay-chk"><input type="checkbox" ${val>=owe?'checked':''} onchange="togglePaid('${escArg(name)}',${owe},this)"></label></div>`;
+}
 function buildPay(){
-  const sp = calcShouldPay();
-  const el = document.getElementById('pay-list');
-  el.innerHTML = orders.map((o,i)=>{
-    if(o.absent) return `
-      <div class="pay-row">
-        <div class="pay-name" style="color:var(--muted)">${o.person}</div>
-        <div class="pay-should" style="color:var(--muted)">—</div>
-        <div style="width:72px;text-align:center;font-size:12px;color:var(--muted)">請假</div>
-        <div class="pay-st st-abs">跳過</div>
-      </div>`;
-    const val = payments[i]||0;
-    const s   = sp[i];
-    const diff = val - s;
-    let stClass='st-none', stText='未收';
-    if(s===0 && o.price===0){ stClass='st-abs'; stText='無訂單'; }
-    else if(s===0){ stClass='st-ok'; stText='金主付'; }
-    else if(val===0){ stClass='st-none'; stText='未收'; }
-    else if(diff===0){ stClass='st-ok'; stText='✓'; }
-    else if(diff>0){ stClass='st-over'; stText='多$'+diff; }
-    else { stClass='st-owe'; stText='欠$'+Math.abs(diff); }
-    return `
-      <div class="pay-row">
-        <div class="pay-name">${o.person}</div>
-        <div class="pay-should">${s?'$'+s:'—'}</div>
-        <div class="pay-amt"><span>$</span><input class="pay-in" type="number" value="${val||''}" placeholder="—" oninput="updatePay(this,${i})" ${s===0?'disabled style="opacity:.4"':''}></div>
-        <div class="pay-st ${stClass}" id="pst-${i}">${stText}</div>
-      </div>`;
-  }).join('');
+  const persons = personAgg(), sName = currentSponsor(), sponsorIsPayee = !!sName && sName===payee;
+  let rows='', sponsorPlaced=false;
+  persons.forEach(p=>{
+    if(p.absent){ rows+=payRowInfo(p.name, p.color, true, '', '缺席・不列入', '跳過'); return; }
+    if(sName && p.name===sName && !sponsorIsPayee){ rows+=payRowPayer(p.name, p.color, sponsorOwes()+personShouldPay(p), true); sponsorPlaced=true; return; }
+    if(p.name===payee){
+      rows += sponsorIsPayee
+        ? payRowInfo(p.name, p.color, false, ' <span class="tag t-lead">收款人＝金主</span>', '自己買單', '')
+        : payRowInfo(p.name, p.color, false, ' <span class="tag t-lead">收款人</span>', '本次由你墊款', '');
+      return;
+    }
+    if(p.total===0){ rows+=payRowInfo(p.name, p.color, true, '', '未點餐', '—'); return; }
+    const owe = personShouldPay(p);
+    if(owe===0){ rows+=payRowInfo(p.name, p.color, false, ' <span class="tag t-ok">金主請客</span>', '本次免付', '$0'); return; }
+    rows+=payRowPayer(p.name, p.color, owe, false);
+  });
+  if(sName && !sponsorIsPayee && !sponsorPlaced) rows+=payRowPayer(sName, '#8A5A2B', sponsorOwes(), true);
+  document.getElementById('pay-list').innerHTML = rows;
+  renderSettle();
 }
 
-function updatePay(inp,i){
-  const val = parseFloat(inp.value)||0;
-  payments[i] = val;
-  const sp   = calcShouldPay();
-  const diff = val - sp[i];
-  const el   = document.getElementById('pst-'+i);
-  if(!inp.value){ el.className='pay-st st-none'; el.textContent='未收'; }
-  else if(diff===0){ el.className='pay-st st-ok'; el.textContent='✓'; }
-  else if(diff>0){ el.className='pay-st st-over'; el.textContent='多$'+diff; }
-  else { el.className='pay-st st-owe'; el.textContent='欠$'+Math.abs(diff); }
-  updateSummary();
+function togglePaid(name, owe, cb){
+  paymentsByName[name] = cb.checked ? owe : 0;
+  buildPay(); updateSummary();
+}
+function editPay(name, owe, el){
+  if(owe<=0 || !el || el.querySelector('input')) return;
+  const cur = (paymentsByName[name]>0) ? paymentsByName[name] : owe;   // 未收時預填「應付金額」，不從 0 開始
+  el.innerHTML = '<input type="number" inputmode="numeric" value="'+cur+'" placeholder="'+owe+'" '
+    + 'style="width:74px;text-align:right;font-size:14px;font-weight:700;border:1.5px solid var(--coral);border-radius:8px;padding:3px 6px;font-family:var(--font);-webkit-appearance:none;outline:none;box-shadow:var(--ring)">';
+  const inp = el.querySelector('input'); inp.focus(); inp.select();
+  let done=false;
+  function commit(){ if(done) return; done=true; paymentsByName[name]=Math.max(0, parseInt(inp.value,10)||0); buildPay(); updateSummary(); }   // 不接受負數實收
+  inp.addEventListener('blur', commit);
+  inp.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); inp.blur(); } else if(e.key==='Escape'){ done=true; buildPay(); } });
 }
 
 function updateSummary(){
-  const sp = calcShouldPay();
-  const totalOrder     = orders.reduce((s,o)=>s+o.price, 0);
-  const totalShouldPay = sp.reduce((s,v)=>s+v, 0);
-  const collected = payments.reduce((s,v)=>s+v, 0);
-  const pending   = Math.max(0, totalShouldPay - collected);
+  const persons = personAgg();
+  const payers  = payerList();
+  const totalOrder = persons.reduce((s,p)=> s + (p.absent?0:p.total), 0);
+  const totalShouldPay = payers.reduce((s,x)=> s + x.owe, 0);
+  const collected = payers.reduce((s,x)=> s + (paymentsByName[x.name]||0), 0);
+  const pending = Math.max(0, totalShouldPay - collected);
   document.getElementById('s-total').textContent = '$'+totalOrder;
   const drow = document.getElementById('s-delivery-row');
   if(deliveryFee>0 && deliveryMode!=='none'){
     drow.style.display='flex';
     document.getElementById('s-delivery-lbl').textContent = deliveryMode==='split'
-      ? `外送費（平攤，每人 +$${Math.round(deliveryFee/Math.max(1,activeCount()))}）`
+      ? `外送費（平攤，每人 +$${Math.ceil(deliveryFee/Math.max(1,activePersonCount()))}）`
       : '外送費（請客方吸收）';
     document.getElementById('s-delivery').textContent='$'+deliveryFee;
   } else { drow.style.display='none'; }
   document.getElementById('s-collected').textContent = '$'+collected;
   document.getElementById('s-pending').textContent = '$'+pending;
 
-  let html='';
-  orders.forEach((o,i)=>{
-    if(o.absent || o.price===0) return;
-    const s = sp[i];
-    if(s===0) return; // covered by sponsor
-    const val  = payments[i]||0;
-    const diff = val - s;
-    if(diff<0) html+=`<div class="owe-item" style="color:var(--coral-d)">・${o.person} 欠 Amy <strong>$${Math.abs(diff)}</strong></div>`;
-    else if(diff>0) html+=`<div class="owe-item" style="color:var(--amber)">・${o.person} 多繳 <strong>$${diff}</strong>（下團扣抵）</div>`;
-    else if(val===0) html+=`<div class="owe-item" style="color:var(--purple)">・${o.person} 尚未繳款 $${s}</div>`;
+  // 總額加總正確即可結清；但仍列出「誰欠誰多少」：少付的欠收款人、多付的由收款人退還
+  let underRows='', overRows='';
+  payers.forEach(x=>{
+    const val = paymentsByName[x.name]||0, diff = val - x.owe;
+    const who = x.sponsor ? (x.name+'（金主）') : x.name;
+    if(diff < 0) underRows += `<div class="owe-item" style="color:var(--coral-d)">・${who} 還欠 ${payee} <strong>$${-diff}</strong></div>`;
+    else if(diff > 0) overRows += `<div class="owe-item" style="color:var(--amber)">・${payee}（收款人）欠 ${who} <strong>$${diff}</strong>（多繳待退）</div>`;
   });
-  document.getElementById('owe-list').innerHTML = html
-    ? `<div style="margin-top:10px;"><div style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px;">欠款／儲值明細</div>${html}</div>`
-    : `<div style="margin-top:10px;font-size:12.5px;color:#0e7862;">✅ 全員已結清</div>`;
+  let oweHtml;
+  if(!underRows && !overRows){
+    oweHtml = `<div style="margin-top:10px;font-size:13px;color:#0F6E56;">✅ 全員剛好付清，帳面已平（實收 $${collected}／應收 $${totalShouldPay}）。</div>`;
+  } else {
+    const head = pending<=0
+      ? `✅ 總額已收齊 $${collected}／$${totalShouldPay}，可結清 · 個人待補／待退如下：`
+      : `還差 $${pending}（湊齊即可結清）· 個人待補／待退如下：`;
+    oweHtml = `<div style="margin-top:10px;"><div style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px;">${head}</div>${underRows}${overRows}</div>`;
+  }
+  document.getElementById('owe-list').innerHTML = oweHtml;
+}
+
+/* ── #11：全員結清 → 完成結算 → 開下一團 ── */
+function renderSettle(){
+  const host = document.getElementById('settle-area'); if(!host) return;
+  const payers = payerList();
+  const totalOwed = payers.reduce((s,x)=> s + x.owe, 0);
+  const collected = payers.reduce((s,x)=> s + (paymentsByName[x.name]||0), 0);
+  // 收齊＝總實收 ≥ 總應收（有人幫別人補上也算收齊）
+  const settled = totalOwed>0 && collected>=totalOwed;
+  host.innerHTML = settled
+    ? `<div class="notice-g" style="margin-top:2px">🎉 這團收款已收齊（實收 $${collected}／應收 $${totalOwed}）！</div>
+       <button class="btn btn-p" onclick="finishSettle()">✅ 完成結算</button>`
+    : '';
+}
+function finishSettle(){
+  // 完成結算＝整團收尾：清掉本次狀態，把面板重整回預設值（不進入下一團流程）
+  try{ localStorage.removeItem('bobo_team_stage'); localStorage.removeItem('bobo_member_orders'); }catch(_){}
+  location.replace(location.pathname);
 }
 
 function notifyOwers(){
   const btn=event.target;
   btn.disabled=true; btn.style.opacity='.6';
+  const payers=payerList();
+  const totalOwed = payers.reduce((s,x)=> s + x.owe, 0);
+  const collected = payers.reduce((s,x)=> s + (paymentsByName[x.name]||0), 0);
   const card=document.getElementById('sum-card');
   const notice=document.createElement('div');
   notice.className='notice-g';
   notice.style.marginTop='8px';
-  notice.textContent='✅ 波波已私訊阿Ken與欣欣欠款明細，並確認Ben本次無訂單。';
+  if(collected>=totalOwed){
+    // 總額已收齊（就算有人少付、有人多付幫補），不用再催
+    notice.textContent='✅ 總收款已收齊，無需再催款。';
+  } else {
+    const owers = payers.filter(x=> (paymentsByName[x.name]||0) < x.owe).map(x=>x.name);
+    const who = owers.length<=3 ? ('（'+owers.join('、')+'）') : '';
+    notice.textContent='✅ 波波已私訊 '+owers.length+' 位還沒繳清的成員'+who+'，還差 $'+(totalOwed-collected)+'。';
+  }
   card.appendChild(notice);
   notice.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
@@ -835,17 +1131,14 @@ function simArrival(){
 }
 
 function confirmArrival(){
-  const rows = orders.filter(o=>!o.absent && o.filled).map(o=>
-    `<div style="font-size:12.5px;padding:5px 0;border-bottom:.5px solid #c5e0d5;display:flex;gap:6px">
-      <span style="font-weight:600;flex:none">${o.person}</span>
-      <span style="color:var(--muted)">${o.item}・${o.spec}</span>
-    </div>`).join('');
+  // 取餐清單真的發到「群組」，不是留在後台面板
+  const list = orders.filter(o=>!o.absent && o.filled && !o.removed && !o.memberCancelled && o.price>0)
+    .map(o=>({person:o.person, item:o.item, spec:o.spec}));
+  if(window.parent && window.parent!==window){
+    window.parent.postMessage({type:'bobo_pickup_ready', list:list},'*');
+  }
   document.getElementById('arrival-status').innerHTML=`
-    <div class="notice-g" style="margin-bottom:8px">✅ 波波已在群組發送取餐清單！</div>
-    <div style="background:var(--teal-light);border-radius:10px;padding:10px 12px;border:1px solid #a0dcd3">
-      <div style="font-size:12px;font-weight:700;color:#0e7862;margin-bottom:6px">📋 已發到群組的取餐清單</div>
-      ${rows}
-    </div>`;
+    <div class="notice-g" style="margin-bottom:0">✅ 波波已把取餐清單發到群組（共 ${list.length} 杯），收到通知的人就會來拿。</div>`;
 }
 
 /* ── 從菜單 OCR 帶入品項（URL #menu=<base64> 優先，其次 localStorage）── */
@@ -861,29 +1154,47 @@ function importOcrMenu(){
     data.items.forEach(function(it){
       menuItems.push({ name:it.name, opts:(it.opts||'糖/冰可選'), price:parseInt(it.price,10)||0, category:(it.category||'') });
     });
+    // 帶入波波在辨識時擬好的 3 種開團文案（沒有就用店名＋店型即時生成）
+    boboCopies = (data.copies && data.copies.length) ? data.copies : boboCopyTemplates(data.shop||'這家店', boboShopType(data.items));
+    // 讓面板抬頭跟實際挑選的店家一致（避免出現與流程無關的預設店名）
+    var _hp=document.querySelector('.hdr-info p'); if(_hp && data.shop) _hp.textContent='群組：辦公室揪團 · '+data.shop;
+    // M0：讓假訂單與缺貨替代品跟帶入的菜單一致，消除 Demo 破綻
+    if(menuItems.length){
+      var _f=0;
+      orders.forEach(function(o){ if(!o.absent && o.filled){ var mi=menuItems[_f % menuItems.length]; o.item=mi.name; o.price=mi.price; _f++; } });
+      var _low=menuItems.slice().sort(function(a,b){return a.price-b.price;});
+      subOptions=_low.slice(0,3).map(function(m){return m.name+'（$'+m.price+'）';}).concat(['🗑 移除此單（不換了）']);
+    }
     var host=document.getElementById('menu-list');
     if(host){
-      var b=document.createElement('div');
-      b.style.cssText='background:#eefaf3;border:1px solid #bfe7d1;border-radius:10px;padding:9px 12px;margin-bottom:10px;font-size:12.5px;color:#1d7a4f';
-      b.textContent='✅ 已從菜單 OCR 帶入 '+menuItems.length+' 個品項'+(data.shop?'（'+data.shop+'）':'')+'，可直接開團或微調。';
-      host.parentNode.insertBefore(b, host);
+      // 菜單帶入的確認改由 buildMenu() 的摘要卡呈現（避免重複的綠色提示框）
       // 內嵌於整合 Demo（LIFF）時：固定在底部的「發布開團到群組」CTA，回拋給外殼
       if(window.parent && window.parent !== window){
         var bar=document.createElement('div');
-        bar.style.cssText='position:fixed;left:0;right:0;bottom:0;z-index:200;padding:10px 14px 14px;background:#fff;border-top:1px solid #e6e1d8;box-shadow:0 -4px 16px rgba(60,40,30,.12)';
-        bar.innerHTML='<button id="bobo-pub" style="display:block;width:100%;padding:14px;border:0;border-radius:12px;background:#E8674C;color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">✓ 發布開團到群組</button>';
+        bar.style.cssText='position:fixed;left:0;right:0;bottom:0;z-index:200;padding:10px 14px 14px;background:#fff;border-top:1px solid #EEE4DF;box-shadow:0 -4px 16px rgba(60,30,20,.12)';
+        bar.innerHTML='<button id="bobo-pub" style="display:block;width:100%;padding:14px;border:0;border-radius:12px;background:#E5462F;color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">✓ 發布開團到群組</button>';
         document.body.appendChild(bar);
         document.body.style.paddingBottom='84px';
         var _pb=document.getElementById('bobo-pub'), _shop=(data.shop||'本次菜單'), _stage=0;
         try{ _stage=parseInt(localStorage.getItem('bobo_team_stage')||'0',10)||0; }catch(_){}
         function _renderPub(){
           var hs=document.getElementById('hdr-status');
-          if(_stage===0){ _pb.textContent='✓ 發布開團到群組'; _pb.style.background='#E8674C'; _pb.disabled=false; _pb.style.cursor='pointer'; if(hs)hs.textContent='進行中'; }
-          else if(_stage===1){ _pb.textContent='🔔 已開團 ｜ 截單後點此截單'; _pb.style.background='#2e9e6b'; _pb.disabled=false; _pb.style.cursor='pointer'; if(hs)hs.textContent='已開團'; }
-          else { _pb.textContent='✓ 已截單，準備餐點中'; _pb.style.background='#8d8896'; _pb.disabled=true; _pb.style.cursor='default'; if(hs)hs.textContent='已截單'; }
+          if(_stage===0){ _pb.textContent='✓ 發布開團到群組'; _pb.style.background='#E5462F'; _pb.disabled=false; _pb.style.cursor='pointer'; if(hs)hs.textContent='進行中'; }
+          else if(_stage===1){ _pb.textContent='🔔 已開團 ｜ 截單後點此截單'; _pb.style.background='#1E9E6B'; _pb.disabled=false; _pb.style.cursor='pointer'; if(hs)hs.textContent='已開團'; }
+          else { _pb.textContent='✓ 已截單，準備餐點中'; _pb.style.background='#8E867F'; _pb.disabled=true; _pb.style.cursor='default'; if(hs)hs.textContent='已截單'; }
         }
         _pb.onclick=function(){
-          if(_stage===0){ window.parent.postMessage({type:'bobo_team_published',shop:_shop,count:menuItems.length},'*'); _stage=1; }
+          if(_stage===0){
+            // 帶上計費模式與金主／補助資訊，讓群組開團公告能顯示對應的文案
+            var _pl={type:'bobo_team_published',shop:_shop,count:menuItems.length,billing:billingMode};
+            if(billingMode==='full'){ var _s=document.getElementById('sponsor-select'); _pl.sponsor=_s?_s.value:''; }
+            else if(billingMode==='oneEach'){ var _s2=document.getElementById('sponsor-one-select'); _pl.sponsor=_s2?_s2.value:''; }
+            else if(billingMode==='subsidy'){ _pl.subsidy=subsidyAmt; var _s3=document.getElementById('sponsor-subsidy-select'); _pl.sponsor=_s3?_s3.value:''; }
+            var _ct=document.getElementById('cutoff-time'); _pl.cutoff=(_ct&&_ct.value)? _ct.value.split('T')[1] : '15:00';
+            _pl.chosenCopy = boboCopyText(boboChosenCopy);   // 團主挑選的開團文案（已填入截單時間）
+            try{ localStorage.setItem('bobo_cutoff', _pl.cutoff); }catch(_){}   // 讓點餐表單顯示一致的截單時間
+            window.parent.postMessage(_pl,'*'); _stage=1;
+          }
           else if(_stage===1){ window.parent.postMessage({type:'bobo_order_closed',shop:_shop},'*'); _stage=2; }
           try{ localStorage.setItem('bobo_team_stage',String(_stage)); }catch(_){}
           _renderPub();
@@ -895,13 +1206,110 @@ function importOcrMenu(){
   }catch(_){}
 }
 
+/* ── M1-A：取消整團 ── */
+function cancelTeam(){
+  if(document.getElementById('cancel-box')) return;
+  var box=document.createElement('div');
+  box.id='cancel-box'; box.className='card';
+  box.style.border='1.5px solid #F3D0C7';
+  box.innerHTML='<div class="card-title" style="color:var(--coral-d)"><span class="ci">⚠️</span>取消整團？</div>'
+    +'<p style="font-size:12px;color:var(--muted);margin-bottom:10px">取消後會通知所有成員、無法復原。已下單的人不用付款。</p>'
+    +'<div class="field"><label>取消原因</label><select id="cancel-reason"><option>店家不接單</option><option>湊不到人</option><option>臨時有狀況</option><option>其他</option></select></div>'
+    +'<div style="display:flex;gap:8px;margin-top:4px"><button class="btn btn-g" style="margin-top:0" onclick="closeCancel()">再想想</button><button class="btn btn-p" style="margin-top:0" onclick="confirmCancel()">確認取消整團</button></div>';
+  document.getElementById('panel-0').appendChild(box);
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function closeCancel(){ var b=document.getElementById('cancel-box'); if(b) b.remove(); }
+function confirmCancel(){
+  var rs=document.getElementById('cancel-reason'); var reason=rs?rs.value:'其他';
+  closeCancel();
+  try{ localStorage.setItem('bobo_team_stage','-1'); }catch(_){}
+  var hs=document.getElementById('hdr-status'); if(hs) hs.textContent='已取消';
+  var paidCount=0; for(var _n in paymentsByName){ if(_n!==payee && (paymentsByName[_n]||0)>0) paidCount++; }
+  ['panel-0','panel-1','panel-2'].forEach(function(id){
+    var p=document.getElementById(id); if(!p || p.querySelector('.cancelled-banner')) return;
+    var n=document.createElement('div'); n.className='cancelled-banner notice';
+    n.style.cssText='background:var(--coral-light);border:1px solid #F3D0C7;color:var(--coral-d);margin-bottom:12px';
+    n.innerHTML='❌ 本團已取消（原因：'+reason+'），已通知所有成員。'+(paidCount>0?(' <b>提醒：已有 '+paidCount+' 人付款，記得退款。</b>'):'');
+    p.insertBefore(n,p.firstChild);
+  });
+  var pb=document.getElementById('bobo-pub'); if(pb){ pb.textContent='本團已取消'; pb.disabled=true; pb.style.background='#8E867F'; pb.style.cursor='default'; }
+  if(window.parent && window.parent!==window){ window.parent.postMessage({type:'bobo_team_cancelled', reason:reason},'*'); }
+}
+
+/* ── M1-B：截單延長 ── */
+function parseLocalDT(v){ var m=/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(v||''); return m?new Date(+m[1],+m[2]-1,+m[3],+m[4],+m[5]):null; }
+function fmtLocalDT(d){ function p(n){return (n<10?'0':'')+n;} return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'T'+p(d.getHours())+':'+p(d.getMinutes()); }
+function simCutoff(){
+  var inp=document.getElementById('cutoff-time');
+  var t=inp&&inp.value?inp.value.replace('T',' '):'15:30';
+  document.getElementById('cutoff-status').innerHTML=
+    '<div class="notice" style="margin-bottom:8px">📩 波波私訊你：「'+t+' 截單時間到了，還有人沒填。要延長還是現在截單？」</div>'
+    +'<div style="display:flex;gap:8px;flex-wrap:wrap">'
+    +'<button class="btn btn-g" style="margin-top:0;flex:1;min-width:88px;font-size:13px;padding:10px" onclick="extendCutoff(15)">延長 15 分</button>'
+    +'<button class="btn btn-g" style="margin-top:0;flex:1;min-width:88px;font-size:13px;padding:10px" onclick="extendCutoff(30)">延長 30 分</button>'
+    +'<button class="btn btn-s" style="margin-top:0;flex:1;min-width:88px;font-size:13px;padding:10px" onclick="closeCutoffNow()">現在截單</button>'
+    +'</div>';
+}
+function extendCutoff(mins){
+  var inp=document.getElementById('cutoff-time'), newDisp='';
+  if(inp&&inp.value){ var d=parseLocalDT(inp.value); if(d){ d.setMinutes(d.getMinutes()+mins); inp.value=fmtLocalDT(d); newDisp=inp.value.replace('T',' '); } }
+  var disp=document.getElementById('cutoff-time-display'); if(disp&&newDisp) disp.textContent=newDisp;
+  document.getElementById('cutoff-status').innerHTML='<div class="notice-g" style="margin-bottom:8px">✅ 已延長 '+mins+' 分鐘'+(newDisp?('，新截單時間 '+newDisp):'')+'。波波已到群組公告。</div>'
+    +'<button class="btn btn-g" style="font-size:13px;padding:9px;margin-top:0" onclick="simCutoff()">👆 再次模擬：時間又到了</button>';
+  if(window.parent && window.parent!==window){ window.parent.postMessage({type:'bobo_cutoff_extended', mins:mins, newtime:newDisp},'*'); }
+}
+function closeCutoffNow(){
+  try{ localStorage.setItem('bobo_team_stage','2'); }catch(_){}
+  var hs=document.getElementById('hdr-status'); if(hs) hs.textContent='已截單';
+  document.getElementById('cutoff-status').innerHTML='<div class="notice-g">✅ 已截單，開始幫大家送出訂單。</div>';
+  var pb=document.getElementById('bobo-pub'); if(pb){ pb.textContent='✓ 已截單，準備餐點中'; pb.disabled=true; pb.style.background='#8E867F'; pb.style.cursor='default'; }
+  try{ buildMenu(); buildOrders(); }catch(_){}
+  if(window.parent && window.parent!==window){ window.parent.postMessage({type:'bobo_order_closed', shop:'本團'},'*'); }
+}
+
+/* ── 範圍 B：讀取成員自助送出的訂單，併入團主面板 ── */
+function importMemberOrders(){
+  try{
+    var arr=JSON.parse(localStorage.getItem('bobo_member_orders')||'[]');
+    if(!Array.isArray(arr)||!arr.length) return;
+    var palette=['#7A5C99','#C25E7C','#3E8E9D','#9D7A3E','#5E9D6A','#B0574E'];
+    function nameColor(name){ var h=0; for(var i=0;i<name.length;i++) h=(h*31+name.charCodeAt(i))>>>0; return palette[h%palette.length]; }
+    var _c=function(x){ return String(x==null?'':x).replace(/[<>]/g,''); };   // 邊界防呆：去掉 < >
+    arr.forEach(function(mo){
+      var person=_c(mo.person);
+      // 沿用此人既有顏色，並移除此人所有既有訂單列（成員自助填單是此人訂單的最新來源）
+      var color=null;
+      for(var k=orders.length-1;k>=0;k--){ if(orders[k].person===person){ if(!color) color=orders[k].color; orders.splice(k,1); } }
+      if(!color) color=nameColor(person);
+      if(mo.status==='cancelled'){
+        orders.push({person:person, color:color, item:'', spec:'', price:0, oos:false, absent:false, filled:true, memberCancelled:true});
+        return;
+      }
+      // 一人多品項：每個品項展開成獨立訂單列（缺貨才能對應到單一品項）
+      var items=(mo.items&&mo.items.length)? mo.items : [{name:mo.item, spec:mo.spec, price:mo.price||0}];
+      items.forEach(function(it){
+        orders.push({person:person, color:color, item:_c(it.name), spec:(_c(it.spec)||'標準'), price:it.price||0, oos:false, absent:false, filled:true});
+      });
+    });
+  }catch(_){}
+}
+
 /* ── init ── */
 buildPeople();
+populateSponsors();
 importOcrMenu();
+importMemberOrders();
 buildMenu();
 buildOrders();
+recalcStats();
 buildPay();
 updateSummary();
+if(!boboCopies.length) boboCopies=boboCopyTemplates('這家店', boboShopType(menuItems));
+defaultCopyForBilling();
+buildCopyOptions();
+/* 依開團階段自動切到對應分頁：已開團→訂單狀況、已截單→收款對帳（未開團維持開團設定） */
+try{ var _initStage=parseInt(localStorage.getItem('bobo_team_stage')||'0',10)||0; if(_initStage>=2){ switchTab(2); } else if(_initStage>=1){ switchTab(1); } }catch(_){}
 </script>
 </body>
 </html>

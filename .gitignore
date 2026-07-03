@@ -14,5 +14,9 @@ __pycache__/
 # Private / drafts (not published)
 _private/
 
+# 內部工作文件（保留在本機、不進公開作品集）
+CLAUDE.md
+REVIEW_GUIDE.md
+
 # 工具本機設定
 .claude/
