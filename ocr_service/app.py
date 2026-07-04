@@ -37,7 +37,7 @@ FRONTEND = Path(__file__).resolve().parent / "frontend.html"
 # 離線示範用：預先驗證過的測試菜單（result_*.json + menu_*.圖）。
 # 用途：面試現場若沒網路或 API key 失效，仍可用真實結果渲染前端畫面。
 # 只要 uvicorn 有起來即可，完全不需呼叫 Gemini/Claude。
-SAMPLES_DIR = Path(__file__).resolve().parent.parent / "測試菜單"
+SAMPLES_DIR = Path(__file__).resolve().parent.parent / "test_menus"
 _IMG_EXTS = (".jpg", ".jpeg", ".png", ".webp")
 if SAMPLES_DIR.exists():
     app.mount("/samples_files", StaticFiles(directory=str(SAMPLES_DIR)), name="samples_files")

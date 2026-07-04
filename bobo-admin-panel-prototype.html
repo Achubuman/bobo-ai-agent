@@ -1066,8 +1066,9 @@ function editPay(name, owe, el){
   if(owe<=0 || !el || el.querySelector('input')) return;
   const cur = (paymentsByName[name]>0) ? paymentsByName[name] : owe;   // 未收時預填「應付金額」，不從 0 開始
   el.innerHTML = '<input type="number" inputmode="numeric" value="'+cur+'" placeholder="'+owe+'" '
-    + 'style="width:74px;text-align:right;font-size:14px;font-weight:700;border:1.5px solid var(--coral);border-radius:8px;padding:3px 6px;font-family:var(--font);-webkit-appearance:none;outline:none;box-shadow:var(--ring)">';
+    + 'style="width:80px;text-align:right;font-size:16px;font-weight:700;border:1.5px solid var(--coral);border-radius:8px;padding:4px 6px;font-family:var(--font);-webkit-appearance:none;outline:none;box-shadow:var(--ring)">';   // 16px：避免 iOS focus 時整頁放大
   const inp = el.querySelector('input'); inp.focus(); inp.select();
+  try{ el.closest('.pay-row').scrollIntoView({block:'center'}); }catch(_){}   // 把編輯中的那列捲到看得到、不被鍵盤蓋住
   let done=false;
   function commit(){ if(done) return; done=true; paymentsByName[name]=Math.max(0, parseInt(inp.value,10)||0); buildPay(); updateSummary(); }   // 不接受負數實收
   inp.addEventListener('blur', commit);

@@ -4,17 +4,11 @@
 
 > 產品設計／原型作品集。菜單辨識這類 AI 本來就會出錯，這個專案在處理的是：怎麼把它包成團主敢用、公司敢上線的流程。
 
-### Live Demo
+## Live Demo — 整合流程
 
-**https://achubuman.github.io/bobo-ai-agent/**
+**▶ https://achubuman.github.io/bobo-ai-agent/**（本機檔：[index.html](index.html)）
 
-用手機開，或把瀏覽器拉窄到手機寬度，就是 LINE 裡的樣子。免金鑰、可離線。
-
----
-
-## 先看這個：整合 Demo
-
-**[開啟整合 Demo](index.html)** — 模擬在 LINE 裡的完整流程，一支手機從頭走到尾：
+用手機開，或把瀏覽器拉窄到手機寬度，就是 LINE 裡的樣子。免金鑰、可離線。模擬在 LINE 裡的完整流程，一支手機從頭走到尾：
 
 群組 @波波 揪團 → AI 推薦店家 → 團主在私訊編輯菜單（菜單 OCR）→ 一鍵開團 → 成員點餐 → 缺貨自動通知改單 → 截單 → 收款對帳。
 
@@ -22,11 +16,23 @@
 
 ### 畫面預覽
 
-| 群組揪團 → AI 推薦 | 菜單 OCR 辨識 |
+<table>
+<tr>
+<td align="center"><img src="images/01-group.png" width="230" alt="群組揪團"><br><sub>群組揪團 → AI 推薦</sub></td>
+<td align="center"><img src="images/02-ocr.png" width="230" alt="菜單 OCR"><br><sub>菜單 OCR 辨識</sub></td>
+</tr>
+<tr>
+<td align="center"><img src="images/03-admin.png" width="230" alt="開團面板"><br><sub>團主開團面板 · 收款對帳</sub></td>
+<td align="center"><img src="images/04-order.png" width="230" alt="成員點餐"><br><sub>成員點餐頁</sub></td>
+</tr>
+</table>
+
+## 產品文件
+
+| 文件 | 說明 |
 |---|---|
-| ![群組揪團](images/01-group.png) | ![菜單 OCR](images/02-ocr.png) |
-| **團主開團面板 · 收款對帳** | **成員點餐頁** |
-| ![開團面板](images/03-admin.png) | ![成員點餐](images/04-order.png) |
+| [產品需求文件 PRD](docs/PRD.md) | 問題定義、Goals、功能 → 目標 → 評估對照、需求與驗收標準、成功指標、實作狀態 |
+| [OCR 測試與發現](docs/OCR_testing_and_findings.md) | 測試計畫、KPI，與三個 finding（高信心幻覺／手寫刪除／輸出截斷）—— PRD 分軸治理決策的證據來源 |
 
 ## 各模組原型
 
@@ -58,10 +64,11 @@ uvicorn app:app --reload    # 開 http://localhost:8000/
 ## 辨識品質與測試
 
 - 用 **10 張真實菜單**測試：純飲料、正餐、套餐、手寫改價、模糊小圖、以及「非菜單」負向案例。
-- **關鍵發現**：辨識結果可以分成「照抄型」（品名、印刷價格）和「推理生成型」（加購、客製選項）兩類；後者就算整體信心高，還是常常編錯。所以我沒用單一信心門檻，而是分開處理：會動到錢的（價格）嚴格擋、可事後編輯的（選項）放行。錯誤案例見 [`錯誤示範素材/`](錯誤示範素材/)。
+- **關鍵發現**：辨識結果可以分成「照抄型」（品名、印刷價格）和「推理生成型」（加購、客製選項）兩類；後者就算整體信心高，還是常常編錯。所以我沒用單一信心門檻，而是分開處理：會動到錢的（價格）嚴格擋、可事後編輯的（選項）放行。錯誤案例見 [`failure_cases/`](failure_cases/)。
 - **抗幻覺**：非菜單／模糊照片不硬編價格，信心過低時擋住開團、引導重拍。
 - **大菜單壓縮**：用 `store_defaults`（全店通用糖／冰／加料）把每杯重複的選項抽成一份，避免輸出 token 爆量被截斷。
 - **量化評測**：以離線腳本比對辨識輸出與 ground truth，計算召回率／價格正確率／幻覺率（評測腳本本機保留）。
+- **完整測試計畫、KPI 與三個 finding**（高信心幻覺／手寫刪除／輸出截斷）見 [docs/OCR_testing_and_findings.md](docs/OCR_testing_and_findings.md)。
 
 ## 核心設計原則
 
@@ -79,4 +86,4 @@ uvicorn app:app --reload    # 開 http://localhost:8000/
 
 程式碼與設計以 [MIT License](LICENSE) 授權。
 
-`測試菜單/`、`錯誤示範素材/` 內的菜單照片，以及 Demo 中出現的店名／商標，版權均屬各店家所有，僅供辨識展示用途，不在 MIT 授權範圍內。
+`test_menus/`、`failure_cases/` 內的菜單照片，以及 Demo 中出現的店名／商標，版權均屬各店家所有，僅供辨識展示用途，不在 MIT 授權範圍內。
