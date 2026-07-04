@@ -6,7 +6,7 @@
 
 ## Live Demo — 整合流程
 
-**▶ https://achubuman.github.io/bobo-ai-agent/**（本機檔：[index.html](index.html)）
+**▶ https://achubuman.github.io/bobo-ai-agent/（https://achubuman.github.io/bobo-ai-agent/）
 
 用手機開，或把瀏覽器拉窄到手機寬度，就是 LINE 裡的樣子。免金鑰、可離線。模擬在 LINE 裡的完整流程，一支手機從頭走到尾：
 
