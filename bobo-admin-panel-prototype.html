@@ -8,8 +8,8 @@
 :root {
   --coral:#E5462F; --coral-d:#C5371F; --coral-light:#FCEBE6;
   --teal:#1E9E6B; --teal-light:#E7F4EE;
-  --amber:#E0851A; --amber-light:#FBEFD9;
-  --purple-light:#EAEEF3; --purple:#4E6A87;
+  --amber:#C2883C; --amber-light:#FBEFD9;
+  --purple-light:#EDF1F6; --purple:#46617A;
   --ink:#231613; --ink-soft:#5C524E; --muted:#6E655E;
   --cream:#FCF6F4; --card:#ffffff; --line:#EEE4DF;
   --font:"PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
@@ -124,7 +124,7 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
 /* ── Tags ── */
 .tag{display:inline-block;font-size:11px;padding:2px 7px;border-radius:20px;font-weight:600;}
 .t-oos{background:var(--coral-light);color:var(--coral-d);}
-.t-ok{background:var(--teal-light);color:#0F6E56;}
+.t-ok{background:var(--teal-light);color:#1E9E6B;}
 .t-abs{background:var(--purple-light);color:var(--purple);}
 .t-wait{background:var(--purple-light);color:var(--purple);}
 .t-lead{background:var(--amber-light);color:#8A5712;}
@@ -138,7 +138,7 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
 .oos-report select{flex:1;font-size:13px;padding:7px 10px;border:1.5px solid #F3D0C7;border-radius:8px;font-family:var(--font);background:#fff;color:var(--ink);-webkit-appearance:none;min-width:0;}
 .oos-report button{flex:none;border:0;border-radius:8px;background:var(--coral);color:#fff;font-size:12px;font-weight:700;padding:7px 13px;cursor:pointer;font-family:var(--font);}
 .oos-report .hint{font-size:11px;color:var(--muted);margin-top:6px;}
-.menu-confirm{background:var(--teal-light);border:1px solid #BBE3D0;border-radius:10px;padding:11px 13px;font-size:13px;color:#0F6E56;}
+.menu-confirm{background:var(--teal-light);border:1px solid #BBE3D0;border-radius:10px;padding:11px 13px;font-size:13px;color:#1E9E6B;}
 
 /* ── Payment rows ── */
 .pay-hdr{display:flex;font-size:11px;color:var(--muted);font-weight:700;padding:0 0 7px;border-bottom:1.5px solid var(--line);letter-spacing:.3px;}
@@ -155,14 +155,15 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
 .pay-note{font-size:12px;color:var(--muted);flex:none;white-space:nowrap;min-width:44px;text-align:right;}
 .pay-chk{width:30px;display:flex;justify-content:center;align-items:center;flex:none;}
 .pay-chk input{width:20px;height:20px;accent-color:var(--teal);cursor:pointer;}
-.st-ok{background:var(--teal-light);color:#0F6E56;}
+.st-ok{background:var(--teal-light);color:#1E9E6B;}
 .st-owe{background:var(--coral-light);color:var(--coral-d);}
 .st-over{background:var(--amber-light);color:#8A5712;}
 .st-none{background:var(--purple-light);color:var(--purple);}
 .st-abs{background:#EFEAE3;color:var(--muted);}
 
 /* ── Summary ── */
-.sum-box{background:var(--teal);color:#fff;border-radius:12px;padding:14px 16px;margin-top:2px;}
+.sum-box{background:#3B2E28;color:#fff;border-radius:12px;padding:14px 16px;margin-top:2px;transition:background .3s;}
+.sum-box.settled{background:var(--teal);}
 .sum-box h3{font-size:12px;opacity:.8;margin-bottom:8px;font-weight:600;}
 .sum-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;}
 .sum-row:last-child{margin-bottom:0;}
@@ -173,10 +174,10 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
 
 /* ── Notices ── */
 .notice{background:var(--amber-light);border:1px solid #F0D9A8;border-radius:10px;padding:9px 12px;font-size:12px;color:#8A5712;line-height:1.6;margin-bottom:10px;}
-.notice-g{background:var(--teal-light);border:1px solid #BBE3D0;border-radius:10px;padding:9px 12px;font-size:12px;color:#0F6E56;line-height:1.6;margin-bottom:10px;}
+.notice-g{background:var(--teal-light);border:1px solid #BBE3D0;border-radius:10px;padding:9px 12px;font-size:12px;color:#1E9E6B;line-height:1.6;margin-bottom:10px;}
 
 /* ── Link box ── */
-.link-box{background:#EAEEF3;border:1px solid #D7DEE6;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;margin-top:6px;}
+.link-box{background:var(--purple-light);border:1px solid #CBD7E2;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;margin-top:6px;}
 .link-url{flex:1;font-size:12px;color:var(--purple);word-break:break-all;}
 .link-copy{font-size:12px;color:var(--coral);font-weight:700;cursor:pointer;white-space:nowrap;padding:3px 8px;border:1.5px solid var(--coral);border-radius:8px;}
 
@@ -184,7 +185,7 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
 .btn{display:block;width:100%;padding:13px;border:none;border-radius:12px;font-size:14px;font-weight:700;font-family:var(--font);cursor:pointer;text-align:center;margin-top:8px;transition:transform .1s,opacity .1s;letter-spacing:.3px;}
 .btn:active{transform:scale(.98);opacity:.9;}
 .btn-p{background:var(--coral);color:#fff;}
-.btn-s{background:var(--teal);color:#fff;}
+.btn-s{background:#5E7C99;color:#fff;}
 .btn-g{background:#EFEAE3;color:var(--ink-soft);}
 
 /* ── Copy options（開團文案挑選） ── */
@@ -385,7 +386,7 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
     <div class="notice-g" id="thresh-notice">✅ 已超過外送門檻（$415 / $300），可以下單了！</div>
     <div class="stats">
       <div class="stat">
-        <div class="stat-num" style="color:var(--teal)" id="filled-count">6/7</div>
+        <div class="stat-num" style="color:#5E7C99" id="filled-count">6/7</div>
         <div class="stat-lbl">已填單</div>
       </div>
       <div class="stat">
@@ -458,7 +459,7 @@ body{font-family:var(--font);color:var(--ink);background:var(--cream);max-width:
       <div class="sum-row"><span>訂單總額</span><strong id="s-total">$415</strong></div>
       <div id="s-delivery-row" class="sum-row" style="display:none"><span id="s-delivery-lbl">外送費</span><strong id="s-delivery">$0</strong></div>
       <div class="sum-row"><span>已收款</span><strong id="s-collected">$315</strong></div>
-      <div class="sum-row"><span>待收</span><strong id="s-pending" style="color:#ffd080">$100</strong></div>
+      <div class="sum-row"><span>待收</span><strong id="s-pending" style="color:#F2B13C">$100</strong></div>
     </div>
     <div class="owe-list" id="owe-list"></div>
   </div>
@@ -475,11 +476,11 @@ const people = [
   {name:'Amy', color:'#E5462F', absent:false, lead:true},
   {name:'Vivi',  color:'#C2883C', absent:false},
   {name:'阿Ken',  color:'#5E7C99', absent:false},
-  {name:'Jenny',  color:'#3E9D74', absent:false},
-  {name:'Leo',  color:'#B06A4E', absent:false},
-  {name:'欣欣',  color:'#4F8E86', absent:false},
+  {name:'Jenny',  color:'#46617A', absent:false},
+  {name:'Leo',  color:'#8E867F', absent:false},
+  {name:'欣欣',  color:'#8A5712', absent:false},
   {name:'David',  color:'#95938C', absent:true},
-  {name:'Ben',  color:'#7E8B5A', absent:false},
+  {name:'Ben',  color:'#6E655E', absent:false},
 ];
 
 const menuItems = [
@@ -494,12 +495,12 @@ const orders = [
   {person:'Amy', color:'#E5462F', item:'四季春茶大杯', spec:'半糖少冰', price:65, oos:false, absent:false, filled:true},
   {person:'Vivi',  color:'#C2883C', item:'椰果奶茶大杯', spec:'全糖正常冰', price:75, oos:false, absent:false, filled:true},
   {person:'阿Ken',  color:'#5E7C99', item:'翡翠檸檬綠茶大杯', spec:'微糖少冰', price:70, oos:false, absent:false, filled:true},
-  {person:'Jenny',  color:'#3E9D74', item:'烏龍茶拿鐵大杯', spec:'半糖少冰', price:75, oos:false, absent:false, filled:true},
-  {person:'Jenny',  color:'#3E9D74', item:'翡翠檸檬綠茶大杯', spec:'微糖少冰', price:70, oos:false, absent:false, filled:true},
-  {person:'Leo',  color:'#B06A4E', item:'四季春茶大杯', spec:'無糖去冰', price:65, oos:false, absent:false, filled:true},
-  {person:'欣欣',  color:'#4F8E86', item:'翡翠青茶大杯', spec:'微糖少冰', price:65, oos:false, absent:false, filled:true},
+  {person:'Jenny',  color:'#46617A', item:'烏龍茶拿鐵大杯', spec:'半糖少冰', price:75, oos:false, absent:false, filled:true},
+  {person:'Jenny',  color:'#46617A', item:'翡翠檸檬綠茶大杯', spec:'微糖少冰', price:70, oos:false, absent:false, filled:true},
+  {person:'Leo',  color:'#8E867F', item:'四季春茶大杯', spec:'無糖去冰', price:65, oos:false, absent:false, filled:true},
+  {person:'欣欣',  color:'#8A5712', item:'翡翠青茶大杯', spec:'微糖少冰', price:65, oos:false, absent:false, filled:true},
   {person:'David',  color:'#95938C', item:'', spec:'', price:0, oos:false, absent:true, filled:false},
-  {person:'Ben',  color:'#7E8B5A', item:'', spec:'', price:0, oos:false, absent:false, filled:false},
+  {person:'Ben',  color:'#6E655E', item:'', spec:'', price:0, oos:false, absent:false, filled:false},
 ];
 
 var paymentsByName = {};   // 以姓名為鍵記錄實收（支援一人多品項彙整、金主付款）
@@ -820,7 +821,7 @@ function oosControl(o,i){
   if(!(o.oos||o.subbed||o.removed)) return '';
   let lbl, bg, bc, lc;
   if(o.removed){ lbl='🗑 已移除此單，'+o.person+' 不用付款'; bg='#EFEAE3'; bc='#DAD4CC'; lc='var(--muted)'; }
-  else if(o.subbed){ lbl='✅ 已換為 '+o.item+'（$'+o.price+'）'; bg='var(--teal-light)'; bc='#BBE3D0'; lc='#0F6E56'; }
+  else if(o.subbed){ lbl='✅ 已換為 '+o.item+'（$'+o.price+'）'; bg='var(--teal-light)'; bc='#BBE3D0'; lc='#1E9E6B'; }
   else { lbl='⚠️ 此品項無庫存'+(o.notified?('，波波已通知 '+o.person):'')+'，由你選替代品：'; bg='var(--coral-light)'; bc='#F3D0C7'; lc='var(--coral-d)'; }
   // 原品項已缺貨，不提供「改回原點」；僅能換其他替代品或移除
   let opts='<option value="">'+((o.subbed||o.removed)?'改成其他…':'選擇替代品…')+'</option>';
@@ -1015,7 +1016,7 @@ function payAvatar(name, color, muted){
 function payStatusSub(name, owe){
   const val = paymentsByName[name]||0, diff = val - owe;
   if(val===0)  return {word:'未收', color:'var(--muted)'};
-  if(diff===0) return {word:'✓ 已收', color:'#0F6E56'};
+  if(diff===0) return {word:'✓ 已收', color:'#1E9E6B'};
   if(diff>0)   return {word:'多繳 $'+diff+'（待退）', color:'#8A5712'};
   return {word:'欠 $'+Math.abs(diff), color:'var(--coral-d)'};
 }
@@ -1093,6 +1094,9 @@ function updateSummary(){
   } else { drow.style.display='none'; }
   document.getElementById('s-collected').textContent = '$'+collected;
   document.getElementById('s-pending').textContent = '$'+pending;
+  // 語意綠只給 Balance=0：收齊才轉綠，未收齊維持暖褐黑
+  const sumBox = document.querySelector('.sum-box');
+  if(sumBox) sumBox.classList.toggle('settled', totalShouldPay>0 && pending<=0);
 
   // 總額加總正確即可結清；但仍列出「誰欠誰多少」：少付的欠收款人、多付的由收款人退還
   let underRows='', overRows='';
@@ -1100,11 +1104,11 @@ function updateSummary(){
     const val = paymentsByName[x.name]||0, diff = val - x.owe;
     const who = x.sponsor ? (x.name+'（金主）') : x.name;
     if(diff < 0) underRows += `<div class="owe-item" style="color:var(--coral-d)">・${who} 還欠 ${payee} <strong>$${-diff}</strong></div>`;
-    else if(diff > 0) overRows += `<div class="owe-item" style="color:var(--amber)">・${payee}（收款人）欠 ${who} <strong>$${diff}</strong>（多繳待退）</div>`;
+    else if(diff > 0) overRows += `<div class="owe-item" style="color:#8A5712">・${payee}（收款人）欠 ${who} <strong>$${diff}</strong>（多繳待退）</div>`;
   });
   let oweHtml;
   if(!underRows && !overRows){
-    oweHtml = `<div style="margin-top:10px;font-size:13px;color:#0F6E56;">✅ 全員剛好付清，帳面已平（實收 $${collected}／應收 $${totalShouldPay}）。</div>`;
+    oweHtml = `<div style="margin-top:10px;font-size:13px;color:#1E9E6B;">✅ 全員剛好付清，帳面已平（實收 $${collected}／應收 $${totalShouldPay}）。</div>`;
   } else {
     const head = pending<=0
       ? `✅ 總額已收齊 $${collected}／$${totalShouldPay}，可結清 · 個人待補／待退如下：`
@@ -1217,7 +1221,7 @@ function importOcrMenu(){
         function _renderPub(){
           var hs=document.getElementById('hdr-status');
           if(_stage===0){ _pb.textContent='✓ 發布開團到群組'; _pb.style.background='#E5462F'; _pb.disabled=false; _pb.style.cursor='pointer'; if(hs)hs.textContent='進行中'; }
-          else if(_stage===1){ _pb.textContent='🔔 已開團 ｜ 截單後點此截單'; _pb.style.background='#1E9E6B'; _pb.disabled=false; _pb.style.cursor='pointer'; if(hs)hs.textContent='已開團'; }
+          else if(_stage===1){ _pb.textContent='🔔 已開團 ｜ 截單後點此截單'; _pb.style.background='#5E7C99'; _pb.disabled=false; _pb.style.cursor='pointer'; if(hs)hs.textContent='已開團'; }
           else { _pb.textContent='✓ 已截單，準備餐點中'; _pb.style.background='#8E867F'; _pb.disabled=true; _pb.style.cursor='default'; if(hs)hs.textContent='已截單'; }
         }
         _pb.onclick=function(){

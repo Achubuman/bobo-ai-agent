@@ -304,7 +304,7 @@ function editOrder(){
   render();
 }
 function askCancelOrder(){
-  $('#done').innerHTML='<div class="done"><div class="big">🗑</div><h2>要取消整筆訂單嗎？</h2>'
+  $('#done').innerHTML='<div class="done" style="color:var(--muted)"><div class="big">🗑</div><h2>要取消整筆訂單嗎？</h2>'
     +'<p class="sub">取消後這團就不會幫你送出，之後想點可以重新點餐。</p>'
     +'<div class="done-acts"><button class="da-edit" onclick="showDone()">← 不取消</button><button class="da-cancel" onclick="confirmCancelOrder()">確認取消</button></div></div>';
 }
@@ -318,7 +318,7 @@ function confirmCancelOrder(){
   }
   hasSubmittedOnce=false;
   cart=[];
-  $('#done').innerHTML='<div class="done"><div class="big">✅</div><h2>訂單已取消</h2>'
+  $('#done').innerHTML='<div class="done" style="color:var(--muted)"><div class="big">🗑</div><h2>訂單已取消</h2>'
     +'<p class="sub">你這團的訂單已取消，不會被送出。</p>'
     +'<div class="done-acts"><button class="da-edit" onclick="reorder()">🔄 重新點餐</button></div></div>';
 }

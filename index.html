@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>波波 ｜ 整合 Demo（LINE 內一條龍）</title>
 <style>
-  :root{--bg:#FCF6F4;--screen:#8cabd9;--card:#fff;--ink:#231613;--muted:#5C524E;--brand:#E5462F;--brand-d:#C5371F;--line:#EEE4DF;--good:#1E9E6B;--green:#D8EEDD;--dm:#FCEBE6}
+  :root{--bg:#FCF6F4;--card:#fff;--ink:#231613;--muted:#5C524E;--brand:#E5462F;--brand-d:#C5371F;--gold:#F2B13C;--amber:#C2883C;--slate:#5E7C99;--line:#EEE4DF;--good:#1E9E6B;--me:#E9EFF4;--dm:#FCEBE6}
   *{box-sizing:border-box}
   body{margin:0;font-family:-apple-system,"PingFang TC","Noto Sans TC",Segoe UI,sans-serif;background:#EFE7E2;color:var(--ink)}
   .stage{display:contents}
@@ -33,7 +33,7 @@
   .bub{max-width:80%;background:#F1F1F3;border-radius:15px;border-top-left-radius:4px;padding:10px 13px;font-size:14px;line-height:1.55}
   .bub .nm{font-size:11px;color:var(--muted);margin-bottom:3px}
   .msg.me{flex-direction:row-reverse}
-  .msg.me .bub{background:var(--green);border-top-left-radius:15px;border-top-right-radius:4px;color:#1E5A38}
+  .msg.me .bub{background:var(--me);border-top-left-radius:15px;border-top-right-radius:4px;color:#3E5A73}
   .msg.sys{justify-content:center}.msg.sys span{font-size:11px;color:#7a7268;background:rgba(255,255,255,.7);padding:3px 12px;border-radius:20px}
   /* card in bubble */
   .card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;margin-top:4px;width:235px}
@@ -54,10 +54,10 @@
   .liff.on{display:flex;animation:slide .28s ease}
   @keyframes slide{from{transform:translateY(100%)}to{transform:none}}
   .liff .lhd{flex:none;display:flex;align-items:center;gap:10px;padding:12px 14px;background:#fff;border-bottom:1px solid var(--line)}
-  .liff .lhd .x{width:28px;height:28px;border-radius:50%;background:#f1ece4;border:0;font-size:16px;cursor:pointer;color:#555}
+  .liff .lhd .x{width:28px;height:28px;border-radius:50%;background:#f1ece4;border:0;font-size:16px;cursor:pointer;color:var(--muted)}
   .liff .lhd .lt{font-size:14px;font-weight:700}.liff .lhd .lt small{display:block;font-size:11px;color:var(--muted);font-weight:400}
   .liff iframe{flex:1;width:100%;border:0;background:#faf7f2}
-  .home{margin-top:2px;height:5px;width:120px;background:#0f0d14;border-radius:3px;align-self:center;opacity:.25}
+  .home{margin-top:2px;height:5px;width:120px;background:var(--ink);border-radius:3px;align-self:center;opacity:.25}
 </style>
 </head>
 <body>
@@ -100,7 +100,7 @@ function addMsg(view,opts){
   var who=opts.who||'bot', txt=opts.txt||'', card=opts.card||'';
   var html;
   if(who==='sys'){ html='<div class="msg sys"><span>'+txt+'</span></div>'; }
-  else if(who==='me'){ html='<div class="msg me"><div class="av" style="background:#6E8B6E">我</div><div class="bub">'+txt+card+'</div></div>'; }
+  else if(who==='me'){ html='<div class="msg me"><div class="av" style="background:#5E7C99">我</div><div class="bub">'+txt+card+'</div></div>'; }
   else if(who==='bot'){ html='<div class="msg"><div class="av bot">波</div><div class="bub"><div class="nm">波波</div>'+txt+card+'</div></div>'; }
   else { html='<div class="msg"><div class="av" style="background:'+(opts.color||'#5E7C99')+'">'+(opts.name||'同')[0]+'</div><div class="bub"><div class="nm">'+(opts.name||'同事')+'</div>'+txt+card+'</div></div>'; }
   var node=el(html); t.appendChild(node); t.scrollTop=t.scrollHeight; return node;
@@ -178,9 +178,9 @@ window.addEventListener('message',function(e){
    自費＝下午睏／週三厭世／天氣熱三種安全的梗（不影射誰）隨機換款；有人請＝感謝但不暗示小氣。 */
 function boboOpenCopy(shop,d){
   var mode=(d&&d.billing)||'self', sp=(d&&d.sponsor)||'金主', amt=(d&&d.subsidy)||0, cut=(d&&d.cutoff)||'15:00';
-  if(mode==='full')    return {tag:'好消息，這攤 <b>'+sp+'</b> 佛心請客。開了 <b>'+shop+'</b> 的團，'+cut+' 截單，難得有人買單、手腳要快 👇', badge:{t:sp+' 請客',bg:'#1E9E6B'}, bd:'今天不用付錢，想喝什麼點下去就對了。'};
-  if(mode==='oneEach') return {tag:'<b>'+sp+'</b> 請大家第一杯，第二杯起自己出。開 <b>'+shop+'</b> 的團，'+cut+' 截單，這種好康別遲到 👇', badge:{t:sp+' 請一杯',bg:'#1E9E6B'}, bd:'第一杯免費（升級加料都算金主的），第二杯起才自付。'};
-  if(mode==='subsidy') return {tag:'公司佛心補助每人 <b>$'+amt+'</b>，只補差額。開了 <b>'+shop+'</b> 的團，'+cut+' 截單，晚填就沒補助了 👇', badge:{t:'補助 $'+amt,bg:'#E0851A'}, bd:'每人先折 $'+amt+'，超過才補差額。'};
+  if(mode==='full')    return {tag:'好消息，這攤 <b>'+sp+'</b> 佛心請客。開了 <b>'+shop+'</b> 的團，'+cut+' 截單，難得有人買單、手腳要快 👇', badge:{t:sp+' 請客',bg:'#F2B13C',fg:'#231613'}, bd:'今天不用付錢，想喝什麼點下去就對了。'};
+  if(mode==='oneEach') return {tag:'<b>'+sp+'</b> 請大家第一杯，第二杯起自己出。開 <b>'+shop+'</b> 的團，'+cut+' 截單，這種好康別遲到 👇', badge:{t:sp+' 請一杯',bg:'#F2B13C',fg:'#231613'}, bd:'第一杯免費（升級加料都算金主的），第二杯起才自付。'};
+  if(mode==='subsidy') return {tag:'公司佛心補助每人 <b>$'+amt+'</b>，只補差額。開了 <b>'+shop+'</b> 的團，'+cut+' 截單，晚填就沒補助了 👇', badge:{t:'補助 $'+amt,bg:'#C2883C'}, bd:'每人先折 $'+amt+'，超過才補差額。'};
   // 自費：三種「大家都有共鳴、不影射誰」的安全梗隨機換款
   var routes=[
     {tag:'下午睏意正式發作，需要一杯續命。開了 <b>'+shop+'</b> 的團，'+cut+' 截單，晚一步只能看我喝 👇'},
@@ -205,7 +205,7 @@ function onPublished(d){
     var its=state.curated.items.slice(0,3).map(function(i){return i.name+' $'+i.price;});
     sum='<div class="summary">🧋 '+its.join('・')+(state.curated.items.length>3?(' …共 '+state.curated.items.length+' 項'):'')+'</div>';
   }
-  var badge='<span style="background:'+copy.badge.bg+';color:#fff;font-size:10px;padding:1px 7px;border-radius:10px;margin-left:6px">'+copy.badge.t+'</span>';
+  var badge='<span style="background:'+copy.badge.bg+';color:'+(copy.badge.fg||'#fff')+';font-size:10px;padding:1px 7px;border-radius:10px;margin-left:6px">'+copy.badge.t+'</span>';
   addMsg('group',{who:'bot',
     txt:((d&&d.chosenCopy)||copy.tag),   // 團主在後台挑選的開團文案優先
     card:'<div class="card"><div class="hd">📋 '+shop+' 點餐表單'+badge+'</div><div class="bd">'+copy.bd+sum+'</div><div class="acts"><button class="btn pri" onclick="openLiff(\'bobo_order_form.html\',\'我要點餐\')">我要點餐 →</button></div></div>'});
@@ -230,8 +230,8 @@ function seed(){
   addMsg('group',{who:'peer',name:'Vivi',color:'#C2883C',txt:'<span style="color:var(--brand-d);font-weight:700">@波波</span> 幫我們揪一下！'});
   addMsg('group',{who:'bot',txt:'收到！附近這 3 家評價不錯，<b>誰想當團主就點「由我開團」</b> 👇',
     card:'<div class="card"><div class="hd">🥤 金茶伍 手切Q粿 <span style="background:var(--brand);color:#fff;font-size:10px;padding:1px 7px;border-radius:10px;margin-left:4px">人氣</span></div><div class="bd">⭐ 4.6・步行 3 分・招牌：手切Q粿紅茶、琥珀紅奶茶</div><div class="acts"><button class="btn pri pulse" onclick="chooseShop(\'jincha\')">由我開團 →</button></div></div>'
-      +'<div class="card" style="margin-top:8px"><div class="hd">🧋 彤露 <span style="background:#E7F4EE;color:#0F6E56;font-size:10px;padding:1px 7px;border-radius:10px;margin-left:4px">已有菜單</span></div><div class="bd">⭐ 4.5・步行 5 分・招牌：極上紅茶、四季春青茶</div><div class="acts"><button class="btn gho" onclick="chooseShop(\'tonglu\')">由我開團 →</button></div></div>'
-      +'<div class="card" style="margin-top:8px"><div class="hd">🍵 雀飲 <span style="background:#E7F4EE;color:#0F6E56;font-size:10px;padding:1px 7px;border-radius:10px;margin-left:4px">已有菜單</span></div><div class="bd">⭐ 4.7・步行 6 分・招牌：黃金蕎麥茶、蕎麥鮮奶</div><div class="acts"><button class="btn gho" onclick="chooseShop(\'quewin\')">由我開團 →</button></div></div>'});
+      +'<div class="card" style="margin-top:8px"><div class="hd">🧋 彤露 <span style="background:#E7F4EE;color:#1E9E6B;font-size:10px;padding:1px 7px;border-radius:10px;margin-left:4px">已有菜單</span></div><div class="bd">⭐ 4.5・步行 5 分・招牌：極上紅茶、四季春青茶</div><div class="acts"><button class="btn gho" onclick="chooseShop(\'tonglu\')">由我開團 →</button></div></div>'
+      +'<div class="card" style="margin-top:8px"><div class="hd">🍵 雀飲 <span style="background:#E7F4EE;color:#1E9E6B;font-size:10px;padding:1px 7px;border-radius:10px;margin-left:4px">已有菜單</span></div><div class="bd">⭐ 4.7・步行 6 分・招牌：黃金蕎麥茶、蕎麥鮮奶</div><div class="acts"><button class="btn gho" onclick="chooseShop(\'quewin\')">由我開團 →</button></div></div>'});
   addMsg('dm',{who:'sys',txt:'🔒 以下只有團主（你）看得到'});
   addMsg('dm',{who:'bot',txt:'先到群組挑一家店，我就把開團準備好給你確認 👇'});
 }

@@ -8,7 +8,7 @@
   :root{
     --bg:#FCF6F4; --card:#fff; --ink:#231613; --muted:#5C524E;
     --brand:#E5462F; --brand-dark:#C5371F; --line:#EEE4DF;
-    --good:#1E9E6B; --warn:#E0851A; --bad:#B4291A; --chip:#F4EEEA;
+    --good:#1E9E6B; --warn:#C2883C; --bad:#C5371F; --chip:#F4EEEA;
     --shadow:0 4px 12px rgba(60,30,20,.06); --ring:0 0 0 3px rgba(229,70,47,.15);
   }
   *{box-sizing:border-box}
@@ -60,9 +60,9 @@
   .thumb .tc{font-size:11px;color:var(--muted);margin-top:2px}
   .thumb .cf{font-size:11px;font-weight:700;margin-top:4px}
   .srole{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;margin-top:5px;line-height:1.5}
-  .srole-ok{background:#E7F4EE;color:#0F6E56}
+  .srole-ok{background:#E7F4EE;color:#1E9E6B}
   .srole-warn{background:#FBEFD9;color:#8A5712}
-  .srole-bad{background:#FBE9E6;color:#B4291A}
+  .srole-bad{background:#FBE9E6;color:#C5371F}
   /* scan summary + items */
   .summary{border-radius:12px;padding:14px 16px;margin-bottom:16px;border:1px solid}
   .summary.ok{background:#E7F4EE;border-color:#BBE3D0}
@@ -125,9 +125,9 @@
   .lightbox.on{display:flex}
   .lightbox img{max-width:96%;max-height:96%;border-radius:8px}
   .curatehint{font-size:12px;color:var(--muted);margin:0 0 10px}
-  .reupload{background:#FBE9E6;border:1px solid #F1C3BC;border-radius:12px;padding:13px 15px;margin-top:16px;font-size:14px;color:#B4291A;line-height:1.65}
+  .reupload{background:#FBE9E6;border:1px solid #F1C3BC;border-radius:12px;padding:13px 15px;margin-top:16px;font-size:14px;color:#C5371F;line-height:1.65}
   .reupload.warn{background:#FBEFD9;border-color:#F0D9A8;color:#8A5712}
-  .copynote{background:#E7F4EE;border:1px solid #BBE3D0;border-radius:12px;padding:11px 13px;margin-top:14px;font-size:13px;color:#0F6E56;line-height:1.6}
+  .copynote{background:#E7F4EE;border:1px solid #BBE3D0;border-radius:12px;padding:11px 13px;margin-top:14px;font-size:13px;color:#1E9E6B;line-height:1.6}
   .apidetails{border:1px solid var(--line);border-radius:10px;padding:0 12px;margin-bottom:2px;background:#FDFAF7}
   .apidetails summary{cursor:pointer;font-size:13px;color:var(--muted);padding:9px 2px;list-style:none}
   .apidetails summary::-webkit-details-marker{display:none}
@@ -149,9 +149,9 @@
   .item.removed{opacity:.5}
   .item.removed .name{text-decoration:line-through}
   .addonnote{font-size:12px;color:#8A5712;background:#FBEFD9;border:1px solid #F0D9A8;border-radius:8px;padding:6px 10px;margin:2px 0 10px}
-  .storedef{background:#eef4fb;border:1px solid #cfe0f3;border-radius:10px;padding:10px 12px;margin:2px 0 12px}
-  .storedef .hd{font-size:12px;font-weight:700;color:#185FA5;margin-bottom:6px}
-  .price.addon{color:#9E3320}
+  .storedef{background:#EDF1F6;border:1px solid #CBD7E2;border-radius:10px;padding:10px 12px;margin:2px 0 12px}
+  .storedef .hd{font-size:12px;font-weight:700;color:#46617A;margin-bottom:6px}
+  .price.addon{color:#8A5712}
   .tbadge{font-size:11px;background:#FBEFD9;color:#8A5712;border:1px solid #F0D9A8;border-radius:20px;padding:2px 9px;white-space:nowrap}
   .tprice{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
   .tprice button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer}
@@ -498,7 +498,7 @@ function repairArray(text){
 }
 
 /* ---- gallery ---- */
-function confColor(c){ return c>=0.95 ? '#0F6E56' : (c<0.5 ? '#B4291A' : '#8A5712'); }
+function confColor(c){ return c>=0.95 ? '#1E9E6B' : (c<0.5 ? '#C5371F' : '#8A5712'); }
 /* 每張範例「在演什麼」：低信心/非菜單=抗幻覺擋下、高信心但有待確認欄位=高信心仍需確認、其餘=辨識清晰 */
 function sampleRole(s){
   var r=(s.result||[]), sum=null;
