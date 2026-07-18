@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>波波 · 菜單 OCR Demo</title>
+<link rel="icon" type="image/svg+xml" href="images/bobo-logo.svg">
 <style>
   :root{
     --bg:#FCF6F4; --card:#fff; --ink:#231613; --muted:#5C524E;
@@ -18,7 +19,7 @@
   header h1{font-size:24px;margin:0 0 4px}
   header p{margin:0;color:var(--muted);font-size:14px}
   .logo{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--brand)}
-  .logo .dot{width:12px;height:12px;border-radius:50%;background:var(--brand)}
+  .logo img{width:24px;height:24px;display:block;border-radius:50%}
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
     padding:18px;margin-top:16px;box-shadow:var(--shadow)}
   .card h2{font-size:15px;margin:0 0 4px;letter-spacing:.02em}
@@ -165,7 +166,7 @@
 <body>
 <div class="wrap">
   <header>
-    <div class="logo"><span class="dot"></span>菜單 OCR</div>
+    <div class="logo"><img src="images/bobo-logo.svg" alt="波波">菜單 OCR</div>
   </header>
 
   <div class="card" id="uploadcard">

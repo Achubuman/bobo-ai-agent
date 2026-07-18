@@ -1,4 +1,4 @@
-# 波波 ── 辦公室開團 AI Agent
+# <img src="images/bobo-logo.svg" width="42" align="top" alt="波波 logo"> 波波 ── 辦公室開團 AI Agent
 
 把辦公室團購（找店 → 開單 → 點餐 → 缺貨換單 → 截單 → 算錢對帳）整條流程自動化的 AI Agent，內嵌在 LINE 裡，未來可擴充到 Microsoft Teams。
 

@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>波波 ｜ 整合 Demo（LINE 內一條龍）</title>
+<link rel="icon" type="image/svg+xml" href="images/bobo-logo.svg">
 <style>
   :root{--bg:#FCF6F4;--card:#fff;--ink:#231613;--muted:#5C524E;--brand:#E5462F;--brand-d:#C5371F;--gold:#F2B13C;--amber:#C2883C;--slate:#5E7C99;--line:#EEE4DF;--good:#1E9E6B;--me:#E9EFF4;--dm:#FCEBE6}
   *{box-sizing:border-box}
@@ -30,6 +31,7 @@
   @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   .av{width:30px;height:30px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff}
   .av.bot{background:var(--brand)}
+  .av.bot img{width:100%;height:100%;display:block;border-radius:50%}
   .bub{max-width:80%;background:#F1F1F3;border-radius:15px;border-top-left-radius:4px;padding:10px 13px;font-size:14px;line-height:1.55}
   .bub .nm{font-size:11px;color:var(--muted);margin-bottom:3px}
   .msg.me{flex-direction:row-reverse}
@@ -101,7 +103,7 @@ function addMsg(view,opts){
   var html;
   if(who==='sys'){ html='<div class="msg sys"><span>'+txt+'</span></div>'; }
   else if(who==='me'){ html='<div class="msg me"><div class="av" style="background:#5E7C99">我</div><div class="bub">'+txt+card+'</div></div>'; }
-  else if(who==='bot'){ html='<div class="msg"><div class="av bot">波</div><div class="bub"><div class="nm">波波</div>'+txt+card+'</div></div>'; }
+  else if(who==='bot'){ html='<div class="msg"><div class="av bot"><img src="images/bobo-logo.svg" alt="波波"></div><div class="bub"><div class="nm">波波</div>'+txt+card+'</div></div>'; }
   else { html='<div class="msg"><div class="av" style="background:'+(opts.color||'#5E7C99')+'">'+(opts.name||'同')[0]+'</div><div class="bub"><div class="nm">'+(opts.name||'同事')+'</div>'+txt+card+'</div></div>'; }
   var node=el(html); t.appendChild(node); t.scrollTop=t.scrollHeight; return node;
 }
@@ -166,11 +168,9 @@ window.addEventListener('message',function(e){
     var _ps=(d.persons&&d.persons.length)?d.persons:(d.person?[d.person]:[]);
     var _tag=_ps.map(function(p){return '@'+p;}).join(' ');
     addMsg('group',{who:'bot',txt:'⚠️ <b>'+_tag+'</b> '+(_ps.length>1?'你們':'你')+'點的「'+(d.item||'')+'」<b>缺貨</b>了，要改點什麼?直接回我就好 🙏'});
-  } else if(d.type==='bobo_order_placed'){
-    // 成員下單／改單會即時同步到團主面板（localStorage），但不需要洗版群組，
-    // 群組只保留「開團／截單／缺貨／取消」等真正需要大家看到的重要事件。
-  } else if(d.type==='bobo_order_cancelled'){
-    addMsg('group',{who:'bot',txt:'🗑 <b>'+(d.person||'有人')+'</b> 取消了這次的訂單'});
+  } else if(d.type==='bobo_order_placed' || d.type==='bobo_order_cancelled'){
+    // 成員下單／改單／取消會即時同步到團主面板（localStorage），但不需要洗版群組，
+    // 群組只保留「開團／截單／缺貨／取消整團」等真正需要大家看到的重要事件。
   }
 });
 
